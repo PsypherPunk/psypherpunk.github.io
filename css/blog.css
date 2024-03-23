@@ -1,0 +1,22 @@
+body {
+    padding-top: 120px;
+}
+
+img {
+    display: block;
+    max-width: 75%;
+    margin: auto;
+}
+
+.container {
+    max-width: 800px;
+}
+
+.card-header a, .card-text a, small.tag a, .list-group-item-heading a {
+    text-decoration: none;
+}
+
+blockquote {
+    margin-left: 1em;
+    margin-right: 1em;
+}

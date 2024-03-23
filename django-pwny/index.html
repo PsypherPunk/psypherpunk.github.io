@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>🦄 django-pwny</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+        <main class="container">
+            
+    <h1 class="title">
+        🦄 django-pwny
+    </h1>
+    <blockquote>A look at password handling in light of changes to the NIST guidelines.</blockquote>
+    <p class="subtitle text-end"><strong>2018-08-29</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/django/" >
+                        #django
+                    </a>
+                
+                    <a href="https://blog.psypherpunk.io/tags/python/" >
+                        #python
+                    </a>
+                
+                    <a href="https://blog.psypherpunk.io/tags/security/" >
+                        #security
+                    </a>
+                
+            </small>
+        </p>
+    
+    <blockquote>
+<p><em>Originally published at
+<a href="https://www.thedatashed.co.uk/2019/02/07/django-pwny/">The Data Shed</a>.</em></p>
+</blockquote>
+<p>Much as we might lament their continued use, passwords are an important part of
+modern life. A part that seems only to be increasing in ubiquity; as I sit here
+I can see at least half a dozen devices, from this laptop to my television,
+that each require an inordinate number of passwords to keep them from turning
+into little more than novelty paperweights.</p>
+<p>So let's take an inexplicable foray into the fun we have managing our little
+<em>&quot;memorized secrets&quot;</em>...</p>
+<h2 id="nist-national-institute-of-standards-and-technology">NIST: National Institute of Standards and Technology</h2>
+<h3 id="nist-special-publication-800-63">NIST Special Publication 800-63</h3>
+<p>I'm sure that many are intimately familiar with <em>NIST Special Publication
+800-63. Appendix A</em>, by Bill Burr. Well, if not the document itself then at
+least its consequences. Therein, amidst discussions of Claude Shannon's work on
+entropy in information systems, he outlined what effectively became the
+de facto best practices for password generation for over a decade, asking us
+to consider:</p>
+<blockquote>
+<ul>
+<li><em>a minimum of 8 character passwords, selected by subscribers from an
+alphabet of 94 printable characters,</em></li>
+<li><em>required subscribers to include at least one upper case letter, one lower
+case letter, one number and one special character, and;</em></li>
+<li><em>Used a dictionary to prevent subscribers from including common words and
+prevented permutations of the username as a password.</em></li>
+</ul>
+</blockquote>
+<p>He recently had this to say on the subject:</p>
+<blockquote>
+<p><em>&quot;Much of what I did I now regret. It just drives people bananas and they
+don't pick good passwords no matter what you do.&quot;</em></p>
+</blockquote>
+<p>He's not wrong, is he.</p>
+<h3 id="nist-special-publication-800-63b">NIST Special Publication 800-63B</h3>
+<p>Released in June 2017, the latest NIST guidelines make some surprising (or
+perhaps not so surprising) changes. Certainly it's a significantly lengthier
+document, given the weight of the task at hand and there's a definite
+<em>formality</em> to the language this time around. Perhaps the biggest change is a
+more general recognition that passwords themselves aren't enough.</p>
+<p>Some of the more significant things to note:</p>
+<ul>
+<li>Gone are the periodic password changes (<em>&quot;Verifiers SHOULD NOT require
+memorized secrets to be changed arbitrarily (e.g., periodically)&quot;</em>).</li>
+<li>Gone is the convoluted alphanumeric-song-and-dance (<em>&quot;Verifiers SHOULD NOT
+impose other composition rules (e.g., requiring mixtures of different
+character types or prohibiting consecutively repeated characters) for
+memorized secrets&quot;</em>).</li>
+</ul>
+<p>Oh, and for all you sites that won't let me paste my password: <em>&quot;Verifiers
+SHOULD permit claimants to use &quot;paste&quot; functionality when entering a memorized
+secret&quot;</em>!</p>
+<p>Most noteworthy of all (at least in the context of my writing this), there's
+this little nugget from section 5.1.1.2:</p>
+<blockquote>
+<p><em>When processing requests to establish and change memorized secrets,
+verifiers SHALL compare the prospective secrets against a list that contains
+values known to be commonly-used, expected, or compromised. For example, the
+list MAY include, but is not limited to:</em></p>
+<ul>
+<li><em>Passwords obtained from previous breach corpuses.</em></li>
+<li><em>Dictionary words.</em></li>
+<li><em>Repetitive or sequential characters (e.g. 'aaaaaa', '1234abcd').</em></li>
+<li><em>Context-specific words, such as the name of the service, the username,
+and derivatives thereof.</em></li>
+</ul>
+</blockquote>
+<p>What's that? <em>&quot;Passwords obtained from previous breach corpuses&quot;</em> you say?</p>
+<h2 id="have-i-been-pwned">';--have i been pwned?</h2>
+<p>Launched in 2013, the site
+<a href="https://haveibeenpwned.com/"><em>Have I Been Pwned?</em></a> stores and processes data
+acquired from <em>breaches</em>, typically when said data are exposed publicly or
+some attempt is made to profit therefrom, in some from the Web's more
+insidious locales. It's a matter the site's creator, Troy Hunt, can better
+<a href="https://haveibeenpwned.com/About">explain</a> but the part most interesting to
+this particular topic is the fact that it exposes an
+<a href="https://haveibeenpwned.com/API/v2">API</a>.</p>
+<p>Specifically, the API allows us to send it a password and check whether it has
+appeared in a previous data breach, thus fulfilling the <em>&quot;previous breach
+corpuses&quot;</em> part of the NIST guidelines.</p>
+<p>Obviously, sending your password across the Web to <em>any</em> third-party service is
+Not A Very Good Thing To Do™ and thankfully the API's design takes this into
+account: the password isn't sent directly, we instead send a cryptographic hash
+derived from the password. Nor do we send the entire hash, instead passing only
+the first five characters.</p>
+<p>The data returned from the API comprise a list of matching hash suffixes and
+number of occurrences of that hash within the corpus.</p>
+<h3 id="perhaps-a-demonstration">Perhaps a demonstration?</h3>
+<p>Let's say we have a password, a truly terrible password that no one would ever
+use:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">BAD_PASSWORD</span><span>=&quot;</span><span style="color:#a3be8c;">password</span><span>&quot;
+</span></code></pre>
+<p>No one would ever be silly enough to use that, right? So, purely for
+demonstration purposes as <em>no one would ever have this password</em>, we calculate
+the SHA1:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> BAD_PASSWORD_HASH=$(
+</span><span>    </span><span style="color:#96b5b4;">echo </span><span style="color:#bf616a;">-n </span><span>${</span><span style="color:#bf616a;">BAD_PASSWORD</span><span>} | \
+</span><span>        </span><span style="color:#bf616a;">sha1sum </span><span>| \
+</span><span>        </span><span style="color:#bf616a;">cut -d </span><span>&#39; &#39;</span><span style="color:#bf616a;"> -f1 </span><span>| \
+</span><span>        </span><span style="color:#bf616a;">tr </span><span>&#39;</span><span style="color:#a3be8c;">[:lower:]</span><span>&#39; &#39;</span><span style="color:#a3be8c;">[:upper:]</span><span>&#39;
+</span><span>)
+</span></code></pre>
+<p>Now we have a cryptographic hash of a password that <em>no one would ever use
+'cause that would be silly</em> and can send the first five characters to the the
+<em>Have I Been Pwned</em> API:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> curl &quot;</span><span style="color:#a3be8c;">https://api.pwnedpasswords.com/range/</span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">BAD_PASSWORD_HASH</span><span>:</span><span style="color:#d08770;">0</span><span>:</span><span style="color:#d08770;">5</span><span style="color:#a3be8c;">}</span><span>&quot;
+</span><span style="color:#bf616a;">003D68EB55068C33ACE09247EE4C639306B:3
+</span><span style="color:#bf616a;">012C192B2F16F82EA0EB9EF18D9D539B0DD:1
+</span><span style="color:#bf616a;">01330C689E5D64F660D6947A93AD634EF8F:1
+</span><span style="color:#bf616a;">0198748F3315F40B1A102BF18EEA0194CD9:1
+</span><span style="color:#bf616a;">01F9033B3C00C65DBFD6D1DC4D22918F5E9:2
+</span><span style="color:#bf616a;">0424DB98C7A0846D2C6C75E697092A0CC3E:5
+</span><span style="color:#bf616a;">047F229A81EE2747253F9897DA38946E241:1
+</span><span style="color:#bf616a;">04A37A676E312CC7C4D236C93FBD992AA3C:5
+</span><span style="color:#bf616a;">...
+</span></code></pre>
+<p>Well that's a lot of results, 511 in fact (at time of writing). Of course, that
+doesn't mean that our password is actually in that list—<em>because, of course, no
+one would ever use it</em>—but we can double-check by seeing if the suffix from our
+SHA1 is in the list:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> curl &quot;</span><span style="color:#a3be8c;">https://api.pwnedpasswords.com/range/</span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">BAD_PASSWORD_HASH</span><span>:</span><span style="color:#d08770;">0</span><span>:</span><span style="color:#d08770;">5</span><span style="color:#a3be8c;">}</span><span>&quot; | \
+</span><span>    </span><span style="color:#bf616a;">grep </span><span>${</span><span style="color:#bf616a;">BAD_PASSWORD_HASH</span><span>:</span><span style="color:#d08770;">5</span><span>:}
+</span><span style="color:#bf616a;">1E4C9B93F3F0682250B6CF8331B7EE68FD8:3645804
+</span></code></pre>
+<p>Oh. Oh dear. So <code>password</code> has been used as a password and found in no fewer
+than 3,645,804 known data breaches? Burr was right, <em>&quot;they don't pick good
+passwords no matter what you do&quot;</em>.</p>
+<h2 id="django">Django</h2>
+<p>To perhaps give a more practical demonstration of how this might be integrated
+into a functioning site, I'm going to look to
+<a href="https://www.djangoproject.com/">Django</a>. Password validation was
+<a href="https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#module-django.contrib.auth.password_validation">introduced in 1.9</a>
+and essentially comprises a list of <em>validators</em>—objects with a <code>validate()</code>
+method—into each of which is passed the incoming password.</p>
+<p>Of course, passwords aren't stored so there are only two points at which you
+can do this:</p>
+<ul>
+<li>User registration, where potentially you can protect users from using at-risk
+passwords.</li>
+<li>Login, at which point you can merely warn users about the potential risk.</li>
+</ul>
+<p>To perhaps put the escalating problem of password management into perspective,
+in version 1.9 (December 2015) Django's <code>CommonPasswordValidator</code> contained a
+list of 1,000 commonly-used passwords. By version 2.1 (August 2018) it had
+grown to 20,000.</p>
+<h3 id="pwny-validators-haveibeenpwnedvalidator"><code>pwny.validators.HaveIBeenPwnedValidator</code></h3>
+<p>Here's a quick implementation, hereby dubbed <code>django-pwny</code> (and hence the
+ridiculous title of this post):</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">HaveIBeenPwnedValidator</span><span style="color:#eff1f5;">:
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">validate</span><span>(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">password</span><span>, </span><span style="color:#bf616a;">user</span><span>=</span><span style="color:#d08770;">None</span><span>):
+</span><span>        sha1 = hashlib.</span><span style="color:#bf616a;">sha1</span><span>()
+</span><span>        sha1.</span><span style="color:#bf616a;">update</span><span>(password.</span><span style="color:#bf616a;">encode</span><span>())
+</span><span>        digest = sha1.</span><span style="color:#bf616a;">hexdigest</span><span>().</span><span style="color:#bf616a;">upper</span><span>()
+</span><span>        prefix = digest[:</span><span style="color:#d08770;">5</span><span>]
+</span><span>        url = </span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">https://api.pwnedpasswords.com/range/</span><span>{prefix}&quot;
+</span><span>        r = requests.</span><span style="color:#bf616a;">get</span><span>(url, </span><span style="color:#bf616a;">headers</span><span>={&quot;</span><span style="color:#a3be8c;">User-Agent</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">django-pwny</span><span>&quot;})
+</span><span>        </span><span style="color:#b48ead;">for </span><span>suffix_count </span><span style="color:#b48ead;">in </span><span>r.text.</span><span style="color:#bf616a;">splitlines</span><span>():
+</span><span>            suffix, count = suffix_count.</span><span style="color:#bf616a;">split</span><span>(&quot;</span><span style="color:#a3be8c;">:</span><span>&quot;)
+</span><span>            </span><span style="color:#b48ead;">if </span><span>digest == </span><span style="color:#b48ead;">f</span><span>&quot;{prefix}{suffix}&quot;:
+</span><span>                </span><span style="color:#b48ead;">raise </span><span style="color:#bf616a;">ValidationError</span><span>(
+</span><span>                    </span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">Your password has been pwned </span><span>{count}</span><span style="color:#a3be8c;"> times!</span><span>&quot;
+</span><span>                )
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">get_help_text</span><span>(</span><span style="color:#bf616a;">self</span><span>):
+</span><span>        </span><span style="color:#b48ead;">return </span><span>(
+</span><span>            &quot;</span><span style="color:#a3be8c;">Your password should not appear in a list of compromised</span><span>&quot;
+</span><span>            &quot;</span><span style="color:#a3be8c;">passwords.</span><span>&quot;
+</span><span>        )
+</span></code></pre>
+<p>While I'm sure there's room for improvement, added to the <code>settings.py</code> file,
+it should allow users to be alerted should their chosen password be a little
+too <em>common</em>:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#bf616a;">AUTH_PASSWORD_VALIDATORS </span><span>= [
+</span><span>    {
+</span><span>        &quot;</span><span style="color:#a3be8c;">NAME</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">pwny.validators.HaveIBeenPwnedValidator</span><span>&quot;,
+</span><span>    },
+</span><span>]
+</span></code></pre>
+<p>So there it is: a way, in accordance with the latest NIST guidelines, to
+compare users' passwords against a substantial list of known breaches. Quite
+whether this particular recommendation will see widespread adoption, we'll have
+to wait and see.</p>
+<p>Shortly after I drafted this, GitHub decided to
+<a href="https://blog.github.com/2018-07-31-new-improvements-and-best-practices-for-account-security-and-recoverability/#enforcing-stronger-passwords">get in on the act</a>.
+While that's definitely a major voice in the industry following the guidelines,
+they're definitely in the minority.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63b.pdf">NIST Special Publication 800-63B</a></li>
+<li><a href="https://csrc.nist.gov/CSRC/media/Publications/sp/800-63/ver-10/archive/2004-06-30/documents/sp800-63-v1-0.pdf">NIST Special Publication 800-63</a></li>
+<li><em>Talk Python to Me</em>, <a href="https://talkpython.fm/episodes/show/136/secure-code-lessons-from-have-i-been-pwned">Episode 136</a>.</li>
+</ul>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2024 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>
