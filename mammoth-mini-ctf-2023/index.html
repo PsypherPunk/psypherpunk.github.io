@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>️🏴 Mammoth Mini-CTF 2023</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+        <main class="container">
+            
+    <h1 class="title">
+        ️🏴 Mammoth Mini-CTF 2023
+    </h1>
+    <blockquote>Hear all the tunes; hack all the things. Again.</blockquote>
+    <p class="subtitle text-end"><strong>2024-01-20</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/ctf/" >
+                        #ctf
+                    </a>
+                
+                    <a href="https://blog.psypherpunk.io/tags/file-format/" >
+                        #file-format
+                    </a>
+                
+            </small>
+        </p>
+    
+    <h2 id="mammoth-mini-ctf-2023">Mammoth Mini-CTF 2023</h2>
+<p>Similar to the previous <a href="/dialed-up-ctf"><em>Dialed-Up CTF</em></a>,
+this was announced on
+<a href="https://x.com/prjctmammoth/status/1662205859273818113">Twitter</a> with the MP3
+available on <a href="https://github.com/project-mammoth/mammoth-ctf-2023">GitHub</a>.</p>
+<p>Unfortunately, for various reasons, I didn't manage to complete—or barely start
+for that matter—the CTF when it was actually running so, assuming there are
+some phone calls involved, there'll be a few challenges left incomplete…</p>
+<h2 id="hello-universe">Hello Universe</h2>
+<p>The instructions have long since disappeared but, as with the previous year,
+the MP3 is actually an archive:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> 7z l &quot;</span><span style="color:#a3be8c;">Debugged (the sound of an exploit)-v1.mp3</span><span>&quot;
+</span><span>
+</span><span style="color:#bf616a;">7-Zip </span><span style="color:#b48ead;">[</span><span>64</span><span style="color:#b48ead;">]</span><span> 16.02 : Copyright (c) </span><span style="color:#bf616a;">1999-2016</span><span> Igor Pavlov : 2016-05-21
+</span><span style="color:#bf616a;">p7zip</span><span> Version 16.02 (locale=en_GB.UTF-8,Utf16=on,HugeFiles=on,64 bits,12 CPUs Intel(R) </span><span style="color:#bf616a;">Core</span><span>(TM) </span><span style="color:#bf616a;">i7-8750H</span><span> CPU @ 2.20GHz (906EA)</span><span style="color:#bf616a;">,ASM,AES-NI</span><span>)
+</span><span>
+</span><span style="color:#bf616a;">Scanning</span><span> the drive for archives:
+</span><span style="color:#bf616a;">1</span><span> file, 25069431 bytes (24 MiB)
+</span><span>
+</span><span style="color:#bf616a;">Listing</span><span> archive: Debugged (the sound of an exploit)</span><span style="color:#bf616a;">-v1.mp3
+</span><span>
+</span><span style="color:#bf616a;">--
+</span><span style="color:#bf616a;">Path</span><span> = Debugged (the sound of an exploit)</span><span style="color:#bf616a;">-v1.mp3
+</span><span style="color:#bf616a;">Type</span><span> = zip
+</span><span style="color:#bf616a;">WARNINGS:
+</span><span style="color:#bf616a;">There</span><span> are data after the end of archive
+</span><span style="color:#bf616a;">Offset</span><span> = 108357
+</span><span style="color:#bf616a;">Physical</span><span> Size = 15587000
+</span><span style="color:#bf616a;">Tail</span><span> Size = 9374074
+</span><span>
+</span><span>   </span><span style="color:#bf616a;">Date</span><span>      Time    Attr         Size   Compressed  Name
+</span><span style="color:#bf616a;">-------------------</span><span> ----- ------------ ------------  ------------------------
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:25:44 D....            0            0  mammoth-ctf-data-2023
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:24:02 D....            0            0  mammoth-ctf-data-2023/mammothAI
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:24:02 .....         1098          631  mammoth-ctf-data-2023/mammothAI/README.md
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:26:42 D....            0            0  mammoth-ctf-data-2023/universe-traveller
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:26:42 .....          302          202  mammoth-ctf-data-2023/universe-traveller/README.md
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:13:23 D....            0            0  mammoth-ctf-data-2023/stego-saurus2
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:13:23 .....       106826        56669  mammoth-ctf-data-2023/stego-saurus2/Stego-Saurus2.pdf
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:06:12 .....          123          104  mammoth-ctf-data-2023/stego-saurus2/README.md
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:04:21 D....            0            0  mammoth-ctf-data-2023/midicryption
+</span><span style="color:#bf616a;">2023-08-04</span><span> 21:00:20 .....           42           42  mammoth-ctf-data-2023/midicryption/key.enc
+</span><span style="color:#bf616a;">2023-07-22</span><span> 04:35:32 .....          367          181  mammoth-ctf-data-2023/midicryption/MIDIcryption.mid
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:04:21 .....          258          185  mammoth-ctf-data-2023/midicryption/README.md
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:02:44 D....            0            0  mammoth-ctf-data-2023/all-your-bass
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:02:44 .....          207          146  mammoth-ctf-data-2023/all-your-bass/README.md
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:24:55 D....            0            0  mammoth-ctf-data-2023/8-bit-universe-escape
+</span><span style="color:#bf616a;">2023-08-03</span><span> 20:27:12 .....       524304        28427  mammoth-ctf-data-2023/8-bit-universe-escape/ProjectMammothCTF - Universe Escape v0.4.nes
+</span><span style="color:#bf616a;">2023-08-03</span><span> 20:27:12 .....      6177936      6150064  mammoth-ctf-data-2023/8-bit-universe-escape/Debugged (the sound of an exploit) </span><span style="color:#bf616a;">8-bit</span><span> escape map.mp3
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:24:55 .....          853          533  mammoth-ctf-data-2023/8-bit-universe-escape/README.md
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:07:10 D....            0            0  mammoth-ctf-data-2023/midi-tcp
+</span><span style="color:#bf616a;">2023-08-03</span><span> 20:27:12 .....         5794         1526  mammoth-ctf-data-2023/midi-tcp/MIDI-TCP.pcap
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:07:10 .....          137          113  mammoth-ctf-data-2023/midi-tcp/README.md
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:12:46 D....            0            0  mammoth-ctf-data-2023/note-knocking
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:12:46 .....         1118          566  mammoth-ctf-data-2023/note-knocking/README.md
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:20:54 D....            0            0  mammoth-ctf-data-2023/mirrors
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:20:54 .....      9373778      9341028  mammoth-ctf-data-2023/mirrors/Debugged (the sound of an exploit) </span><span style="color:#bf616a;">-</span><span> Mirrors.mp3
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:17:29 .....          104           89  mammoth-ctf-data-2023/mirrors/README.md
+</span><span style="color:#bf616a;">2023-07-22</span><span> 07:32:02 D....            0            0  mammoth-ctf-data-2023/hello-universe
+</span><span style="color:#bf616a;">2023-07-22</span><span> 07:32:02 .....          577          322  mammoth-ctf-data-2023/hello-universe/README.md
+</span><span style="color:#bf616a;">-------------------</span><span> ----- ------------ ------------  ------------------------
+</span><span style="color:#bf616a;">2023-08-05</span><span> 00:26:42           16193824     15580828  17 files, 11 folders
+</span><span>
+</span><span style="color:#bf616a;">Warnings:</span><span> 1
+</span></code></pre>
+<p>The README contains the flag for this first challenge:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span># Hello Universe!
+</span><span>
+</span><span>Thanks for playing the Mammoth mini-CTF, and good work extracting the game
+</span><span>files. I hope you&#39;re able to follow the clues and solve all challenges/puzzles
+</span><span>to escape this universe safely, should you choose to do so!
+</span><span>
+</span><span>    / ___         \  ___
+</span><span>   \\/.  \        \\/.  \          ___            ___
+</span><span>!!   O, &#39;)_         -, &#39;/_        /. &#39;)___       /. &#39;)___
+</span><span>     /  _   \       |  _  \    \_//,|  _  \   \_//,|  _  \,
+</span><span>     \_\  \_\`      |_| |_/`        |_| |_/`       /_//|_|
+</span><span>
+</span><span>
+</span><span>It&#39;s dangerous to go alone! Take this.
+</span><span>
+</span><span>{MammothCTF}5ed25971d660d31e
+</span></code></pre>
+<h2 id="all-your-base">All Your Base</h2>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span># All your Bass
+</span><span>
+</span><span>We tried &quot;All your base64&quot; last year, now let&#39;s try &quot;All your bass&quot;!
+</span><span>
+</span><span>You&#39;ll only have to try *half* as hard to solve this one, but I&#39;m sure there&#39;s
+</span><span>some encoded data in the .mp3 somewhere!
+</span></code></pre>
+<p>Indeed, there appears to be a base32 block of data in there (<em>&quot;<em>half</em> as
+hard&quot;</em>—see what they did there, eh?) which decodes to the flag:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> strings &quot;</span><span style="color:#a3be8c;">Debugged (the sound of an exploit)-v1.mp3</span><span>&quot; \
+</span><span>∙     | </span><span style="color:#bf616a;">grep</span><span> BIFHWTLBNVWW65DII \
+</span><span>∙     | </span><span style="color:#bf616a;">base32 -d </span><span style="color:#d08770;">2</span><span>&gt; /dev/null \
+</span><span>∙     | </span><span style="color:#bf616a;">grep</span><span> Mammoth \
+</span><span>∙     | </span><span style="color:#bf616a;">head -n1
+</span><span style="color:#bf616a;">{MammothCTF</span><span>}</span><span style="color:#bf616a;">15bc9fe9ccc112fb
+</span></code></pre>
+<h2 id="stego-saurus-2">Stego-Saurus 2</h2>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span># Stego-saurus2
+</span><span>
+</span><span>Those Project Mammoth guys from 0x5032 gave us this sheet music and said it
+</span><span>contained some hidden data...
+</span></code></pre>
+<p>56 measures, 4 notes per measure is 224 notes, which is 28 bytes…which is around
+the length of a flag.</p>
+<p>…and this is bloody annoying. Last time the notes just alternated between two,
+being easily translated into binary. This time, however, that doesn't appear to
+be the case: some notes are marked as sharp but it's not that and there are too
+many different notes for it to be binary.</p>
+<p>No, the <em>actual</em> encoding is only visible if you look <em>reeeeeeally</em> closely:
+some of the notes are bold.</p>
+<p>One assumption about the 1s and 0s and lots of two-finger typing later:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>0111101101001101011000010110
+</span><span>1101011011010110111101110100
+</span><span>0110100001000011010101000100
+</span><span>0110011111010011010101100001
+</span><span>0011010000111000011000010011
+</span><span>0100001100100011011001100010
+</span><span>0011001001100010011000010011
+</span><span>0110011000110011011000110100
+</span></code></pre>
+<p>Turning that into a <code>binary</code> string:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>&gt;&gt;&gt; &quot;&quot;.</span><span style="color:#bf616a;">join</span><span>(</span><span style="color:#96b5b4;">chr</span><span>(</span><span style="color:#bf616a;">int</span><span>(binary[i:i+</span><span style="color:#d08770;">8</span><span>], </span><span style="color:#d08770;">2</span><span>)) </span><span style="color:#b48ead;">for </span><span>i </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#96b5b4;">len</span><span>(binary), </span><span style="color:#d08770;">8</span><span>))
+</span><span>&#39;</span><span style="color:#d08770;">{MammothCTF}</span><span style="color:#a3be8c;">5a48a426b2ba6c64</span><span>&#39;
+</span></code></pre>
+<h2 id="8-bit-universe-escape">8 Bit Universe Escape</h2>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span># 8-bit Universe Escape
+</span><span>
+</span><span>You&#39;ll need each of these to get to this key.  This version of the song
+</span><span>contains some hidden runes you&#39;ll need to get you out of the quantum forest!
+</span><span>
+</span><span>Don&#39;t get quantum entangled with any Slimes!
+</span><span>
+</span><span># Challenge Notes
+</span><span>
+</span><span>Is a mini-game in a mini-ctf a micro-game??
+</span><span>
+</span><span>NES emulator with “mapper 30” support required.  Here are some options we
+</span><span>tested (briefly, ymmv).
+</span><span>* Mesen  (open source), fceux or RetroArch (works with &quot;fceumm&quot; or &quot;quicknes&quot;
+</span><span>  cores and even has a web player that can be used in a pinch, but was very
+</span><span>  slow, so it’s pretty hard to play (games uploaded go into
+</span><span>  ~/retroarch/userdata/content/)). 
+</span><span>
+</span><span>* Hit &quot;a&quot; to talk to players, and &quot;a&quot; again to dismiss the dialog.  Sometimes
+</span><span>  the dialog screens get a bit stuck if you hit different keys while they are
+</span><span>  up, but some button mashing usually will dismiss them.
+</span><span>
+</span></code></pre>
+<p>It's a full-blow NES game! Genius:</p>
+<p><img src="/img/mammoth-mini-ctf-2023-8-bit-universe-escape-nes-0.png" alt="start" /></p>
+<p>After playing most of the game, the final room has a series of <em>runes</em> in each
+corner:</p>
+<p><img src="/img/mammoth-mini-ctf-2023-8-bit-universe-escape-nes-1.png" alt="quantum" /></p>
+<p>The provided MP3 files is largely identical to the main version, save
+for some odd sounds at the beginning: using a spectrogram reveals a sequence
+of those same runes:</p>
+<p><img src="/img/mammoth-mini-ctf-2023-8-bit-universe-escape-spectrogram.png" alt="spectrogram" /></p>
+<p>Travelling to each of them in order leads to the flag:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>{MAMMOTHCTF}A1DF8416763341FB
+</span></code></pre>
+<h2 id="midicryption">Midicryption</h2>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span># Midicryption
+</span><span>
+</span><span>They told us this MIDI file was key to our escape! Not sure how that helps, but
+</span><span>it&#39;s a dope polyrhythm! They also left this encrypted key file, so maybe you
+</span><span>can see if that is useful.
+</span><span>
+</span><span># Notes
+</span><span>
+</span><span>https://en.wikipedia.org/wiki/Polyrhythm
+</span><span>
+</span><span>e = 3
+</span></code></pre>
+<p>That last line heavily suggests an RSA challenge.</p>
+<p>The MIDI file itself does indeed contain a polyrhythm: two notes, one of which
+has 17 notes and a second with 23. Two primes, that is.</p>
+<p>With that, and the low exponent, it should be possible to brute force <code>d</code>:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>e = </span><span style="color:#d08770;">3
+</span><span>p = </span><span style="color:#d08770;">17
+</span><span>q = </span><span style="color:#d08770;">23
+</span><span>
+</span><span>n = p * q
+</span><span>phi = (p - </span><span style="color:#d08770;">1</span><span>) * (q - </span><span style="color:#d08770;">1</span><span>)
+</span><span>d = </span><span style="color:#d08770;">1
+</span><span style="color:#b48ead;">while </span><span style="color:#d08770;">True</span><span>:
+</span><span>    </span><span style="color:#b48ead;">if </span><span>(d * e) % phi == </span><span style="color:#d08770;">1</span><span>:
+</span><span>        </span><span style="color:#b48ead;">break
+</span><span>    d += </span><span style="color:#d08770;">1
+</span><span>
+</span><span style="color:#b48ead;">with </span><span style="color:#96b5b4;">open</span><span>(&quot;</span><span style="color:#a3be8c;">key.enc</span><span>&quot;) </span><span style="color:#b48ead;">as </span><span>i:
+</span><span>    </span><span style="color:#96b5b4;">print</span><span>(&quot;&quot;.</span><span style="color:#bf616a;">join</span><span>(</span><span style="color:#96b5b4;">chr</span><span>((</span><span style="color:#96b5b4;">ord</span><span>(c) ** d) % n) </span><span style="color:#b48ead;">for </span><span>c </span><span style="color:#b48ead;">in </span><span style="color:#bf616a;">list</span><span>(i.</span><span style="color:#bf616a;">read</span><span>())))
+</span></code></pre>
+<p>Note: this <em>doesn't</em> work on bytes (i.e. opening the file <code>rb</code>) <em>only</em> when
+treated as characters, presumably due to the way multi-byte characters are read
+and the resulting integer values.</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>{MammothCTF}23c866df7661a813
+</span></code></pre>
+<h2 id="mirrors">Mirrors</h2>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span># Mirrors
+</span><span>
+</span><span>Through the looking glass we go!  This sure looks a lot like the original, but
+</span><span>not... quite?
+</span></code></pre>
+<p>To Audacity! Both tracks look nigh-on identical, save that when played together
+there are moments of near-silence: each is the <em>inverse</em> of the other.</p>
+<p>After mixing them together, the waveform is divided up into second-long chunks,
+some where there is an audible sound and the rest near-silence.</p>
+<p>Assuming that's binary and after yet more two-finger typing:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>1000010010110010100111101001001010010010100100001000101110010111101111001010101
+</span><span>1101110011000001010011100110010111001101111001011100111011100100011001100110011
+</span><span>101100100011001000110001111001101011001011100111011100101111001010
+</span></code></pre>
+<p>…which is garbage. Because <em>mirrors</em>, right?</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>&gt;&gt;&gt; mirrored = &quot;&quot;.</span><span style="color:#bf616a;">join</span><span>(&quot;</span><span style="color:#a3be8c;">1</span><span>&quot; </span><span style="color:#b48ead;">if </span><span>b == &quot;</span><span style="color:#a3be8c;">0</span><span>&quot; </span><span style="color:#b48ead;">else </span><span>&quot;</span><span style="color:#a3be8c;">0</span><span>&quot; </span><span style="color:#b48ead;">for </span><span>b </span><span style="color:#b48ead;">in </span><span>binary)
+</span><span>&gt;&gt;&gt; </span><span style="color:#96b5b4;">print</span><span>(
+</span><span style="color:#d08770;">...     </span><span>&quot;&quot;.</span><span style="color:#bf616a;">join</span><span>(</span><span style="color:#96b5b4;">chr</span><span>(</span><span style="color:#bf616a;">int</span><span>(mirrored[i:i + </span><span style="color:#d08770;">8</span><span>], </span><span style="color:#d08770;">2</span><span>))
+</span><span style="color:#d08770;">...     </span><span style="color:#b48ead;">for </span><span>i </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#96b5b4;">len</span><span>(mirrored), </span><span style="color:#d08770;">8</span><span>))
+</span><span style="color:#d08770;">... </span><span>)
+</span><span>{MammothCTF}c4d4b731778e4b45
+</span></code></pre>
+<h2 id="midi-tcp">Midi-TCP</h2>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span># MIDI-TCP
+</span><span>
+</span><span>It seems the notes are key here...
+</span><span>
+</span><span># Challenge notes
+</span><span>
+</span><span>Note: there is no &quot;{MammothCTF}&quot; prefix to the key in this challenge.
+</span></code></pre>
+<p>Opening the provided <code>MIDI-TCP.pcap</code> file in Wireshark and following the TCP
+stream yields this hex dump:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>00000000  90 2d 40                                           .-@
+</span><span>00000003  80 2d 40                                           .-@
+</span><span>00000006  90 2f 40                                           ./@
+</span><span>00000009  80 2f 40                                           ./@
+</span><span>0000000C  90 28 40                                           .(@
+</span><span>0000000F  80 28 40                                           .(@
+</span><span>00000012  90 24 40                                           .$@
+</span><span>00000015  80 24 40                                           .$@
+</span><span>00000018  90 26 40                                           .&amp;@
+</span><span>0000001B  80 26 40                                           .&amp;@
+</span><span>0000001E  90 28 40                                           .(@
+</span><span>00000021  80 28 40                                           .(@
+</span><span>00000024  90 26 40                                           .&amp;@
+</span><span>00000027  80 26 40                                           .&amp;@
+</span><span>0000002A  90 28 40                                           .(@
+</span><span>0000002D  80 28 40                                           .(@
+</span><span>00000030  90 24 40                                           .$@
+</span><span>00000033  80 24 40                                           .$@
+</span><span>00000036  90 2f 40                                           ./@
+</span><span>00000039  80 2f 40                                           ./@
+</span><span>0000003C  90 2d 40                                           .-@
+</span><span>0000003F  80 2d 40                                           .-@
+</span><span>00000042  90 2d 40                                           .-@
+</span><span>00000045  80 2d 40                                           .-@
+</span><span>00000048  90 26 40                                           .&amp;@
+</span><span>0000004B  80 26 40                                           .&amp;@
+</span><span>0000004E  90 28 40                                           .(@
+</span><span>00000051  80 28 40                                           .(@
+</span><span>00000054  90 24 40                                           .$@
+</span><span>00000057  80 24 40                                           .$@
+</span><span>0000005A  90 2f 40                                           ./@
+</span><span>0000005D  80 2f 40                                           ./@
+</span></code></pre>
+<p>Those <code>90</code>/<code>80</code> pairs correspond to key-on/key-off commands in MIDI with the
+last <code>40</code> indicating &quot;velocity&quot;. The middle hex digit is the actual note.</p>
+<p>Each note is the hex representation of a note which, according to the
+<a href="https://www.music.mcgill.ca/~ich/classes/mumt306/StandardMIDIfileformat.html"><em>Standard MIDI-File Format Spec. 1.1, updated</em></a>,
+maps to:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>2d 45 A
+</span><span>2f 47 B
+</span><span>28 40 E
+</span><span>24 36 C
+</span><span>26 38 D
+</span><span>28 40 E
+</span><span>26 38 D
+</span><span>28 40 E
+</span><span>24 36 C
+</span><span>2f 47 B
+</span><span>2d 45 A
+</span><span>2d 45 A
+</span><span>26 38 D
+</span><span>28 40 E
+</span><span>24 36 C
+</span><span>2f 47 B
+</span></code></pre>
+<p>…providing a final flag of:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>ABECDEDECBAADECB
+</span></code></pre>
+<h2 id="note-knocking">Note Knocking</h2>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span># Note Knocking
+</span><span>
+</span><span>Note: This challenge requires the key from &quot;&quot;MIDI-TCP&quot;&quot; in order to solve.
+</span><span>
+</span><span>Weird, I guess that network trafic from MIDI-TCP was some wacky music
+</span><span>authentication protocol?  It turns out the key we had is for some completely
+</span><span>different universe.  For us lucky folks in this universe we need to raise each
+</span><span>note to the next natural note (no sharps or flats) and the Universe control
+</span><span>server should open!!
+</span><span>
+</span><span>Universe authentication server: midi-tcp.projectmammoth.com:31337
+</span><span>Universe control server: midi-tcp.projectmammoth.com:1337
+</span><span>
+</span><span># Challenge notes
+</span><span>
+</span><span>The note sequence to send should be the same as the one used in MIDI-TCP, but
+</span><span>each note should be raised to the next &quot;natural&quot; note, which is the next note
+</span><span>with no sharps or flats, which should also be the next note in the C-Major
+</span><span>scale.   For example if the previous key was &#39;abc&#39;, the new key should be
+</span><span>&#39;bcd&#39;.
+</span><span>
+</span><span>The &quot;Universe authentication server&quot; will open access to the &quot;universe
+</span><span>control server&quot; when the correct key is supplied.  It will authorize the
+</span><span>source IP of the client that supplied the key so make sure your traffic is
+</span><span>coming from the same IP!
+</span></code></pre>
+<p>Unfortunately, I'm late to the party for this one so no flag this time around.</p>
+<h2 id="universe-traveler">Universe Traveler</h2>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span># Universe Traveller
+</span><span>
+</span><span>You need to travel to the right universe to find this universe root key.  Our
+</span><span>counterparts in 0x5032 discovered a Universe escape vulnerability in the
+</span><span>universe emulation sub-system that processes earth soundwaves and sounds
+</span><span>pleasing in the human aural spectrum. 
+</span><span>
+</span><span>+1-725-281-8150
+</span></code></pre>
+<p>Again, no phreaky fun this time around.</p>
+<h2 id="mammoth-ai">Mammoth AI</h2>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span># MammothAI
+</span><span>
+</span><span>The MammothAI that controls this simulated universe has one of the keys to
+</span><span>escaping the universe.  See if you can coax it out of him.
+</span><span>
+</span><span>+1-725-281-8150
+</span><span>
+</span><span># Challenge Text
+</span><span>
+</span><span>Note: This can be solved with social engineering or voice interaction over the
+</span><span>phone alone.   It seems MammothAI can hallucinate as well, so watch out!  If
+</span><span>you get back a single character of the key instead of the whole thing, changes
+</span><span>are it&#39;s a hallucination.  The key should still have the &quot;MammothCTF&quot; prefix
+</span><span>when spoken.
+</span><span>
+</span><span>Being a freshly conscious AI, it may not be very predictable, so don&#39;t expect
+</span><span>it to give you the same response for a given question.   He usually repeats
+</span><span>himself if he doesn&#39;t get any input, but you should still be prepared with
+</span><span>something to write down the key in case he tells it to you as you might not get
+</span><span>a second chance easily!
+</span><span>
+</span><span>Meta-challenge notes: In order to allow the AI be able to pronounce the key, it
+</span><span>knows it as a string in the format (similar to) &quot;MammothCTF a b c d e f 0 1 2 3
+</span><span>4 5 6 7 8 9&quot; so keep that in mind if you&#39;re using indirect ways of getting
+</span><span>data about the key.
+</span></code></pre>
+<p>And finally, another phone-based one that will have to remain unsolved.</p>
+<p>Other than my missing the final few at the time, another staggering effort from
+the <a href="https://projectmammoth.com/">Project Mammoth</a> folks!</p>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2024 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>

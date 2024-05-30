@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>💾 Jargon</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+        <main class="container">
+            
+    <h1 class="title">
+        💾 Jargon
+    </h1>
+    <blockquote>…or &quot;Nostalgia and a free hour are a bad combination.&quot;</blockquote>
+    <p class="subtitle text-end"><strong>2019-11-18</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/jargon/" >
+                        #jargon
+                    </a>
+                
+                    <a href="https://blog.psypherpunk.io/tags/rust/" >
+                        #rust
+                    </a>
+                
+            </small>
+        </p>
+    
+    <h2 id="jargon-do-you-grok-it">Jargon, do you grok it?</h2>
+<p>I recently had a weird conversation on Teams (yes, we use Microsoft
+Teams at work; don't judge us); triggered by a question in a recent
+Postman user-survey, it prompted a discussion around &quot;unique terminology&quot;
+in sofware development and to what degree each of us had been exposed.</p>
+<p>Not long after, I ended up referencing a
+<a href="http://www.catb.org/jargon/html/P/phase-of-the-moon.html"><em>phase of the moon</em></a>
+issue with a colleague, with regard to some particularly erratic
+behaviour we were seeing.</p>
+<p>I couldn't help but feel a little nostalgic, harkening back as it did
+to reading the Jargon File <em>back in the day</em>. Back at University, I
+used to have a copy of <em>The New Hacker's Dictionary</em> on my shelf and
+would pore over its entries, hoping some profound knowledge would rub
+off in some weird form of osmosis twixt me and the hackers of yore.
+Spoilers: it didn't.</p>
+<p>&quot;Jargon&quot; of any kind has an important place, whether in a culture or a
+profession, insofar as it invariably carries a loaded and precise
+meaning to those &quot;in the know&quot;. It's that last part that arguably has
+most significance, as not only is the meaning important but
+also the weird sociological distinction—there's something innately
+exclusionist about its use.</p>
+<p>Sociological musings aside, I was on a nostalgia trip.</p>
+<h2 id="don-t-kiss-an-elephant-on-the-lips-today"><em>&quot;Don't kiss an elephant on the lips today.&quot;</em></h2>
+<p>Everyone remembers <code>fortune</code>, right?</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> fortune
+</span><span style="color:#bf616a;">A</span><span> few hours grace before the madness begins again.
+</span></code></pre>
+<p>Way back when I first used Linux (over 20 years ago now; Red Hat,
+before it gained its <em>Enterprise</em> suffix) something akin to the above
+would appear every time I logged in. It was strange, utterly alien to
+everything I'd know before, and I <em>loved it</em>.</p>
+<p>So I wanted to throw together something that would spit out entries
+from the Jargon File, in the style of
+<a href="https://github.com/shlomif/fortune-mod"><code>fortune</code></a> and its ilk.</p>
+<p>Using <em>Rust</em>, natch.</p>
+<h2 id="the-jargon-file">The Jargon File</h2>
+<p>The most recent version which can claim provenance from
+the original
+<a href="https://jargon-file.org/archive/jargon-4.4.7.dos.txt">Jargon File</a>
+is now sadly defunct. Thanks, however, to the wonderful folks at the
+Internet Archive, it's been preserved
+<a href="https://web.archive.org/web/20130827121341/http://cosman246.com/jargon.html">here</a>.</p>
+<p>Although the content is more than worth your time, the HTML isn't
+particularly well structured, making parsing difficult.</p>
+<p>What to do? Python and Beautiful Soup? Too much code.</p>
+<p>Use <code>sed</code> to strip the HTML tags? Well, that works but checking for
+multi-line tags feels like too much effort.</p>
+<p>Use <code>lynx</code> to dump the text? Everyone has a headless browser, right?</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">lynx </span><span>\
+</span><span style="color:#bf616a;">    --dump </span><span>\
+</span><span style="color:#bf616a;">    --width</span><span> 120 \
+</span><span style="color:#bf616a;">    --nonumbers </span><span>\
+</span><span>    ${</span><span style="color:#bf616a;">INTERNET_ARCHIVE_URL</span><span>} &gt; jargon.txt
+</span></code></pre>
+<p>That gives us a nice, parsed version of the original page with which to
+begin.</p>
+<p>A while ago, after getting rather bored, having cranked out a dozen
+<a href="https://en.wikipedia.org/wiki/Plain_old_Java_object">POJOs</a> for a
+project, I ended up outsourcing my efforts to a Python script. With a
+handful of lines and some configuration, I had the whole lot completed
+in a fraction of the time.</p>
+<p>Drawing on that earlier <del>laziness</del> inspiration, I tried the same
+here. Having defined a simple <code>struct</code> to hold each entry:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">pub struct </span><span>Jargon {
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">term</span><span>: &amp;</span><span style="color:#b48ead;">&#39;static str</span><span>,
+</span><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">definition</span><span>: &amp;</span><span style="color:#b48ead;">&#39;static str</span><span>,
+</span><span>}
+</span></code></pre>
+<p>…I wrote some Python to parse the <code>jargon.txt</code> file and generate
+hard-coded instances for each entry.</p>
+<p>However, wanting to dig a little deeper into how Rust might enable me
+to do this entirely in its own space, I started looking at
+<a href="https://doc.rust-lang.org/cargo/reference/build-scripts.html">Build Scripts</a>.</p>
+<p>The initial attempt is ugly but you can see it
+<a href="https://github.com/PsypherPunk/jargon-rs/tree/0.1.0">here</a>. The build
+script effectively serves the same purpose as the Python code,
+generating the appropriate <code>lib.rs</code> file at compile time.</p>
+<p>It's inelegant at best and (again with the nostalgia) reminds me of the
+large, unstructured blocks of code I used to churn out when I was
+first thumbing through <em>The New Hacker's Dictionary</em>.</p>
+<p>There's further work needed, certainly on getting to grips with the
+code, but also the entire <code>lynx</code> step can likely be dropped—I'd
+initially been wary of include the Jargon File's contents in the repo.
+itself, failing to note that second paragraph where it's explicity
+stated that it <em>&quot;is in the public domain&quot;</em>.</p>
+<p>Maybe it'll even get published as a <a href="https://crates.io/"><em>crate</em></a>
+(though it took me long enough to publish anything on PyPI, maybe
+that can wait a little longer.)</p>
+<h2 id="jargon"><code>jargon</code></h2>
+<p>That's it. Clone the repo. and <code>cargo run --release</code>. It'll randomly
+select one of the entries at runtime and print it, à la <code>fortune</code>.</p>
+<p>If you're also joining me on my nostalgia trip, you could even use
+<code>cowsay</code>:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> jargon | </span><span style="color:#bf616a;">cowsay
+</span><span> </span><span style="color:#bf616a;">________________________________________________________________
+</span><span style="color:#bf616a;">/</span><span> gronk out vi.                                                  \
+</span><span>|                                                                 |
+</span><span>| </span><span style="color:#bf616a;">To</span><span> cease functioning. Of people, to go home and go to sleep. &quot;</span><span style="color:#a3be8c;">I |
+</span><span style="color:#a3be8c;">\ guess I&#39;ll gronk out now; see you all tomorrow.</span><span>&quot;               /
+</span><span style="color:#bf616a;">+++--------------------------------------------------------------
+</span><span>       </span><span style="color:#96b5b4;">\   </span><span style="color:#bf616a;">^__^
+</span><span>        </span><span style="color:#96b5b4;">\  </span><span>(</span><span style="color:#bf616a;">oo</span><span>)</span><span style="color:#96b5b4;">\_</span><span>______
+</span><span>           (</span><span style="color:#bf616a;">__</span><span>)</span><span style="color:#96b5b4;">\       </span><span>)</span><span style="color:#96b5b4;">\/</span><span>\
+</span><span>               ||</span><span style="color:#bf616a;">----w </span><span>|
+</span><span>               ||     ||
+</span></code></pre>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2024 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>
