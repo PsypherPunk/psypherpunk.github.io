@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>🗃️ Wordle on Sunday</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+        <main class="container">
+            
+    <h1 class="title">
+        🗃️ Wordle on Sunday
+    </h1>
+    <blockquote>Wordle seems different…but do the data back it up?</blockquote>
+    <p class="subtitle text-end"><strong>2022-03-10</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/web-archiving/" >
+                        #web-archiving
+                    </a>
+                
+                    <a href="https://blog.psypherpunk.io/tags/wordle/" >
+                        #wordle
+                    </a>
+                
+            </small>
+        </p>
+    
+    <p>Wordle is everywhere.</p>
+<p>Wordle is everything.</p>
+<p>Soon all will be Wordle.</p>
+<p>Or, at least, it's beginning to feel that way around here. Whether it's the
+midnight die-hards, the early risers or—like me—the filthy casuals, nary an
+hour goes past without a post to our dedicated Teams channel…</p>
+<blockquote>
+<p><em>"I think the NYT are using fancier words."</em>—Anna<br />
+<em>"Oh, that feels like a fun Sunday activity…to the Internet Archive!"</em>—me.</p>
+</blockquote>
+<p>Posted early one recent Sunday morning, the above seems to be a popular
+sentiment (the "fancier" bit, not that this is fun), that things are
+"different" since the New York Times purchased it in January 2022.
+"Pretentious" is a word that's been bandied around more than a little. But do
+the data back up such a sentiment? Have the New York Times actually changed the
+word list? If only we had a time machine…</p>
+<h2 id="to-the-time-machine">To the time machine</h2>
+<p>The Internet Archive have been archiving web pages (and associated resources)
+for over a quarter of a century now and thankfully, that includes Wordle, both
+the original and at its new home. So we have our time machine: we can view
+Wordle's word list at various points in its history and compare them, both
+along its journey and at its currently location.</p>
+<p>Both the previous and current version of Wordle have the entire word-list
+contained in a JavaScript file downloaded when viewing the page:</p>
+<ul>
+<li>the New York Times word-list is now at:
+<a href="https://www.nytimes.com/games/wordle/main.X.js">https://www.nytimes.com/games/wordle/main.X.js</a></li>
+<li>Wordle used to serve its word-list from
+<a href="https://www.powerlanguage.co.uk/wordle/main.X.js">https://www.powerlanguage.co.uk/wordle/main.X.js</a></li>
+</ul>
+<p>…where X was some hex value which would occasionally change.</p>
+<p>The Internet Archive provides an API which allows you to query its CDX<sup class="footnote-reference"><a href="#1">1</a></sup>
+index. Its usage is better documented
+<a href="https://github.com/internetarchive/wayback/tree/master/wayback-cdx-server#basic-usage">elsewhere</a>
+but for our intentions, the versions of all previous Wordle word-lists can be
+quered via the URL:
+<a href="http://web.archive.org/cdx/search/cdx?url=https%3A%2F%2Fwww.powerlanguage.co.uk%2Fwordle%2Fmain.&amp;matchType=prefix&amp;limit=1000">http://web.archive.org/cdx/search/cdx?url=https%3A%2F%2Fwww.powerlanguage.co.uk%2Fwordle%2Fmain.&amp;matchType=prefix&amp;limit=1000</a>.</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">from </span><span>urllib.parse </span><span style="color:#b48ead;">import </span><span>quote_plus
+</span><span>
+</span><span>
+</span><span>wordle_prefix = &quot;</span><span style="color:#a3be8c;">https://www.powerlanguage.co.uk/wordle/main.</span><span>&quot;
+</span><span>r = requests.</span><span style="color:#bf616a;">get</span><span>(
+</span><span>    </span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">http://web.archive.org/cdx/search/cdx?url=</span><span>{</span><span style="color:#bf616a;">quote_plus</span><span>(wordle_prefix)}</span><span style="color:#a3be8c;">&amp;matchType=prefix&amp;limit=1000</span><span>&quot;,
+</span><span>)
+</span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#96b5b4;">len</span><span>(r.text.</span><span style="color:#bf616a;">splitlines</span><span>()))
+</span></code></pre>
+<p>That gives us (at time of writing) 396 archived instances of the Wordle
+JavaScript. 396 is perhaps a bit much<sup class="footnote-reference"><a href="#2">2</a></sup>.</p>
+<p>The fourth field in each result shows the <em>type</em> of each. Most are, as
+expected, <code>application/javascript</code>, indicating that they are indeed JavaScript
+files. However, there are several of the type <code>warc/revisit</code><sup class="footnote-reference"><a href="#3">3</a></sup> also: these
+are simply metadata records indicating that the discovered version was
+unchanged since the previous visit so no new version was archived. So…</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>results = </span><span style="color:#bf616a;">list</span><span>(</span><span style="color:#96b5b4;">filter</span><span>(
+</span><span>    </span><span style="color:#b48ead;">lambda </span><span style="color:#bf616a;">line</span><span>: line[</span><span style="color:#d08770;">3</span><span>] == &quot;</span><span style="color:#a3be8c;">application/javascript</span><span>&quot;,
+</span><span>    (line.</span><span style="color:#bf616a;">split</span><span>() </span><span style="color:#b48ead;">for </span><span>line </span><span style="color:#b48ead;">in </span><span>r.text.</span><span style="color:#bf616a;">splitlines</span><span>()),
+</span><span>))
+</span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#96b5b4;">len</span><span>(results))
+</span></code></pre>
+<p>That still gives us 206. Okay, I'm regretting this now.</p>
+<p>The sixth field in the results is the <em>hash</em> of the content. If two files share
+the same hash, they can be (with reasonable certainty) said to be the same
+file. So…</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>unique_hashes = </span><span style="color:#bf616a;">set</span><span>(line[</span><span style="color:#d08770;">5</span><span>] </span><span style="color:#b48ead;">for </span><span>line </span><span style="color:#b48ead;">in </span><span>results)
+</span><span>unique_results = []
+</span><span style="color:#b48ead;">for </span><span>result </span><span style="color:#b48ead;">in </span><span>results:
+</span><span>    </span><span style="color:#b48ead;">if </span><span>result[</span><span style="color:#d08770;">5</span><span>] in unique_hashes:
+</span><span>        unique_results.</span><span style="color:#bf616a;">append</span><span>(result)
+</span><span>        unique_hashes.</span><span style="color:#bf616a;">remove</span><span>(result[</span><span style="color:#d08770;">5</span><span>])
+</span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#96b5b4;">len</span><span>(unique_results))
+</span></code></pre>
+<p>That leaves us only 19 results. Okay, that's much more manageable. Need to get
+the word list out of each of those archived JavaScript files. They're declared
+as a JavaScript array but still, they're still—for our purposes at least—a blob
+of text.</p>
+<p>Time for some regular expressions!</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">import </span><span>re
+</span><span>
+</span><span>
+</span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">get_js_words</span><span>(</span><span style="color:#bf616a;">text</span><span>: str) -&gt; typing.List[str]:
+</span><span>    </span><span style="color:#b48ead;">for </span><span>line </span><span style="color:#b48ead;">in </span><span>text.</span><span style="color:#bf616a;">splitlines</span><span>():
+</span><span>        </span><span style="color:#b48ead;">if </span><span>match := re.</span><span style="color:#bf616a;">match</span><span>(&#39;</span><span style="color:#a3be8c;">^.+var [A-Z][a-z]=(\[[^\]]+\]).+$</span><span>&#39;, line):
+</span><span>            (words,) = match.</span><span style="color:#bf616a;">groups</span><span>()
+</span><span>            words = </span><span style="color:#96b5b4;">eval</span><span>(words)
+</span><span>            </span><span style="color:#b48ead;">return </span><span>words
+</span><span>
+</span><span>
+</span><span>wordle_words_list = []
+</span><span style="color:#b48ead;">for </span><span>result </span><span style="color:#b48ead;">in </span><span>unique_results:
+</span><span>    r = requests.</span><span style="color:#bf616a;">get</span><span>(</span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">https://web.archive.org/web/</span><span>{result[</span><span style="color:#d08770;">1</span><span>]}</span><span style="color:#a3be8c;">/</span><span>{result[</span><span style="color:#d08770;">2</span><span>]}&quot;)
+</span><span>    </span><span style="color:#65737e;"># Some actually return a 404. Great.
+</span><span>    </span><span style="color:#b48ead;">if </span><span>r.status_code != </span><span style="color:#d08770;">200</span><span>:
+</span><span>        wordle_words_list.</span><span style="color:#bf616a;">append</span><span>([])
+</span><span>        </span><span style="color:#b48ead;">continue
+</span><span>    wordle_words_list.</span><span style="color:#bf616a;">append</span><span>(</span><span style="color:#bf616a;">get_js_words</span><span>(r.text))
+</span></code></pre>
+<p>The <code>wordle_words_list</code> variable now contains the 19<sup class="footnote-reference"><a href="#4">4</a></sup> different (or not)
+word lists from each archived version.</p>
+<p>We can easily see the differences between each version of the word-list by
+using Python's
+<a href="https://docs.python.org/3.8/library/stdtypes.html#set-types-set-frozenset"><code>set()</code></a>
+type:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>previous_result = results[</span><span style="color:#d08770;">0</span><span>]
+</span><span>previous_words = wordle_words_list[</span><span style="color:#d08770;">0</span><span>]
+</span><span style="color:#b48ead;">for </span><span>result, words </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">zip</span><span>(unique_results[</span><span style="color:#d08770;">1</span><span>:], wordle_words_list[</span><span style="color:#d08770;">1</span><span>:]):
+</span><span>    </span><span style="color:#65737e;"># One result is missing so…
+</span><span>    </span><span style="color:#b48ead;">if </span><span>not words:
+</span><span>        </span><span style="color:#b48ead;">continue
+</span><span>    added = </span><span style="color:#bf616a;">set</span><span>(words) - </span><span style="color:#bf616a;">set</span><span>(previous_words)
+</span><span>    removed = </span><span style="color:#bf616a;">set</span><span>(previous_words) - </span><span style="color:#bf616a;">set</span><span>(words)
+</span><span>    </span><span style="color:#b48ead;">if </span><span>added or removed:
+</span><span>        </span><span style="color:#96b5b4;">print</span><span>(result[</span><span style="color:#d08770;">1</span><span>])
+</span><span>    </span><span style="color:#b48ead;">if </span><span>added:
+</span><span>        </span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">Added: </span><span>{&#39;</span><span style="color:#a3be8c;">, </span><span>&#39;.</span><span style="color:#bf616a;">join</span><span>(added)}&quot;)
+</span><span>    </span><span style="color:#b48ead;">if </span><span>removed:
+</span><span>        </span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">Removed: </span><span>{&#39;</span><span style="color:#a3be8c;">, </span><span>&#39;.</span><span style="color:#bf616a;">join</span><span>(removed)}&quot;)
+</span><span>    previous_result = result
+</span><span>    previous_words = words
+</span></code></pre>
+<p>That actually gives us:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>20211015045445
+</span><span>Added: based, bowed, gored, lough…  # lots more words
+</span><span>Removed: pixel, wight, inbox, wryly…  # lots more words
+</span><span>20211214013727
+</span><span>Added: pixel, wight, inbox, wryly…  # lots more words
+</span><span>Removed: based, bowed, gored, lough…  # lots more words
+</span></code></pre>
+<p>Although omitted for brevity, those are same list of words being added, then
+removed, then added, etc. It would appear that in its entire lifetime the word
+list would appear to have only changed twice but seemingly that was a change
+and a reversion.</p>
+<p>Interesting.</p>
+<p>How about the much-discussed changes during the New York Times' ownership?
+For that, the live site will present the most current version:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>last_wordle_words = wordle_words_list[-</span><span style="color:#d08770;">1</span><span>]
+</span><span>
+</span><span>r = requests.</span><span style="color:#bf616a;">get</span><span>(&quot;</span><span style="color:#a3be8c;">https://www.nytimes.com/games/wordle/main.4d41d2be.js</span><span>&quot;)
+</span><span>nyt_words = </span><span style="color:#bf616a;">get_js_words</span><span>(r.text)
+</span><span>
+</span><span>added = </span><span style="color:#bf616a;">set</span><span>(nyt_words) - </span><span style="color:#bf616a;">set</span><span>(last_wordle_words)
+</span><span>removed = </span><span style="color:#bf616a;">set</span><span>(last_wordle_words) - </span><span style="color:#bf616a;">set</span><span>(nyt_words)
+</span><span>
+</span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">NYT added: </span><span>{&#39;</span><span style="color:#a3be8c;">, </span><span>&#39;.</span><span style="color:#bf616a;">join</span><span>(added)}&quot;)
+</span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">NYT removed: </span><span>{&#39;</span><span style="color:#a3be8c;">, </span><span>&#39;.</span><span style="color:#bf616a;">join</span><span>(removed)}&quot;)
+</span></code></pre>
+<p>Interestingly, that shows:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>NYT added: 
+</span><span>NYT removed: agora, pupal, fibre, slave, wench, lynch
+</span></code></pre>
+<p>Nope, no new words and a handful removed.</p>
+<hr />
+<h2 id="footnotes">Footnotes</h2>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>the CDX format is somewhat esoteric but details are
+<a href="https://web.archive.org/web/20031226073353/http://www.archive.org/web/researcher/cdx_file_format.php">here</a>.
+It's basically a text file containing details of web resources.</p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>I made an assumption that the CDX results would be sorted—they're not.
+I'll leave resolving that as an exercise for the reader but it didn't change
+the outcome: the results seems to flip-flop a few more times over Wordle's
+lifetime but the final result is the same.</p>
+</div>
+<div class="footnote-definition" id="3"><sup class="footnote-definition-label">3</sup>
+<p>"WARC" is an <a href="https://www.iso.org/standard/68004.html">ISO standard</a>,
+effectively a series of concatenated records either containing or pertaining to
+web resources. <code>warc/revisit</code> is a form of the latter indicating that a web
+resource has been seen again, unchanged.</p>
+</div>
+<div class="footnote-definition" id="4"><sup class="footnote-definition-label">4</sup>
+<p>actually slightly fewer: some of the responses were non-200s and were
+omitted.</p>
+</div>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2024 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>

