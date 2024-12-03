@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>️🏴 MetaCTF February 2024 Flash CTF</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://bsky.app/profile/psypherpunk.io"><i class="fa-brands fa-bluesky"></i> Bluesky</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+        <main class="container">
+            
+    <h1 class="title">
+        ️🏴 MetaCTF February 2024 Flash CTF
+    </h1>
+    <blockquote>A monthly mini CTF competition organized by MetaCTF and Antisyphon.</blockquote>
+    <p class="subtitle text-end"><strong>2024-02-23</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/ctf/" >
+                        #ctf
+                    </a>
+                
+            </small>
+        </p>
+    
+    <h2 id="metactf-february-2024-flash-ctf">MetaCTF February 2024 Flash CTF</h2>
+<blockquote>
+<p><em>A monthly mini CTF competition organized by MetaCTF and Antisyphon. There
+will be 5 challenges and you will have 2 hours to solve as many as you can.</em></p>
+</blockquote>
+<h2 id="direct-login">Direct Login</h2>
+<blockquote>
+<p><em>Take a look at
+<a href="https://metaproblems.com/d99ea4173e1febb4890bfba04e5a30c2/collider.py">ConnectWind's internal employee portal</a>.
+In addition to company policies &amp; HR information, I heard it also stores
+flags.</em></p>
+<p><em>Can you access the protected employee portal without knowing the password and
+steal the flag?</em></p>
+</blockquote>
+<p>The main page contains this JavaScript:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#b48ead;">if </span><span>(</span><span style="color:#bf616a;">r</span><span>.</span><span style="color:#bf616a;">login_successful</span><span>) {
+</span><span> </span><span style="color:#65737e;">// Redirect if login successful
+</span><span> </span><span style="color:#8fa1b3;">set_alert</span><span>(&#39;</span><span style="color:#a3be8c;">Login successful! Redirecting... &lt;i class=&quot;fa-solid fa-spinner fa-spin&quot;&gt;&lt;/i&gt;</span><span>&#39;, &quot;</span><span style="color:#a3be8c;">success</span><span>&quot;);
+</span><span> </span><span style="color:#96b5b4;">setTimeout</span><span>(</span><span style="color:#b48ead;">function </span><span>() {
+</span><span>   window.location.href = &quot;</span><span style="color:#a3be8c;">./employee_portal.php</span><span>&quot;;
+</span><span>}, </span><span style="color:#d08770;">1500</span><span>);
+</span></code></pre>
+<p>There's no actual authentication; visiting <code>employee_portal.php</code> reveals the
+flag:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>MetaCTF{inspectors_gonna_inspect}
+</span></code></pre>
+<h2 id="obfuscated-secrets">Obfuscated Secrets</h2>
+<blockquote>
+<p><em>I hid the flag in
+<a href="https://metaproblems.com/4404b6b97072820c4b3bb702d1846fae/flag_checker.py">this Python script</a>.
+It asks you for a flag and tells you if it's correct or not. Can you reverse
+engineer it to find the correct flag?</em></p>
+<p><em>The flag that the script above validates as correct is the flag for this
+challenge.</em></p>
+<p><em>You can also access the script in an online Python IDE here:
+<a href="https://www.online-python.com/1i6lX9bv0a">https://www.online-python.com/1i6lX9bv0a</a>. Click the green "Run" button to
+run the program.</em></p>
+</blockquote>
+<p>The script here takes in user input and then essentially makes this check:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#96b5b4;">all</span><span>([</span><span style="color:#96b5b4;">ord</span><span>(flag[i]) - </span><span style="color:#d08770;">1 </span><span>== </span><span style="color:#96b5b4;">ord</span><span>(encrypted[i]) + i </span><span style="color:#b48ead;">for </span><span>i </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#96b5b4;">len</span><span>(encrypted))])
+</span></code></pre>
+<p>…where <code>flag</code> is the user input and <code>encrypted</code> is the encrypted flag. Simply
+reverse-engineering that comparison reveals the flag:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>&gt;&gt;&gt; encrypted = &quot;</span><span style="color:#a3be8c;">Lcq]&gt;N?s]bV[R[_OaScQ]]NGPYDKDNG]</span><span>&quot;
+</span><span>&gt;&gt;&gt; &quot;&quot;.</span><span style="color:#bf616a;">join</span><span>(</span><span style="color:#96b5b4;">chr</span><span>(</span><span style="color:#96b5b4;">ord</span><span>(encrypted[i]) + i + </span><span style="color:#d08770;">1</span><span>) </span><span style="color:#b48ead;">for </span><span>i </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#96b5b4;">len</span><span>(encrypted)))
+</span><span>&#39;</span><span style="color:#a3be8c;">MetaCTF</span><span style="color:#d08770;">{flag_in_reverse_is_galf}</span><span>&#39;
+</span></code></pre>
+<h2 id="simple-sums">Simple Sums</h2>
+<blockquote>
+<p><em>Take a look at
+<a href="https://metaproblems.com/7837d6868308cec64daf4e9d4128a2c4/simplesums.c">my new calculator app</a>!</em></p>
+<p>The only thing it can do at the moment is adding two positive integers.
+There's an easter egg that gives you the flag if your numbers add up to a
+special number. Can you get that flag?_</p>
+<p><em>Connect to my calculator app with the flag using the <code>nc host5.metaproblems.com 5030</code> command.</em></p>
+</blockquote>
+<p>Here the C program takes in 2 <code>int</code> values, both of which must be <code>&lt;= 0</code> and
+the sum of which must be <code>-1337</code>.</p>
+<p>These are <em>unsigned</em> <code>int</code> values so integer-overflowing is the crux of this.</p>
+<p>Taking <code>INT_MAX</code> (as it's the upper limit at which things will begin to
+overflow) and <code>INT_MAX - 1335</code> results in the correct value:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">nc</span><span> host5.metaproblems.com 5030
+</span><span style="color:#bf616a;">Welcome</span><span> to the SimpleSum calculator!
+</span><span>
+</span><span style="color:#bf616a;">Provide</span><span> two integers between 0 and 2147483647, inclusive
+</span><span>
+</span><span style="color:#bf616a;">Enter</span><span> the first positive integer: 2147483647
+</span><span style="color:#bf616a;">Enter</span><span> the second positive integer: 2147482312
+</span><span>
+</span><span style="color:#bf616a;">The</span><span> sum is 4294965959
+</span><span>
+</span><span style="color:#bf616a;">Good</span><span> job! Here&#39;</span><span style="color:#a3be8c;">s your flag:
+</span><span style="color:#a3be8c;">MetaCTF{c0unting_beyond_infinity}
+</span></code></pre>
+<h2 id="sha256-collider">SHA256 Collider</h2>
+<blockquote>
+<p><em>I've heard no one has found a collision for sha256 yet ... will you be the
+first?</em></p>
+<p><em>Take a look at
+<a href="https://metaproblems.com/d99ea4173e1febb4890bfba04e5a30c2/collider.py">this program</a>.
+If you give it the right secret, it will give you the flag!</em></p>
+<p><em>Connect to our instance of this program at <code>nc host5.metaproblems.com 7050</code></em></p>
+</blockquote>
+<p>The service reveals the underlying values:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> nc host5.metaproblems.com 7050
+</span><span style="color:#bf616a;">Welcome!</span><span> Please wait for the secret ...
+</span><span>
+</span><span style="color:#bf616a;">g</span><span> = 3
+</span><span style="color:#bf616a;">p</span><span> = 176990879449076061394656208196471172772796858746347869333441279405195482688385975304880833357734442233801462103581022209200859912054692903826387709385614287807701459307239660196202170697996271354481597203147379846644879109903687638341699852267708487952068587305618378357476857928558713970326437806256518178353
+</span><span style="color:#bf616a;">secret</span><span> = 146802330728120378918906691881895374785480307070866779454516776790411811985618126251720916771758679657681171678349141469419391516537668903272003830572369327589991248382248087525806631471585012412111100182322711401172439831685120287246754540246392578979672737389183817026689029121609192962868973898418954591865
+</span><span>
+</span><span style="color:#bf616a;">Enter</span><span> your secret:
+</span></code></pre>
+<p>This appears to be a quasi-Diffie-Helman algorithm wherein each party selects
+their secret (<code>user_secret</code> and <code>secret</code> respectively), and the values to be
+shared are calculated.</p>
+<p>The aim here is effectively to produce a <code>user_secret</code> which results in
+identical <code>user_shared</code> and <code>shared</code> values (the SHA256 is irrelevant: it's the
+values input thereto that matter).</p>
+<p>Cue
+<a href="https://en.wikipedia.org/wiki/Fermat&#x27;s_little_theorem"><em>Fermat's little theorem</em></a>.
+That states that for any number <code>a</code> not divisible by <code>p</code>, a prime number, then
+<em>a^(p−1) ≡ 1 mod  p</em>.</p>
+<p>Essentially, what's desired is: <em>g^user_secret ≡ g^secret mod p</em>. Because this
+is modular arithmetic, adding or subtracting a multiple of <code>p-1</code> from the
+exponent <code>secret</code> is adding or subtracting a multiple of <code>p-1</code> to the power,
+which doesn't change the result <em>mod p</em>.</p>
+<p>Therefore setting <code>user_shared</code> to <code>(p - 1) + secret</code> should result in the
+right answer:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> ./collider-solution.py
+</span><span style="color:#bf616a;">[+]</span><span> Opening connection to host5.metaproblems.com on port 7050: Done
+</span><span style="color:#bf616a;">[+]</span><span> Receiving all data: Done (88B)
+</span><span style="color:#bf616a;">[*]</span><span> Closed connection to host5.metaproblems.com port 7050
+</span><span>
+</span><span style="color:#bf616a;">Well</span><span> done, you are the first! Here is your flag: MetaCTF{well_d0n3_you_br0k3_sha256?!}
+</span></code></pre>
+<h2 id="007-license-to-scan">007: License to Scan</h2>
+<blockquote>
+<p><em>The transport department purchased a bunch of used MetaCTF license plate
+cameras on eBay, but the console's display is fried, and we can't figure out
+how to use them. Can you help us out? Here's a
+<a href="https://metaproblems.com/07fb1d1c1e787ce3be6db7de826a1cda/plates.pcapng">packet capture</a>,
+and here's
+<a href="https://metaproblems.com/07fb1d1c1e787ce3be6db7de826a1cda/rfc.html">a description</a>
+of the protocol they use.</em></p>
+</blockquote>
+<p>Using <a href="https://github.com/KimiNewt/pyshark"><code>pyshark</code></a> and largely implementing
+the spec. as provided:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">import </span><span>pyshark
+</span><span>
+</span><span>
+</span><span>cap = pyshark.</span><span style="color:#bf616a;">FileCapture</span><span>(
+</span><span>    &quot;</span><span style="color:#a3be8c;">./plates.pcapng</span><span>&quot;,
+</span><span>    </span><span style="color:#bf616a;">display_filter</span><span>=&quot;</span><span style="color:#a3be8c;">not arp</span><span>&quot;,
+</span><span>)
+</span><span>
+</span><span>k1 = bytes.</span><span style="color:#bf616a;">fromhex</span><span>(cap[</span><span style="color:#d08770;">0</span><span>].data.data)[</span><span style="color:#d08770;">3</span><span>:]
+</span><span>k2 = bytes.</span><span style="color:#bf616a;">fromhex</span><span>(cap[</span><span style="color:#d08770;">1</span><span>].data.data)[</span><span style="color:#d08770;">3</span><span>:]
+</span><span>key = </span><span style="color:#bf616a;">bytes</span><span>(a ^ b </span><span style="color:#b48ead;">for </span><span>a, b </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">zip</span><span>(k1, k2))
+</span><span>
+</span><span style="color:#b48ead;">for </span><span>packet </span><span style="color:#b48ead;">in </span><span style="color:#bf616a;">list</span><span>(cap)[</span><span style="color:#d08770;">2</span><span>:]:
+</span><span>    data = bytes.</span><span style="color:#bf616a;">fromhex</span><span>(packet.data.data)
+</span><span>
+</span><span>    _version_type = </span><span style="color:#96b5b4;">bin</span><span>(data[</span><span style="color:#d08770;">0</span><span>])
+</span><span>    _length = int.</span><span style="color:#bf616a;">from_bytes</span><span>(data[</span><span style="color:#d08770;">1</span><span>:</span><span style="color:#d08770;">3</span><span>], </span><span style="color:#bf616a;">byteorder</span><span>=&quot;</span><span style="color:#a3be8c;">big</span><span>&quot;)
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">for </span><span>j </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#96b5b4;">len</span><span>(data[</span><span style="color:#d08770;">3</span><span>:]), </span><span style="color:#d08770;">16</span><span>):
+</span><span>        plate_index = j + </span><span style="color:#d08770;">4
+</span><span>        plate = </span><span style="color:#bf616a;">bytes</span><span>(
+</span><span>            a ^ b
+</span><span>            </span><span style="color:#b48ead;">for </span><span>a, b </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">zip</span><span>(
+</span><span>                data[</span><span style="color:#d08770;">3 </span><span>+ plate_index : </span><span style="color:#d08770;">3 </span><span>+ plate_index + </span><span style="color:#d08770;">16</span><span>],
+</span><span>                key,
+</span><span>            )
+</span><span>        )
+</span><span>        plate = plate.</span><span style="color:#bf616a;">decode</span><span>().</span><span style="color:#bf616a;">strip</span><span>()
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">if </span><span>&quot;</span><span style="color:#a3be8c;">{</span><span>&quot; in plate or &quot;</span><span style="color:#a3be8c;">}</span><span>&quot; in plate:
+</span><span>            </span><span style="color:#96b5b4;">print</span><span>(plate, </span><span style="color:#bf616a;">end</span><span>=&quot;&quot;)
+</span></code></pre>
+<p>…although I've skipped some of the explicit packet-type checks for simplicity,
+thanks to the ordering of the packets in the capture and the fact that <em>of
+course</em> it's using encryption:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> ./plates.py
+</span><span style="color:#bf616a;">MetaCTF{dr1ver_t3st</span><span>}
+</span></code></pre>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2024 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>

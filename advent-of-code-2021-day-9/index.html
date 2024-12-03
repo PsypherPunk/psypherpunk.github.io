@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>️🎄 Advent of Code 2021, Day 9</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://bsky.app/profile/psypherpunk.io"><i class="fa-brands fa-bluesky"></i> Bluesky</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+        <main class="container">
+            
+    <h1 class="title">
+        ️🎄 Advent of Code 2021, Day 9
+    </h1>
+    <blockquote>Smoke Basin</blockquote>
+    <p class="subtitle text-end"><strong>2022-08-28</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/rust/" >
+                        #rust
+                    </a>
+                
+                    <a href="https://blog.psypherpunk.io/tags/advent-of-code/" >
+                        #advent-of-code
+                    </a>
+                
+            </small>
+        </p>
+    
+    <p>In which I decide to stop messing around and do things Properly™ when it comes
+to fallible parsing.</p>
+<h2 id="day-9-smoke-basin"><a href="https://adventofcode.com/2021/day/9">Day 9: Smoke Basin</a></h2>
+<p>The input this time around—as shown in the example—is a grid of integers:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>2199943210
+</span><span>3987894921
+</span><span>9856789892
+</span><span>8767896789
+</span><span>9899965678
+</span></code></pre>
+<p>Parsing the input into a <code>Vec&lt;Vec&lt;usize&gt;&gt;</code> was easy enough:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">get_lava_tubes</span><span>(</span><span style="color:#bf616a;">input</span><span>: &amp;</span><span style="color:#b48ead;">str</span><span>) -&gt; Vec&lt;Vec&lt;</span><span style="color:#b48ead;">usize</span><span>&gt;&gt; {
+</span><span>    input
+</span><span>        .</span><span style="color:#96b5b4;">trim</span><span>()
+</span><span>        .</span><span style="color:#96b5b4;">lines</span><span>()
+</span><span>        .</span><span style="color:#96b5b4;">map</span><span>(|</span><span style="color:#bf616a;">line</span><span>| {
+</span><span>            line.</span><span style="color:#96b5b4;">chars</span><span>()
+</span><span>                .</span><span style="color:#96b5b4;">map</span><span>(|</span><span style="color:#bf616a;">c</span><span>| c.</span><span style="color:#96b5b4;">to_digit</span><span>(</span><span style="color:#d08770;">10</span><span>).</span><span style="color:#96b5b4;">unwrap</span><span>() as </span><span style="color:#b48ead;">usize</span><span>)
+</span><span>                .collect::&lt;Vec&lt;_&gt;&gt;()
+</span><span>        })
+</span><span>        .</span><span style="color:#96b5b4;">collect</span><span>()
+</span><span>}
+</span></code></pre>
+<p>However, in retrospect there's one thing I <em>really</em> need to improve: my use of
+<code>unwrap()</code> everywhere.</p>
+<p>The problem is that <code>c.to_digit(10)</code>: I should, of course, return a
+<code>Result</code> in the event that it fails to parse a character.</p>
+<p>Removing the <code>unwrap()</code> and and leaving the rest as-is leads to
+<code>Vec&lt;Option&lt;u32&gt;&gt;</code>. Rust, however, has a nice trick to invert that. If
+instead, I explicitly specify the type:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span>line.</span><span style="color:#96b5b4;">chars</span><span>()
+</span><span>    .</span><span style="color:#96b5b4;">map</span><span>(|</span><span style="color:#bf616a;">c</span><span>| c.</span><span style="color:#96b5b4;">to_digit</span><span>(</span><span style="color:#d08770;">10</span><span>))
+</span><span>    .collect::&lt;Option&lt;Vec&lt;_&gt;&gt;&gt;()
+</span></code></pre>
+<p>…then <code>Vec&lt;Option&lt;T&gt;&gt;</code> becomes <code>Option&lt;Vec&lt;T&gt;&gt;</code>. Using the same
+feature on the outer <code>collect()</code>, converts what would have been a
+<code>Vec&lt;Option&lt;Vec&lt;T&gt;&gt;&gt;</code> to a <code>Option&lt;Vec&lt;Vec&lt;T&gt;&gt;&gt;</code>.</p>
+<p>That resulting <code>Option</code> can then be converted into the desired
+<code>Result</code> with <code>ok_or()</code>:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">get_lava_tubes</span><span>(</span><span style="color:#bf616a;">input</span><span>: &amp;</span><span style="color:#b48ead;">str</span><span>) -&gt; Result&lt;Vec&lt;Vec&lt;</span><span style="color:#b48ead;">u32</span><span>&gt;&gt;, ()&gt; {
+</span><span>    input
+</span><span>        .</span><span style="color:#96b5b4;">trim</span><span>()
+</span><span>        .</span><span style="color:#96b5b4;">lines</span><span>()
+</span><span>        .</span><span style="color:#96b5b4;">map</span><span>(|</span><span style="color:#bf616a;">line</span><span>| {
+</span><span>            line.</span><span style="color:#96b5b4;">chars</span><span>()
+</span><span>                .</span><span style="color:#96b5b4;">map</span><span>(|</span><span style="color:#bf616a;">c</span><span>| c.</span><span style="color:#96b5b4;">to_digit</span><span>(</span><span style="color:#d08770;">10</span><span>))
+</span><span>                .collect::&lt;Option&lt;Vec&lt;_&gt;&gt;&gt;()
+</span><span>        })
+</span><span>        .collect::&lt;Option&lt;Vec&lt;_&gt;&gt;&gt;()
+</span><span>        .</span><span style="color:#96b5b4;">ok_or</span><span>(())
+</span><span>}
+</span></code></pre>
+<p>Skipping over my actual implementation (a breadth-first-search which is
+arguably less interesting than getting better at the above), the existing
+solution no longer works.</p>
+<p>My standard layout—actually implemented as a
+<a href="https://cookiecutter.readthedocs.io/">Cookiecutter</a> template—for each day of
+Advent of Code is something like this:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> tree .
+</span><span style="color:#96b5b4;">.
+</span><span style="color:#bf616a;">├──</span><span> Cargo.lock
+</span><span style="color:#bf616a;">├──</span><span> Cargo.toml
+</span><span style="color:#bf616a;">├──</span><span> input.txt
+</span><span style="color:#bf616a;">└──</span><span> src
+</span><span>    </span><span style="color:#bf616a;">├──</span><span> lib.rs
+</span><span>    </span><span style="color:#bf616a;">└──</span><span> main.rs
+</span><span>
+</span><span style="color:#bf616a;">1</span><span> directory, 5 files
+</span></code></pre>
+<p>That is, most of the implementation is in <code>lib.rs</code>, with <code>main.rs</code> doing little
+more than provide an entry point. The <code>main.rs</code> for this day, for instance,
+looks something like:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">use </span><span>std::fs;
+</span><span>
+</span><span style="color:#b48ead;">use </span><span>::day09::*;
+</span><span>
+</span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">main</span><span>() {
+</span><span>    </span><span style="color:#b48ead;">let</span><span> input = fs::read_to_string(&quot;</span><span style="color:#a3be8c;">input.txt</span><span>&quot;).</span><span style="color:#96b5b4;">expect</span><span>(&quot;</span><span style="color:#a3be8c;">Error reading input.txt</span><span>&quot;);
+</span><span>
+</span><span>    println!(
+</span><span>        &quot;</span><span style="color:#a3be8c;">What is the sum of the risk levels of all low points on your heightmap? </span><span style="color:#d08770;">{}</span><span>&quot;,
+</span><span>        </span><span style="color:#96b5b4;">get_part_one</span><span>(&amp;input),
+</span><span>    );
+</span><span>
+</span><span>    println!(
+</span><span>        &quot;</span><span style="color:#a3be8c;">What do you get if you multiply together the sizes of the three largest basins? </span><span style="color:#d08770;">{}</span><span>&quot;,
+</span><span>        </span><span style="color:#96b5b4;">get_part_two</span><span>(&amp;input),
+</span><span>    );
+</span><span>}
+</span></code></pre>
+<p>However, now that we're more correctly returning a <code>Result</code> due to our
+fallible parsing, this won't work: we'll try to print said <code>Result</code>
+instead of the answer.</p>
+<p>So a correct implementation would be:</p>
+<pre data-lang="rust" style="background-color:#2b303b;color:#c0c5ce;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">main</span><span>() -&gt; Result&lt;(), ()&gt; {
+</span><span>    </span><span style="color:#b48ead;">let</span><span> input = fs::read_to_string(&quot;</span><span style="color:#a3be8c;">input.txt</span><span>&quot;).</span><span style="color:#96b5b4;">expect</span><span>(&quot;</span><span style="color:#a3be8c;">Error reading input.txt</span><span>&quot;);
+</span><span>
+</span><span>    println!(
+</span><span>        &quot;</span><span style="color:#a3be8c;">What is the sum of the risk levels of all low points on your heightmap? </span><span style="color:#d08770;">{}</span><span>&quot;,
+</span><span>        </span><span style="color:#96b5b4;">get_part_one</span><span>(&amp;input)?,
+</span><span>    );
+</span><span>
+</span><span>    println!(
+</span><span>        &quot;</span><span style="color:#a3be8c;">What do you get if you multiply together the sizes of the three largest basins? </span><span style="color:#d08770;">{}</span><span>&quot;,
+</span><span>        </span><span style="color:#96b5b4;">get_part_two</span><span>(&amp;input)?,
+</span><span>    );
+</span><span>
+</span><span>    Ok(())
+</span><span>}
+</span></code></pre>
+<p>As documented in this from the
+<a href="https://blog.rust-lang.org/2022/05/19/Rust-1.61.0.html#custom-exit-codes-from-main">Rust 1.61 release notes</a>,
+it's now possible to specify the exact exit code, based on the return type.</p>
+<p>That's one for another day.</p>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2024 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>
