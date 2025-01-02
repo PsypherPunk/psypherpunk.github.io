@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>🐛 Go Down the Rabbit Hole</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://bsky.app/profile/psypherpunk.io"><i class="fa-brands fa-bluesky"></i> Bluesky</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+        <main class="container">
+            
+    <h1 class="title">
+        🐛 Go Down the Rabbit Hole
+    </h1>
+    <blockquote>On the em-dash, static site generators, Go and why you should really RTFM.</blockquote>
+    <p class="subtitle text-end"><strong>2019-02-13</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/go/" >
+                        #go
+                    </a>
+                
+                    <a href="https://blog.psypherpunk.io/tags/markdown/" >
+                        #markdown
+                    </a>
+                
+                    <a href="https://blog.psypherpunk.io/tags/static-site-generator/" >
+                        #static-site-generator
+                    </a>
+                
+            </small>
+        </p>
+    
+    <p>I like a good em-dash. It's delightfully versatile, easily taking the place of
+other, lesser punctuation marks.</p>
+<p>However, while writing my last blog post I ran into a problem. Originally
+written in <a href="https://daringfireball.net/projects/markdown/">Markdown</a>, my
+beloved em-dash was causing all sorts of problems. Specifically, this paragraph:</p>
+<blockquote>
+<p><em>Well that's a lot of results, 511 in fact (at time of writing). Of course,
+that doesn't mean that our password is actually in that list—*because, of
+course, no one would ever use it*—but we can double-check by seeing if the
+suffix from our SHA1 is in the list:</em></p>
+</blockquote>
+<p>That little aside—not only parenthetical but <em>italicised</em> also (I was having
+one of those days, clearly)—wasn't displaying as intended, failing to lean to
+the right and instead keeping those silly asterisks (they're not even
+punctuation!). Why? Down the proverbial rabbit-hole we go…</p>
+<h2 id="blog">Blog</h2>
+<p>In no way prompted by the <del>incessant harassment</del> gentle coaxing of our CEO,
+I've been trying to maintain a blog for a while now (and when I say "maintain",
+I largely mean "start"). To that end, I've installed, uninstalled and
+reinstalled all manner of static site generators in a handful of languages:
+<a href="https://github.com/getpelican/pelican"><em>Pelican</em></a> (<em>Python</em>),
+<a href="https://github.com/getnikola/nikola"><em>Nikola</em></a> (also Python),
+<a href="https://github.com/cobalt-org/cobalt.rs"><em>Cobalt</em></a> (Rust)…before finally
+settling on <em>Gutenberg</em> (Rust). Then it went and changed its name to
+<a href="https://github.com/getzola/zola"><em>Zola</em></a> (still Rust).</p>
+<p>So, having finally settled on the right tool, I promptly thought <em>"this seems
+like an opportune moment to learn some Go"</em> and opted for
+<a href="https://github.com/gohugoio/hugo"><em>Hugo</em></a> (Go).</p>
+<p>Having only dabbled so far, and finding that Hugo had seemingly opted for
+Markdown and not the infinitely superior
+<a href="http://docutils.sourceforge.net/rst.html">reStructureText</a>, I ran into the
+aforementioned problem.</p>
+<p>Shall we check the documentation and see if this is known issue? <em>"No!"</em> I said
+to myself. <em>"Let's learn some Go and try and get to the bottom of this"</em>, I
+decided.</p>
+<h2 id="go">Go</h2>
+<p>Currently the programming language of choice practically everywhere (definitely
+in some dark corners of our office), <a href="https://golang.org/">Go</a> needs little
+introduction. It's snappy, it's relatively easy to read and it <del>has</del> had an
+amusing <a href="https://golang.org/doc/gopher/gophercolor.png">logo</a>.</p>
+<h3 id="hugo">Hugo</h3>
+<p>Getting and building Hugo's source is easy enough:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">git</span><span> clone https://github.com/gohugoio/hugo.git
+</span><span style="color:#96b5b4;">cd</span><span> hugo
+</span><span style="color:#bf616a;">go</span><span> install
+</span></code></pre>
+<p>Wait, what happened? No output. Did that work? Apparently that <em>should</em> have
+built a binary and put it in my path…</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> hugo
+</span><span style="color:#bf616a;">Total</span><span> in 0 ms
+</span><span style="color:#bf616a;">Error:</span><span> Error building site: open /home/roger/content: no such file or directory
+</span></code></pre>
+<p>Crikey, it worked. I'm not enjoying the lack of output but so far so good (that
+error coming from the fact I'm running this in Hugo's repository, not a site
+built by Hugo).</p>
+<h3 id="blackfriday">Blackfriday</h3>
+<p>Perusing the source code a little, it looks like Hugo is using a Markdown
+library called <a href="https://github.com/russross/blackfriday">Blackfriday</a>. Maybe
+that's the source of our problem? Let's write some Go!</p>
+<pre data-lang="go" style="background-color:#2b303b;color:#c0c5ce;" class="language-go "><code class="language-go" data-lang="go"><span style="color:#b48ead;">package </span><span style="color:#bf616a;">main
+</span><span>
+</span><span style="color:#b48ead;">import </span><span>(
+</span><span>    &quot;</span><span style="color:#a3be8c;">fmt</span><span>&quot;
+</span><span>    &quot;</span><span style="color:#a3be8c;">github.com/russross/blackfriday</span><span>&quot;
+</span><span>)
+</span><span>
+</span><span style="color:#b48ead;">func </span><span style="color:#8fa1b3;">main</span><span>() {
+</span><span>    </span><span style="color:#bf616a;">output </span><span>:= </span><span style="color:#bf616a;">blackfriday</span><span>.</span><span style="color:#bf616a;">MarkdownBasic</span><span>([]</span><span style="color:#b48ead;">byte</span><span>(&quot;</span><span style="color:#96b5b4;">\n\n</span><span style="color:#a3be8c;">This is a sentence—*here&#39;s an italicised aside*—and here&#39;s the end.</span><span style="color:#96b5b4;">\n\n</span><span>&quot;))
+</span><span>    </span><span style="color:#bf616a;">fmt</span><span>.</span><span style="color:#bf616a;">Println</span><span>(</span><span style="color:#bf616a;">string</span><span>(</span><span style="color:#bf616a;">output</span><span>))
+</span><span>}
+</span></code></pre>
+<p>So with some furious Googling, we <code>go build</code> and run the resulting binary and
+we get…</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>&lt;p&gt;This is a sentence—&lt;em&gt;here&#39;s an italicised aside&lt;/em&gt;—and here&#39;s the end.&lt;/p&gt;
+</span></code></pre>
+<p>Damn; it worked (note the correct <code>&lt;em&gt;</code> tags around our aside). Maybe it's a
+version thing? This would seem an opportune moment to investigate how Go
+handles its dependencies.</p>
+<p>Oh, but I really wish that weren't true…</p>
+<h3 id="go-dependencies">Go Dependencies</h3>
+<p>Dependency management in Go appears to be in something of an "interesting"
+state at the time of writing. If you start looking at the documentation, you
+learn about <code>dep</code>:</p>
+<blockquote>
+<p><em><code>dep</code> was the "official experiment." The Go toolchain, as of 1.11, has
+(experimentally) adopted an approach that sharply diverges from <code>dep</code>.</em></p>
+</blockquote>
+<p>So the <em>"official experiment"</em> got canned and there's an "<em>experimental</em>"
+replacement?</p>
+<p>How is Hugo doing this?</p>
+<p>Well there's a <code>go.mod</code> file and a <code>go.sum</code> file. Which apparently aren't Go
+files, they're Go <a href="https://tip.golang.org/doc/go1.11#modules"><em>module</em></a> files.
+And what happens if we try and initialise our earlier code as a Go module?</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">go</span><span> mod init test
+</span></code></pre>
+<p>Interesting: now I have a <code>go.mod</code> file. What happens when I do a <code>go build</code>
+again?</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> go build
+</span><span style="color:#65737e;"># test
+</span><span style="color:#bf616a;">./test.go:9:15:</span><span> undefined: blackfriday.MarkdownBasic
+</span></code></pre>
+<p>That doesn't look right. The contents of our new <code>go.mod</code> appear to hold some
+clues:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> cat go.mod
+</span><span style="color:#bf616a;">module</span><span> test
+</span><span>
+</span><span style="color:#bf616a;">require</span><span> (
+</span><span>    </span><span style="color:#bf616a;">github.com/russross/blackfriday</span><span> v2.0.0+incompatible
+</span><span>    </span><span style="color:#bf616a;">github.com/shurcooL/sanitized_anchor_name</span><span> v1.0.0 // indirect
+</span><span>)
+</span></code></pre>
+<p>It would appear that Go has helpfully installed the latest version of
+Blackfriday. What's Hugo running?</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> grep blackfriday go.mod
+</span><span>    </span><span style="color:#bf616a;">github.com/russross/blackfriday</span><span> v0.0.0-20180804101149-46c73eb196ba
+</span></code></pre>
+<p>Aha! So it's an older version; that <em>must</em> be the cause of our problem, right?
+Let's replace the version in <em>our</em> <code>go.mod</code> file with the above one from Hugo,
+re-run <code>go build</code> and run our binary!</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> ./test
+</span><span>&lt;p&gt;This </span><span style="color:#bf616a;">is</span><span> a sentence—&lt;em&gt;here&#39;</span><span style="color:#a3be8c;">s an italicised aside&lt;/em&gt;—and here</span><span>&#39;s the end.&lt;/p&gt;
+</span></code></pre>
+<p>Oh fudge.</p>
+<h3 id="debugging">Debugging</h3>
+<p>For the purposes of this experiment, I'm running Jetbrains'
+<a href="https://www.jetbrains.com/go/">GoLand</a>. Thankfully their tooling caters to the
+likes of myself and their debug settings kindly inform me that I need to run
+<a href="https://github.com/go-delve/delve"><code>delve</code></a>, apparently.</p>
+<p><img src="/img/run-debug-configurations-059.png" alt="GoLand Run/Debug Configuration" /></p>
+<p>Following those useful instructions, we recompile Hugo with the information
+provided:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">go</span><span> install</span><span style="color:#bf616a;"> -gcflags </span><span>&quot;</span><span style="color:#a3be8c;">all=-N -l</span><span>&quot;
+</span></code></pre>
+<p>Then start Delve:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> dlv</span><span style="color:#bf616a;"> --listen</span><span>=:2345</span><span style="color:#bf616a;"> --headless</span><span>=true</span><span style="color:#bf616a;"> --api-version</span><span>=2 exec /home/roger/go/bin/hugo -- server -D
+</span><span style="color:#bf616a;">API</span><span> server listening at: </span><span style="color:#b48ead;">[</span><span>::</span><span style="color:#b48ead;">]</span><span>:2345
+</span></code></pre>
+<p>At this point we should cut to a kinetic montage—complete with inspirational
+power chords—while I haplessly click around, adding and removing breakpoints,
+trying to find a suitable point of ingress into Blackfriday's code.</p>
+<p>Eventually I find myself in the <code>emphasis()</code> function, in <code>inline.go</code>.
+Seemingly, when <code>inline()</code> passes the text to <code>emphasis()</code> it's truncated to:</p>
+<blockquote>
+<p>*because, of course, no one would ever use it*—but we can double-check by
+seeing if the suffix from our SHA1 is in the list:</p>
+</blockquote>
+<p>Okay, fair enough: this is the first point in this block of text in which we
+encounter markup so we're processing the remaining text on that line.</p>
+<p>A few more clicks and we're down into <code>helperEmphasis()</code>.</p>
+<p>Now <code>helperFindEmphChar()</code>.</p>
+<p>It's looking promising as this function correctly identifies the position of
+the next <code>*</code> as index 44. So the code is correctly identifying the start and
+end positions of the emphasis but still failing to italicise the text…?</p>
+<p>We continue a little further, to find this block:</p>
+<pre data-lang="go" style="background-color:#2b303b;color:#c0c5ce;" class="language-go "><code class="language-go" data-lang="go"><span style="color:#b48ead;">if </span><span style="color:#bf616a;">p</span><span>.</span><span style="color:#bf616a;">flags</span><span>&amp;</span><span style="color:#bf616a;">EXTENSION_NO_INTRA_EMPHASIS </span><span>!= </span><span style="color:#d08770;">0 </span><span>{  
+</span><span>   </span><span style="color:#b48ead;">if </span><span>!(</span><span style="color:#bf616a;">i</span><span>+</span><span style="color:#d08770;">1 </span><span>== </span><span style="color:#96b5b4;">len</span><span>(</span><span style="color:#bf616a;">data</span><span>) || </span><span style="color:#bf616a;">isspace</span><span>(</span><span style="color:#bf616a;">data</span><span>[</span><span style="color:#bf616a;">i</span><span>+</span><span style="color:#d08770;">1</span><span>]) || </span><span style="color:#bf616a;">ispunct</span><span>(</span><span style="color:#bf616a;">data</span><span>[</span><span style="color:#bf616a;">i</span><span>+</span><span style="color:#d08770;">1</span><span>])) {  
+</span><span>      </span><span style="color:#b48ead;">continue  
+</span><span>  }  
+</span><span>}
+</span></code></pre>
+<p>At this point it slowly dawns on me: <code>data</code> here is an array of <em>bytes</em>; both
+the <code>isspace()</code> and <code>ispunct()</code> functions specifically compare a <em>byte</em> with a
+list of known, relevant characters. The latter, for instance, uses the static
+list of <code>!"#$%&amp;'()\*+,-./:;&lt;=&gt;?@[\\]^_`{|}~"</code>. The problem is that the
+em-dash is <em>three</em> bytes (226, 128 and 148 expressed as decimals if you're
+interested); this is never going to match.</p>
+<p>That explains why Blackfriday is behaving this way—we're trying to make three
+bytes match one—but not why we're failing to see this error during the test code
+we wrote.</p>
+<p>So what's different? If we wander back up the call stack to find the point at
+which Hugo is calling the Blackfriday library (at <code>helpers/content.go:347</code>) we
+find:</p>
+<pre data-lang="go" style="background-color:#2b303b;color:#c0c5ce;" class="language-go "><code class="language-go" data-lang="go"><span style="color:#bf616a;">blackfriday</span><span>.</span><span style="color:#bf616a;">Markdown</span><span>(</span><span style="color:#bf616a;">ctx</span><span>.</span><span style="color:#bf616a;">Content</span><span>,
+</span><span>    </span><span style="color:#bf616a;">c</span><span>.</span><span style="color:#bf616a;">getHTMLRenderer</span><span>(</span><span style="color:#bf616a;">blackfriday</span><span>.</span><span style="color:#bf616a;">HTML_TOC</span><span>, </span><span style="color:#bf616a;">ctx</span><span>),
+</span><span>    </span><span style="color:#bf616a;">getMarkdownExtensions</span><span>(</span><span style="color:#bf616a;">ctx</span><span>))
+</span></code></pre>
+<p>However, in my earlier example I was, as per the documentation, calling
+<code>blackfriday.MarkdownBasic()</code>. Great! So what's the difference in those calls?</p>
+<p>In fact, if we try <code>blackfriday.MarkdownCommon()</code>, we can see the problem:</p>
+<pre data-lang="go" style="background-color:#2b303b;color:#c0c5ce;" class="language-go "><code class="language-go" data-lang="go"><span style="color:#b48ead;">package </span><span style="color:#bf616a;">main
+</span><span>
+</span><span style="color:#b48ead;">import </span><span>(
+</span><span>    &quot;</span><span style="color:#a3be8c;">fmt</span><span>&quot;
+</span><span>    &quot;</span><span style="color:#a3be8c;">github.com/russross/blackfriday</span><span>&quot;
+</span><span>)
+</span><span>
+</span><span style="color:#b48ead;">func </span><span style="color:#8fa1b3;">main</span><span>() {
+</span><span>    </span><span style="color:#bf616a;">output </span><span>:= </span><span style="color:#bf616a;">blackfriday</span><span>.</span><span style="color:#bf616a;">MarkdownCommon</span><span>([]</span><span style="color:#b48ead;">byte</span><span>(&quot;</span><span style="color:#96b5b4;">\n\n</span><span style="color:#a3be8c;">This is a sentence—*with an italicised aside*—before carrying on.</span><span style="color:#96b5b4;">\n\n</span><span>&quot;))
+</span><span>    </span><span style="color:#bf616a;">fmt</span><span>.</span><span style="color:#bf616a;">Println</span><span>(</span><span style="color:#bf616a;">string</span><span>(</span><span style="color:#bf616a;">output</span><span>))
+</span><span>}
+</span></code></pre>
+<p>This gives us:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>&lt;p&gt;This is a sentence—*here&#39;s an italicised aside*—and here&#39;s the end.&lt;/p&gt;
+</span></code></pre>
+<p>So the problem is something common to <code>blackfriday.MarkdownCommon()</code> and Hugo's
+<code>blackfriday.Markdown()</code> call. The <code>MarkdownCommon()</code> function isn't too long:</p>
+<pre data-lang="go" style="background-color:#2b303b;color:#c0c5ce;" class="language-go "><code class="language-go" data-lang="go"><span style="color:#b48ead;">func </span><span style="color:#8fa1b3;">MarkdownCommon</span><span>(</span><span style="color:#bf616a;">input </span><span>[]</span><span style="color:#b48ead;">byte</span><span>) []</span><span style="color:#b48ead;">byte </span><span>{
+</span><span>    </span><span style="color:#65737e;">// set up the HTML renderer
+</span><span>    </span><span style="color:#bf616a;">renderer </span><span>:= </span><span style="color:#bf616a;">HtmlRenderer</span><span>(</span><span style="color:#bf616a;">commonHtmlFlags</span><span>, &quot;&quot;, &quot;&quot;)
+</span><span>    </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">MarkdownOptions</span><span>(</span><span style="color:#bf616a;">input</span><span>, </span><span style="color:#bf616a;">renderer</span><span>, </span><span style="color:#bf616a;">Options</span><span>{
+</span><span>        </span><span style="color:#bf616a;">Extensions</span><span>: </span><span style="color:#bf616a;">commonExtensions</span><span>})
+</span><span>}
+</span></code></pre>
+<p>Taking one look at the contents of the <code>commonExtensions</code> variable and, ladies
+and gentlemen, we have a winner: <code>EXTENSION_NO_INTRA_EMPHASIS</code>. It might not be
+immediately obvious but, according to the documentation:</p>
+<blockquote>
+<p><em>Intra-word emphasis supression</em>. The _ character is commonly used inside
+words when discussing code, so having markdown interpret it as an emphasis
+command is usually the wrong thing. Blackfriday lets you treat all emphasis
+markers as normal characters when they occur inside a word.</p>
+</blockquote>
+<p>As Blackfriday isn't recognising the em-dash as a punctuation character, it's
+considering it part of the same word and, thanks to the above extension being
+active, not allowing emphasis in the middle of a word.</p>
+<p>Surely enough, once we disable that extension in our Hugo <code>config.toml</code> file,
+everything renders as intended:</p>
+<pre data-lang="toml" style="background-color:#2b303b;color:#c0c5ce;" class="language-toml "><code class="language-toml" data-lang="toml"><span>[blackfriday]
+</span><span>  </span><span style="color:#bf616a;">extensionsmask </span><span>= [&quot;</span><span style="color:#a3be8c;">noIntraEmphasis</span><span>&quot;]
+</span></code></pre>
+<h2 id="rtfm">RTFM</h2>
+<p>It looks like this has already been flagged as an
+<a href="https://github.com/russross/blackfriday/issues/137">issue</a> in GitHub.</p>
+<p>Several <a href="https://github.com/russross/blackfriday/issues/243">times</a>.</p>
+<p>In fact, it's in the
+<a href="https://github.com/russross/blackfriday/blob/master/README.md#todo">README</a>.</p>
+<p>Perhaps some more reading before beginning this little exercise might have been
+beneficial but wasn't it a learning experience? And isn't that what <em>really</em>
+matters?</p>
+<h2 id="back-to-daylight">Back to Daylight</h2>
+<p>The aforementioned fix <em>does</em> work in the short term but we do run the risk of
+the very problem the extension was intended to remedy. A longer-term fix,
+however, is likely to involve a fairly extensive rewrite of parts of
+Blackfriday.</p>
+<p>There have been some great <a href="https://blog.golang.org/strings">articles</a> written
+on how Go handles, strings, bytes and <em>runes</em>. It's likely in this latter type
+that we'd find a solution—largely analogous to characters in ASCII but
+recognising multi-byte characters for Unicode.</p>
+<p>Making some crude changes to the functions we found earlier (<code>ispunct()</code>, for
+instance) such that they accept <code>rune</code> (or <code>[]rune</code>) data types does seem to
+fix the issue (I won't include the details here; it involves a lot of me
+swearing at Go's module management and how it handles local repositories) but
+there's likely a bigger picture to consider with the rest of the codebase.</p>
+<p>So yeah. Go.</p>
+<p>I'd better start blogging.</p>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2025 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>
