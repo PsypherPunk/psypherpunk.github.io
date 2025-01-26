@@ -1,0 +1,53 @@
+body {
+    padding-top: 120px;
+}
+
+img {
+    display: block;
+    max-width: 75%;
+    margin: auto;
+}
+
+.container {
+    max-width: 800px;
+}
+
+.card-header a, .card-text a, small.tag a, .list-group-item-heading a {
+    text-decoration: none;
+}
+
+blockquote {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+
+table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+table.table {
+    border-spacing: 0;
+}
+
+table.table th,
+table.table td {
+    border: 1px solid #dee2e6;
+}

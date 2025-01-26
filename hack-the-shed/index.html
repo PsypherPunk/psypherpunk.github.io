@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>🔓 Hack the Shed</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://bsky.app/profile/psypherpunk.io"><i class="fa-brands fa-bluesky"></i> Bluesky</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+        <main class="container">
+            
+    <h1 class="title">
+        🔓 Hack the Shed
+    </h1>
+    <blockquote>Drink all the booze; hack all the things.</blockquote>
+    <p class="subtitle text-end"><strong>2019-06-19</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/security/" >
+                        #security
+                    </a>
+                
+                    <a href="https://blog.psypherpunk.io/tags/owasp/" >
+                        #owasp
+                    </a>
+                
+            </small>
+        </p>
+    
+    <blockquote>
+<p><em>"Has anyone ever participated in a Capture-the-flag style hacking event?
+Does anyone fancy trying one?"</em></p>
+</blockquote>
+<p>So, fairly innocuously, began what turned out to be a pretty interesting event.</p>
+<p>We recently ran a Capture the Flag (<abbr title="Capture the Flag">CTF</abbr>)
+event at my workplace. For anyone unfamiliar with the concept (which, in all
+fairness, was the position of many of the participants), there are a
+<a href="https://ctftime.org/ctf-wtf/">few variants</a> of CTF events but the essential
+premise is this: teams compete to find specific, intended vulnerabilities in a
+software application. Once found, the application presents the team with a code
+(the eponymous "flag") which gains the team points. At the end of the
+competition, the team with the most points wins. Simple, no?</p>
+<p>The application in this instance was the
+<a href="https://www.owasp.org/index.php/OWASP_Juice_Shop_Project">OWASP Juice Shop</a>,
+a truly sublime piece of work, created by
+<a href="https://twitter.com/bkimminich">Bjoern Kimminich</a>. The site presents itself as
+a <em>"a small online shop which sells - surprise! - fruit &amp; vegetable juice and
+associated products"</em>. In reality, it's an immensely well-crafted presentation
+of potential (and all-too-real) security vulnerabilities.</p>
+<p><img src="/img/juice-shop.png" alt="OWASP Juice Shop" /></p>
+<h2 id="setup">Setup</h2>
+<p>Getting an instance of the Juice Shop up and running is straightforward
+enough—it's easily deployable as a
+<a href="https://elements.heroku.com/buttons/bkimminich/juice-shop">Heroku Element</a>,
+or you can get it running with Docker in a single command:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">docker</span><span> run</span><span style="color:#bf616a;"> --rm -p</span><span> 3000:3000 bkimminich/juice-shop
+</span></code></pre>
+<p>That'll give you a fully-functioning version of the Juice Shop at which you can
+hack away to your heart's content. However, I wanted to keep the competition
+private and although Heroku does allow for restricting access, it comes at a
+cost. No, I was going to run this myself…</p>
+<h3 id="deployment">Deployment</h3>
+<p>Although the documentation is available for
+<a href="https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/">free</a> on the
+web, it's also available for purchase on
+<a href="https://leanpub.com/juice-shop">Leanpub</a>. In the hope that some of the money
+makes it back to the contributors, I'd highly recommend acquiring a copy.</p>
+<p>By default, the application effectively runs in a "standalone" mode, allowing
+users to find the various vulnerabilities but can also be run in CTF mode,
+presenting unique CTF flag codes upon discovery, again well
+<a href="https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/ctf.html">documented</a>.</p>
+<p>For the purposes of the competition, there are two components: the Juice Shop
+itself (one per team) plus a scoreboard.</p>
+<p>The scoreboard serves a multitude of purposes: handling registrations for each
+of the users (and their corresponding teams), offering a centralised point in
+which flags can be collated and tracked and, most importantly, presenting the
+scores for everyone to see.</p>
+<p>There are two main scoreboards covered in the documentation:
+<a href="https://ctfd.io/about/">CTFd</a> and Facebook's
+<a href="https://github.com/facebook/fbctf">fbctf</a>.</p>
+<p>Spoilers: I opted for the former. The latter, although it has a nice aesthetic,
+presented far too many problems during setup while the former "just worked".</p>
+<p>So my plan was this:</p>
+<ul>
+<li>I'd run a single virtual machine for the whole competition.</li>
+<li>Each instance of the Juice Shop would have its own unique hostname.</li>
+<li>The CTFd instance would run alongside them.</li>
+</ul>
+<p>Easy enough, right?</p>
+<h3 id="the-virtual-machine">The Virtual Machine</h3>
+<p>I opted for a Virtual Machine hosted by DigitalOcean (sorry, a
+<a href="https://www.digitalocean.com/products/droplets/"><em>droplet</em></a>)
+running <a href="https://www.digitalocean.com/products/droplets/">Debian Stretch</a>
+(because <em>Debian</em>) and decided to run everything using Docker (because
+<em>DevOps</em>).</p>
+<p>For the purposes of locking the machine down during setup, I used
+<a href="https://code.launchpad.net/ufw"><em>Uncomplicated Firewall</em></a> to restrict access
+from anywhere except the office:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">sudo</span><span> ufw default deny incoming
+</span><span style="color:#bf616a;">sudo</span><span> ufw default allow outgoing
+</span><span style="color:#bf616a;">sudo</span><span> ufw allow from ${</span><span style="color:#bf616a;">OFFICE_IP</span><span>} to ssh
+</span></code></pre>
+<h3 id="the-juice-shop-s">The Juice Shop(s)</h3>
+<p>It's worth noting that the Juice Shop does allow for
+<a href="https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/customization.html">customisation</a>—everything
+from logos to shop items and such. However, frankly I didn't want to detract
+from the beauty of the thing—it really is a marvel, the level of effort which
+has been applied to the project.</p>
+<p>In order to generate unique keys for each of the flags (lest some enterprising
+participant use a code they happened upon elsewhere…) we first generated a
+random string:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">CTF_KEY</span><span>=$</span><span style="color:#a3be8c;">(</span><span style="color:#bf616a;">cat</span><span style="color:#a3be8c;"> /dev/urandom </span><span>| </span><span style="color:#bf616a;">tr -dc </span><span>&#39;</span><span style="color:#a3be8c;">a-zA-Z0-9</span><span>&#39; | </span><span style="color:#bf616a;">fold -w</span><span style="color:#a3be8c;"> 32 </span><span>| </span><span style="color:#bf616a;">head -n</span><span style="color:#a3be8c;"> 1)
+</span></code></pre>
+<p>Finally, for each instance of the Juice Shop that we needed (two, in our case),
+we launch a Docker container for each:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">docker</span><span> run</span><span style="color:#bf616a;"> -d </span><span>\
+</span><span style="color:#bf616a;">    --name</span><span> juice-shop-ctf \
+</span><span style="color:#bf616a;">    --env </span><span>&quot;</span><span style="color:#a3be8c;">CTF_KEY=</span><span>$</span><span style="color:#a3be8c;">{</span><span style="color:#bf616a;">CTF_KEY</span><span style="color:#a3be8c;">}</span><span>&quot; \
+</span><span style="color:#bf616a;">    --env </span><span>&quot;</span><span style="color:#a3be8c;">NODE_ENV=ctf</span><span>&quot; \
+</span><span style="color:#bf616a;">    --publish </span><span>${</span><span style="color:#bf616a;">JUICE_SHOP_PORT</span><span>}:3000 \
+</span><span>    bkimminich/juice-shop
+</span></code></pre>
+<p>Note that each ran on a different port on the host (specified via
+<code>JUICE_SHOP_PORT</code> above) and we passed in the <code>CTF_KEY</code> value generated earlier.</p>
+<h3 id="ctfd">CTFd</h3>
+<p>Running an instance of the scoreboard was, thankfully, not much more difficult:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">git</span><span> clone https://github.com/CTFd/CTFd.git
+</span><span style="color:#96b5b4;">cd</span><span> CTFd/
+</span></code></pre>
+<p>Once we had a copy of the codebase there was only one further step before
+launching—including the random key we generated earlier. In the cloned folder,
+we need to edit the <code>docker-compose.yml</code> file to include a <code>SECRET_KEY</code> value:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">version: </span><span>&#39;</span><span style="color:#a3be8c;">2</span><span>&#39;
+</span><span>
+</span><span style="color:#bf616a;">services:
+</span><span>  </span><span style="color:#bf616a;">ctfd:
+</span><span>    </span><span style="color:#bf616a;">…
+</span><span>    </span><span style="color:#bf616a;">environment:
+</span><span>      </span><span style="color:#bf616a;">-</span><span> SECRET_KEY=${</span><span style="color:#bf616a;">CTF_KEY</span><span>}
+</span><span>      </span><span style="color:#bf616a;">…
+</span></code></pre>
+<p>The <code>CTF_KEY</code> above was replaced with the <em>actual</em> generated value. Once that
+single line was added, the instance was ready to launch.</p>
+<p>As hinted in the above step, CTFd uses
+<a href="https://docs.docker.com/compose/"><code>docker-compose</code></a> to handle the various
+services which are needed, the installation instructions for which are nicely
+<a href="https://docs.docker.com/compose/install/">straightforward</a>. Once installed…</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">docker-compose</span><span> up</span><span style="color:#bf616a;"> -d
+</span></code></pre>
+<h3 id="dns">DNS</h3>
+<p>With two Juice Shop instances and a scoreboard running, it was time to make
+them accessible.</p>
+<p>For reference, we had two teams: <em>Anomynoush</em> (an acknowledgement of the noted
+hacktivist collective and a visiting dignitary) and <em>H4ck t3h P14n3t!</em> (which,
+if you don't get the reference: <em>shame on you!</em>). So we would need three
+subdomains:</p>
+<ul>
+<li><code>anomynoush.example.com</code></li>
+<li><code>h4ckt3hp14n3t.example.com</code></li>
+<li><code>ctfd.example.com</code></li>
+</ul>
+<p>Creating the various subdomains for each of the services was a matter of
+creating DNS <em>A records</em>—the exact steps for this will vary depending on with
+whom your domain is registered. In this instance, the domain was registered
+with <a href="https://www.namecheap.com/">Namecheap</a> and their
+<a href="https://www.namecheap.com/support/knowledgebase/article.aspx/9776/2237/how-to-create-a-subdomain-for-my-domain">documentation</a>
+is decent enough, albeit specific to their interface.</p>
+<h3 id="https">HTTPS</h3>
+<p>Naturally we're going to make everything accessible over HTTPS and that means
+<em>certificates</em>. And frankly, few services have done more for the proliferation
+of HTTPS than <a href="https://letsencrypt.org/"><em>Let's Encrypt</em></a>.</p>
+<p>In this case, I used <a href="https://certbot.eff.org/"><em>Certbot</em></a> to facilitate the
+creation of each certificate. There are a few different methods and various
+plugins but the steps that worked for me were:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">sudo</span><span> apt install certbot python-certbot-nginx
+</span><span style="color:#bf616a;">sudo</span><span> ufw allow 80
+</span><span style="color:#bf616a;">sudo</span><span> certbot</span><span style="color:#bf616a;"> --nginx -d </span><span>${</span><span style="color:#bf616a;">CTF_HOST</span><span>}
+</span><span style="color:#bf616a;">sudo</span><span> ufw delete allow 80
+</span></code></pre>
+<p>Yes, it involved temporarily opening up port 80 in the firewall, but it
+<em>worked</em>. Once that was repeated for each of the hostnames (represented by
+<code>CTF_HOST</code> above), I just needed something to route traffic to the containers.</p>
+<h3 id="nginx">NGINX</h3>
+<p><a href="https://www.nginx.com/">NGINX</a> is <em>awesome</em>. In this case, it's providing a
+reverse-proxy, handling routing of incoming requests to the corresponding
+containers.</p>
+<p>Again, DigitalOcean have excellent
+<a href="https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-16-04">documentation</a>
+on the setup but here's the setup for one of the Juice Shop instances:</p>
+<pre data-lang="nginx" style="background-color:#2b303b;color:#c0c5ce;" class="language-nginx "><code class="language-nginx" data-lang="nginx"><span>server {
+</span><span>    server_name h4ckt3hp14n3t.example.com;
+</span><span>    listen 443 ssl http2;
+</span><span>    client_max_body_size 1M;
+</span><span>
+</span><span>    add_header X-Clacks-Overhead &quot;GNU Terry Pratchett&quot;;
+</span><span>    add_header Strict-Transport-Security &quot;max-age=31536000; includeSubDomains; always&quot;;
+</span><span>    add_header X-Frame-Options DENY;
+</span><span>    add_header X-Content-Type-Options nosniff;
+</span><span>    add_header X-XSS-Protection &quot;1; mode=block&quot;;
+</span><span>    add_header Content-Security-Policy &quot;default-src &#39;self&#39;; script-src &#39;self&#39; &#39;unsafe-inline&#39; &#39;unsafe-eval&#39; https://cdnjs.cloudflare.com; img-src &#39;self&#39;; style-src &#39;self&#39; &#39;unsafe-inline&#39;; font-src &#39;self&#39;; object-src &#39;none&#39;; connect-src &#39;self&#39;&quot;;
+</span><span>
+</span><span>    location / {
+</span><span>        proxy_set_header Host $http_host;
+</span><span>        proxy_set_header Upgrade $http_upgrade;
+</span><span>        proxy_set_header Connection &quot;upgrade&quot;;
+</span><span>        proxy_redirect off;
+</span><span>        proxy_set_header X-Real-IP $remote_addr;
+</span><span>        proxy_set_header X-Scheme $scheme;
+</span><span>        proxy_set_header X-Forwarded-Protocol $scheme;
+</span><span>        proxy_set_header X-Forwarded-Proto $scheme;
+</span><span>        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+</span><span>        proxy_connect_timeout 300s;
+</span><span>        proxy_read_timeout 300s;
+</span><span>        proxy_pass http://localhost:3001/;
+</span><span>    }
+</span><span>
+</span><span>    ssl on;
+</span><span>    ssl_certificate /etc/letsencrypt/live/h4ckt3hp14n3t.example.com/fullchain.pem;
+</span><span>    ssl_certificate_key /etc/letsencrypt/live/h4ckt3hp14n3t.example.com/privkey.pem;
+</span><span>
+</span><span>    ssl_session_timeout 5m;
+</span><span>    ssl_session_cache  shared:SSL:10m;
+</span><span>
+</span><span>    ssl_ciphers EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH;
+</span><span>    ssl_protocols TLSv1.2;
+</span><span>
+</span><span>    ssl_prefer_server_ciphers on;
+</span><span>    ssl_session_cache  builtin:1000  shared:SSL:10m;
+</span><span>    ssl_session_tickets off;
+</span><span>    ssl_stapling on;
+</span><span>    ssl_stapling_verify on;
+</span><span>}
+</span></code></pre>
+<p>The important things to note here are:</p>
+<ul>
+<li><code>server_name</code>: this is the hostname designated in the <a href="https://blog.psypherpunk.io/hack-the-shed/#dns">DNS</a> section
+earlier.</li>
+<li><code>proxy_pass</code>: this will always be <code>http://localhost</code> but the port will be the
+<code>JUICE_SHOP_PORT</code> value specified in the <a href="https://blog.psypherpunk.io/hack-the-shed/#the-juice-shop-s">Juice Shop(s)</a>
+section earlier.</li>
+<li><code>ssl_certificate</code> and <code>ssl_certificate_key</code> will be the values of the files
+created as part of the <a href="https://blog.psypherpunk.io/hack-the-shed/#https">HTTPS</a> section earlier.</li>
+</ul>
+<p>Once each of the sites are configured as per the above, the final step is to
+tell the firewall to allow incoming connections:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">sudo</span><span> ufw allow from ${</span><span style="color:#bf616a;">OFFICE_IP</span><span>} to any port https
+</span></code></pre>
+<h3 id="setting-up-the-scoreboard">Setting Up the Scoreboard</h3>
+<h4 id="importing-the-flags">Importing the Flags</h4>
+<p>The first stage in setting up the CTFd instance is adding the various flags
+from the Juice Shop. Thankfully, there's a nice tool,
+<a href="https://www.npmjs.com/package/juice-shop-ctf-cli">juice-shop-ctf-cli</a> created
+for just this purpose. There's some configuration but I created a <code>ctfd.yaml</code>
+file with the various options:</p>
+<pre data-lang="yaml" style="background-color:#2b303b;color:#c0c5ce;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#bf616a;">ctfFramework</span><span>: </span><span style="color:#a3be8c;">CTFd 2.x
+</span><span style="color:#bf616a;">juiceShopUrl</span><span>: </span><span style="color:#a3be8c;">https://juice-shop.herokuapp.com
+</span><span style="color:#bf616a;">ctfKey</span><span>: </span><span style="color:#a3be8c;">Kjrcvim78J5MLR6a7zoaSO73LZJoSWDB
+</span><span style="color:#bf616a;">countryMapping</span><span>: </span><span style="color:#a3be8c;">https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml
+</span><span style="color:#bf616a;">insertHints</span><span>: </span><span style="color:#a3be8c;">paid
+</span><span style="color:#bf616a;">insertHintUrls</span><span>: </span><span style="color:#a3be8c;">paid
+</span></code></pre>
+<p>After which you can use the <code>juice-shop-ctf-cli</code>:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">npm</span><span> install</span><span style="color:#bf616a;"> -g</span><span> juice-shop-ctf-cli
+</span><span style="color:#bf616a;">juice-shop-ctf --config</span><span> ctfd.yaml
+</span></code></pre>
+<p>This creates a ZIP file which can be uploaded to CTFd's Admin. section.</p>
+<h4 id="users-teams">Users &amp; Teams</h4>
+<p>CTFd allows for running competitions in either a user- or team-based mode. I
+wanted people to be grouped into teams with each person having their own login.</p>
+<p>This is where I ran into issues.</p>
+<p>The first step was to set up an
+<a href="https://myaccount.google.com/apppasswords">app. password</a> on my personal Gmail
+account. Once configured, I manually created accounts for each of the
+participants—and CTFd kindly forwarded the login details via email to each
+individual—and added the two teams.</p>
+<p>At which point I couldn't figure out for the life of me how to add users to
+those teams. Users can <em>create</em> teams and then pass the details to other users
+to join but no one could seemingly join the one's I'd created.</p>
+<p>After calmly reading the documentation and in no way panicking because it was
+lunch time and the competition was only a few hours away, I ended up nuking the
+CTFd instance.</p>
+<p>And then it got <em>weird</em>…</p>
+<p>After recreating the CTFd instance all my users were still there, as were the
+flags. But I'd removed the containers <em>entirely</em>—what was happening?! It turns
+out that CTFd keeps everything in local directory—<code>.data</code>—and that was
+persisting following the deletion.</p>
+<p>So no, I wasn't losing my mind; but I <em>was</em> running out of time…</p>
+<p>By this point I'd pretty much given up. I'm sure the documentation covers it
+somewhere but I still couldn't put my newly-created users in newly-created
+teams. So I cheated. Using some of the credentials I'd already minted for two
+of the users (one from each team), I created the team using that user. Then
+manually logged in as each user and joined the right team.</p>
+<h2 id="running-the-event">Running the Event</h2>
+<h3 id="beforehand">Beforehand</h3>
+<p>On the day of the competition, I made a quick presentation earlier in the day,
+hoping to cover the running order and answer any queries (rather than doing
+everything 5 minutes before we started):</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>Start: 16:00
+</span><span>gather teams,
+</span><span>grab beers
+</span><span>
+</span><span>Stop: 18:00
+</span><span>present the trophy…
+</span></code></pre>
+<p>Oh, and set the necessary ground-rules:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>rules:
+</span><span>* don’t be a dick.
+</span><span>* don’t break it.
+</span><span>* have fun.
+</span><span>* learn things.
+</span></code></pre>
+<h3 id="competition-time">Competition Time</h3>
+<p>For the actual event, the two teams were set up in their own area. I'd asked
+that one person from each time stream to a nearby television; a separate TV was
+used to screen the scoreboard—I'd hoped that we'd get a few spectators and this
+would keep things interesting. Turns out we did—a couple had even joined in and
+bagged a flag by the end of the competition.</p>
+<p>At 16:00 the competitors grabbed beers, got their heads down and started. The
+competition's duration was dictated by the official
+<a href="https://open.spotify.com/user/psypherpunk/playlist/1dZQGTDJMll0B5DBQN3bpp?si=u4GPy9_VRvOv7-OaKk83_A">soundtrack</a>,
+running for about 2 hours.</p>
+<p>It was interesting to watch the various ways people worked through the hints.
+One team immediately created a Teams channel (our internal comms. tool of
+choice) to keep track of flags; some coordinated their team-mates, providing
+some excellent Google-fu to assist in tracking down some of the more obscure
+clues.</p>
+<p>But, as the last bars of the soundtrack faded, there could be only one winning
+team—<em>Anomynoush</em>!—who could claim the trophy: The Golden Hacker™.</p>
+<p><img src="/img/golden-hacker.jpg" alt="The Golden Hacker™" /></p>
+<h2 id="what-s-next">What's next?</h2>
+<p>The VM was budgeted for the month so the following day the Juice Shops were
+started back up to allow people to continue catching some of the more elusive
+flags.</p>
+<p>One thing that had surprised me was the amount of progress made in that first
+hour. I'd intentionally kept the competition fairly short to avoid anyone
+feeling "stuck"; I should never have doubted them, should I? With that in mind,
+there's now the intention to run some smaller, shorter sessions for anyone who
+couldn't make it.</p>
+<p>The CTF event was, I think, not only a great way to raise security awareness
+within teams but it was <em>fun</em>. The Juice Shop is an ideal format for this sort
+of event—it's wonderfully presented but it's also a <em>genuine</em> application with
+<em>genuine</em> vulnerabilities.</p>
+<p>I just need to figure out how to top it for the next one…</p>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2025 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>

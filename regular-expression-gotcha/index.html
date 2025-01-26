@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://blog.psypherpunk.io/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://blog.psypherpunk.io/css/blog.css" rel="stylesheet">
+        
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.psypherpunk.io/rss.xml">
+        
+        <script src="https://kit.fontawesome.com/80cf39a0f7.js" crossorigin="anonymous"></script>
+        <title>💥 Regular Expressions</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/">psypherpunk::blog</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle links">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ms-auto text-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="/tags"><i class="fa fa-hashtag"></i> tags</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://github.com/psypherpunk"><i class="fa fa-github"></i> GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://twitter.com/psypherpunk"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="noopener" class="nav-link" href="https://bsky.app/profile/psypherpunk.io"><i class="fa-brands fa-bluesky"></i> Bluesky</a>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" rel="me noopener" class="nav-link" href="https://hachyderm.io/@psypherpunk"><i class="fa-brands fa-mastodon"></i> Mastodon</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+        <main class="container">
+            
+    <h1 class="title">
+        💥 Regular Expressions
+    </h1>
+    <blockquote>Today-I-learned-and-wish-I-hadn&#x27;t</blockquote>
+    <p class="subtitle text-end"><strong>2022-01-21</strong></p>
+    
+        <p class="text-end">
+            <small class="tag">
+                
+                    <a href="https://blog.psypherpunk.io/tags/regular-expressions/" >
+                        #regular-expressions
+                    </a>
+                
+                    <a href="https://blog.psypherpunk.io/tags/gotcha/" >
+                        #gotcha
+                    </a>
+                
+            </small>
+        </p>
+    
+    <blockquote>
+<p><em>One statement, no questions,</em><br />
+<em>Put your fist up for your regular expressions</em>.<br />
+—Dual Core, <em>Regular Expressions</em></p>
+</blockquote>
+<p>Regular expressions are powerful.</p>
+<p>Regular expressions are fun.</p>
+<p><img src="https://imgs.xkcd.com/comics/regular_expressions.png" alt="xkcd: Regular Expressions" /></p>
+<p>Right up until they are not. Today was one such day.</p>
+<p>At some point, anyone who's had to work with regular expressions has needed to
+match a specific range of characters. Let's say—for no particular reason—<em>alpha</em>
+characters. <em>A</em> to <em>Z</em>. Or <em>a</em> to <em>z</em>. The basics, none of those fancy Unicode
+ones, thankyouverymuch.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> grep</span><span style="color:#bf616a;"> --perl-regexp </span><span>&#39;</span><span style="color:#a3be8c;">i</span><span>&#39; &lt;&lt;&lt; &quot;</span><span style="color:#a3be8c;">testing</span><span>&quot;
+</span><span style="color:#bf616a;">testing
+</span><span>
+</span><span style="color:#bf616a;">$</span><span> grep</span><span style="color:#bf616a;"> --perl-regexp </span><span>&#39;</span><span style="color:#a3be8c;">a</span><span>&#39; &lt;&lt;&lt; &quot;</span><span style="color:#a3be8c;">testing</span><span>&quot;
+</span></code></pre>
+<p>To match <em>all</em> characters, you'd need to include them all somehow. You could,
+of course, go all-in:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> grep</span><span style="color:#bf616a;"> --perl-regexp </span><span>&#39;</span><span style="color:#a3be8c;">[abcdefghijklmnopqrstuvwxyz]</span><span>&#39; &lt;&lt;&lt; &quot;</span><span style="color:#a3be8c;">testing</span><span>&quot;
+</span><span style="color:#bf616a;">testing
+</span></code></pre>
+<p>…which would work, but it's not very <em>concise</em>, is it? You could, of course,
+use a <em>character class</em> and match any word character:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> grep</span><span style="color:#bf616a;"> --perl-regexp </span><span>&#39;</span><span style="color:#a3be8c;">\w</span><span>&#39; &lt;&lt;&lt; &quot;</span><span style="color:#a3be8c;">testing</span><span>&quot;
+</span><span style="color:#bf616a;">testing
+</span></code></pre>
+<p>…which would, again, work but you could accidentally match a non-ASCII and
+you wouldn't want that, would you?</p>
+<p>Of course, you could also use one of the convenient character ranges:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> grep</span><span style="color:#bf616a;"> --perl-regexp </span><span>&#39;</span><span style="color:#a3be8c;">[a-z]</span><span>&#39; &lt;&lt;&lt; &quot;</span><span style="color:#a3be8c;">testing</span><span>&quot;
+</span><span style="color:#bf616a;">testing
+</span></code></pre>
+<p>Wonderful! But that won't match upper-case characters, will it?</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">grep --perl-regexp </span><span>&#39;</span><span style="color:#a3be8c;">^[a-z]+$</span><span>&#39; &lt;&lt;&lt; &quot;</span><span style="color:#a3be8c;">Testing</span><span>&quot;
+</span></code></pre>
+<p>Hmmmm…no. Using the upper-case variant would leave us in the same pickle, no?</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">grep --perl-regexp </span><span>&#39;</span><span style="color:#a3be8c;">^[A-Z]+$</span><span>&#39; &lt;&lt;&lt; &quot;</span><span style="color:#a3be8c;">Testing</span><span>&quot;
+</span></code></pre>
+<p>Curses! But, of course, there's <em>another</em> option: a combination of the two!
+How convenient!</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">grep --perl-regexp </span><span>&#39;</span><span style="color:#a3be8c;">^[A-z]+$</span><span>&#39; &lt;&lt;&lt; &quot;</span><span style="color:#a3be8c;">Testing</span><span>&quot;
+</span><span style="color:#bf616a;">Testing
+</span></code></pre>
+<p>It worked perfectly! Matching <em>only</em> alpha. characters and both casing variants!
+All is well, right?</p>
+<p><em>Right</em>?!</p>
+<h2 id="no">No</h2>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">grep --perl-regexp </span><span>&#39;</span><span style="color:#a3be8c;">^[A-z]+$</span><span>&#39; &lt;&lt;&lt; &quot;</span><span style="color:#a3be8c;">Test[\]^_`</span><span style="color:#bf616a;">ing</span><span>&quot;
+</span><span style="color:#a3be8c;">Test[\]^_`</span><span style="color:#bf616a;">ing
+</span></code></pre>
+<p>Errrr…what? <code>A-z</code>. That's fairly clear, right?</p>
+<p>No. No, it is not. Because <code>A-z</code> is not, in fact, shorthand for "the range of
+characters from <em>a</em> to <em>a</em>, upper- and lower-case." It is, in fact, the
+shorthand for "the range of <em>ASCII characters</em> from <code>A</code> to <code>z</code>".</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">$</span><span> python3</span><span style="color:#bf616a;"> -c </span><span>&#39;</span><span style="color:#a3be8c;">print(&quot;&quot;.join(chr(c) for c in range(ord(&quot;A&quot;), ord(&quot;z&quot;) + 1)))</span><span>&#39;
+</span><span style="color:#bf616a;">ABCDEFGHIJKLMNOPQRSTUVWXYZ[</span><span style="color:#96b5b4;">\]</span><span style="color:#bf616a;">^_</span><span>`</span><span style="color:#bf616a;">abcdefghijklmnopqrstuvwxy
+</span></code></pre>
+<p>Oh dear. Oh dear, oh dear.</p>
+<p>Quite what was going on at the American Standards Association between <code>Z</code> and
+<code>a</code>, I'd hate to guess. Presumably their cat walked across the keyboard while
+they were celebrating the addition of the capital letters.</p>
+<p>But yes, there's a whole bunch of punctuation (<code>^</code> and ` are technically
+<em>symbols</em>, not punctuation; fun fact) smack in the middle of those character
+ranges which will get matched should you ever opt to use <code>A-z</code> in a regular
+expression.</p>
+<p>Which no one would, right?</p>
+<p><em>Right?!</em></p>
+
+
+        </main>
+        
+        <footer class="footer py-1 bg-light">
+    <div class="container text-end">
+        <small class="text-muted">© 2025 PsypherPunk</small>
+    </div>
+</footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
+</html>
