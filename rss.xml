@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>psypherpunk::blog</title>
+      <link>https://blog.psypherpunk.io/</link>
+      <description></description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://blog.psypherpunk.io/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Sun, 11 May 2025 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>️📦 HackTheBox: UnderPass</title>
+          <pubDate>Sun, 11 May 2025 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/htb-machine-easy-underpass/</link>
+          <guid>https://blog.psypherpunk.io/blog/htb-machine-easy-underpass/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/htb-machine-easy-underpass/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;app.hackthebox.com&#x2F;machines&#x2F;UnderPass&quot;&gt;UnderPass&lt;&#x2F;a&gt; is the most recently
+retired of HackTheBox’s machines and one that I’m not ashamed to admit took me
+far too long to solve.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>️🏴 MetaCTF January 2025 Flash CTF</title>
+          <pubDate>Sun, 26 Jan 2025 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/metactf-january-2025-flash-ctf/</link>
+          <guid>https://blog.psypherpunk.io/blog/metactf-january-2025-flash-ctf/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/metactf-january-2025-flash-ctf/">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training, TCM Security, Simply Cyber Academy. There will be 5
+challenges and you will have 2 hours to solve as many as you can. This is a
+beginner-friendly CTF.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;jan2025&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;jan2025&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>️🐍 Polyfactory and Patients</title>
+          <pubDate>Tue, 03 Dec 2024 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/polyfactory-and-patients/</link>
+          <guid>https://blog.psypherpunk.io/blog/polyfactory-and-patients/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/polyfactory-and-patients/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.meetup.com&#x2F;pydata-leeds&#x2F;&quot;&gt;PyData Leeds&lt;&#x2F;a&gt; was recently fortunate
+enough to play host to the
+&lt;a href=&quot;https:&#x2F;&#x2F;hippodigital.co.uk&#x2F;blog&#x2F;tackling-high-quality-test-data-generation-at-pydatas-nhs-data-community-takeover&#x2F;&quot;&gt;“NHS Data Community Takeover”&lt;&#x2F;a&gt;.
+To preface things with a quote from that blog post:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Unfortunately, quality test data is non-existent as some (if not most) NHS
+organisations, especially data that reflects real-life use cases and the
+depth of complexity the real world represents. This is particularly
+challenging given the weight of this dataset, it’s real people’s healthcare
+data and it deserves the respect we give it.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;</description>
+      </item>
+      <item>
+          <title>️🏴 MetaCTF November 2024 Flash CTF</title>
+          <pubDate>Thu, 21 Nov 2024 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/metactf-november-2024-flash-ctf/</link>
+          <guid>https://blog.psypherpunk.io/blog/metactf-november-2024-flash-ctf/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/metactf-november-2024-flash-ctf/">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security. There will be 5 challenges and you will
+have 2 hours to solve as many as you can. This is a beginner-friendly CTF.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;sep2024&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;sep2024&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>️🏴 MetaCTF August 2024 Flash CTF</title>
+          <pubDate>Thu, 22 Aug 2024 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/metactf-august-2024-flash-ctf/</link>
+          <guid>https://blog.psypherpunk.io/blog/metactf-august-2024-flash-ctf/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/metactf-august-2024-flash-ctf/">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security. There will be 5 challenges and you will
+have 2 hours to solve as many as you can. This is a beginner-friendly CTF.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;aug2024&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;aug2024&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>️🏴 MetaCTF July 2024 Flash CTF</title>
+          <pubDate>Fri, 19 Jul 2024 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/metactf-july-2024-flash-ctf/</link>
+          <guid>https://blog.psypherpunk.io/blog/metactf-july-2024-flash-ctf/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/metactf-july-2024-flash-ctf/">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security. There will be 5 challenges and you will
+have 2 hours to solve as many as you can. This is a beginner-friendly CTF.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;jul2024&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;jul2024&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>️🏴 MetaCTF June 2024 Flash CTF</title>
+          <pubDate>Fri, 21 Jun 2024 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/metactf-june-2024-flash-ctf/</link>
+          <guid>https://blog.psypherpunk.io/blog/metactf-june-2024-flash-ctf/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/metactf-june-2024-flash-ctf/">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security. There will be 5 challenges and you will
+have 2 hours to solve as many as you can. This is a beginner-friendly CTF.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;jun2024&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;jun2024&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>️🏴 MetaCTF May 2024 Flash CTF</title>
+          <pubDate>Fri, 24 May 2024 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/metactf-may-2024-flash-ctf/</link>
+          <guid>https://blog.psypherpunk.io/blog/metactf-may-2024-flash-ctf/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/metactf-may-2024-flash-ctf/">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security. There will be 5 challenges and you will
+have 2 hours to solve as many as you can. This is a beginner-friendly CTF.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;may2024&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;may2024&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>️🏴 MetaCTF April 2024 Flash CTF</title>
+          <pubDate>Fri, 26 Apr 2024 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/metactf-april-2024-flash-ctf/</link>
+          <guid>https://blog.psypherpunk.io/blog/metactf-april-2024-flash-ctf/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/metactf-april-2024-flash-ctf/">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security. There will be 5 challenges and you will
+have 2 hours to solve as many as you can. This is a beginner-friendly CTF.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;apr2024&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;apr2024&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>️🏴 MetaCTF March 2024 Flash CTF</title>
+          <pubDate>Fri, 22 Mar 2024 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/metactf-march-2024-flash-ctf/</link>
+          <guid>https://blog.psypherpunk.io/blog/metactf-march-2024-flash-ctf/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/metactf-march-2024-flash-ctf/">&lt;h2 id=&quot;metactf-march-2024-flash-ctf&quot;&gt;MetaCTF March 2024 Flash CTF&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;</description>
+      </item>
+      <item>
+          <title>️🏴 MetaCTF February 2024 Flash CTF</title>
+          <pubDate>Fri, 23 Feb 2024 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/metactf-february-2024-flash-ctf/</link>
+          <guid>https://blog.psypherpunk.io/blog/metactf-february-2024-flash-ctf/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/metactf-february-2024-flash-ctf/">&lt;h2 id=&quot;metactf-february-2024-flash-ctf&quot;&gt;MetaCTF February 2024 Flash CTF&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF and Antisyphon. There
+will be 5 challenges and you will have 2 hours to solve as many as you can.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;</description>
+      </item>
+      <item>
+          <title>️🏴 BSides London 2023 CTF</title>
+          <pubDate>Mon, 29 Jan 2024 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/bsides-london-2023/</link>
+          <guid>https://blog.psypherpunk.io/blog/bsides-london-2023/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/bsides-london-2023/">&lt;h2 id=&quot;bsides-london-2023-ctf&quot;&gt;BSides London 2023 CTF&lt;&#x2F;h2&gt;
+&lt;p&gt;Prompted by a message on the
+&lt;a href=&quot;https:&#x2F;&#x2F;www.meetup.com&#x2F;hack-the-box-meetup-uk&#x2F;&quot;&gt;&lt;em&gt;Hack The Box Meetup:UK&lt;&#x2F;em&gt;&lt;&#x2F;a&gt;
+Discord, the below documents my attempt at the CTF from the &lt;em&gt;BSides London
+2023&lt;&#x2F;em&gt; conference, shamelessly purloined from the archive at
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;phyushin&#x2F;bsidesLDN2023&quot;&gt;&lt;code&gt;phyushin&#x2F;bsidesLDN2023&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>️🏴 Mammoth Mini-CTF 2023</title>
+          <pubDate>Sat, 20 Jan 2024 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/mammoth-mini-ctf-2023/</link>
+          <guid>https://blog.psypherpunk.io/blog/mammoth-mini-ctf-2023/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/mammoth-mini-ctf-2023/">&lt;h2 id=&quot;mammoth-mini-ctf-2023&quot;&gt;Mammoth Mini-CTF 2023&lt;&#x2F;h2&gt;
+&lt;p&gt;Similar to the previous &lt;a href=&quot;&#x2F;dialed-up-ctf&quot;&gt;&lt;em&gt;Dialed-Up CTF&lt;&#x2F;em&gt;&lt;&#x2F;a&gt;,
+this was announced on
+&lt;a href=&quot;https:&#x2F;&#x2F;x.com&#x2F;prjctmammoth&#x2F;status&#x2F;1662205859273818113&quot;&gt;Twitter&lt;&#x2F;a&gt; with the MP3
+available on &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-mammoth&#x2F;mammoth-ctf-2023&quot;&gt;GitHub&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>️📦 HackTheBox: Stocker</title>
+          <pubDate>Tue, 14 Feb 2023 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/htb-machine-easy-stocker/</link>
+          <guid>https://blog.psypherpunk.io/blog/htb-machine-easy-stocker/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/htb-machine-easy-stocker/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;app.hackthebox.com&#x2F;machines&#x2F;Stocker&quot;&gt;Stocker&lt;&#x2F;a&gt; is one of
+HackTheBox’s &lt;em&gt;Easy&lt;&#x2F;em&gt; machines, now retired (hence this inaugural writeup.)&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>️🎄 Advent of Code 2021, Day 9</title>
+          <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/advent-of-code-2021-day-9/</link>
+          <guid>https://blog.psypherpunk.io/blog/advent-of-code-2021-day-9/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/advent-of-code-2021-day-9/">&lt;p&gt;In which I decide to stop messing around and do things Properly™ when it comes
+to fallible parsing.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>️🎄 Advent of Code 2021, Day 7</title>
+          <pubDate>Sat, 27 Aug 2022 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/advent-of-code-2021-day-7/</link>
+          <guid>https://blog.psypherpunk.io/blog/advent-of-code-2021-day-7/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/advent-of-code-2021-day-7/">&lt;h2 id=&quot;day-7-the-treachery-of-whales&quot;&gt;&lt;a href=&quot;https:&#x2F;&#x2F;adventofcode.com&#x2F;2021&#x2F;day&#x2F;7&quot;&gt;Day 7: The Treachery of Whales&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;While I’ve completed every star for each year of
+&lt;a href=&quot;https:&#x2F;&#x2F;adventofcode.com&#x2F;&quot;&gt;&lt;em&gt;Advent of Code&lt;&#x2F;em&gt;&lt;&#x2F;a&gt;, I recently realised I hadn’t
+written up my notes from some of the days from last year. Taking the
+opportunity to revisit my efforts, here’s the first missing day from 2021,
+along with some obvervations as to where I fundamentally misunderstood the
+input data.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>️🏴 Dialed Up CTF</title>
+          <pubDate>Tue, 16 Aug 2022 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/dialed-up-ctf/</link>
+          <guid>https://blog.psypherpunk.io/blog/dialed-up-ctf/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/dialed-up-ctf/">&lt;h2 id=&quot;dialed-up-ctf&quot;&gt;Dialed Up CTF&lt;&#x2F;h2&gt;
+&lt;p&gt;I originally noticed this on
+&lt;a href=&quot;https:&#x2F;&#x2F;twitter.com&#x2F;prjctmammoth&#x2F;status&#x2F;1554939919230849024&quot;&gt;Twitter&lt;&#x2F;a&gt;, the
+weekend before DEF CON 30: a &lt;em&gt;“mini-CTF all embedded in  an .mp3”&lt;&#x2F;em&gt;. Who could
+resist?&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>🗃️ Wordle on Sunday</title>
+          <pubDate>Thu, 10 Mar 2022 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/wordle-on-sunday/</link>
+          <guid>https://blog.psypherpunk.io/blog/wordle-on-sunday/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/wordle-on-sunday/">&lt;p&gt;Wordle is everywhere.&lt;&#x2F;p&gt;
+&lt;p&gt;Wordle is everything.&lt;&#x2F;p&gt;
+&lt;p&gt;Soon all will be Wordle.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>💥 Regular Expressions</title>
+          <pubDate>Fri, 21 Jan 2022 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/regular-expression-gotcha/</link>
+          <guid>https://blog.psypherpunk.io/blog/regular-expression-gotcha/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/regular-expression-gotcha/">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;One statement, no questions,&lt;&#x2F;em&gt;&lt;br &#x2F;&gt;
+&lt;em&gt;Put your fist up for your regular expressions&lt;&#x2F;em&gt;.&lt;br &#x2F;&gt;
+—Dual Core, &lt;em&gt;Regular Expressions&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Regular expressions are powerful.&lt;&#x2F;p&gt;
+&lt;p&gt;Regular expressions are fun.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>🔁 Zola, okay we&#x27;ll do it your way.</title>
+          <pubDate>Wed, 03 Nov 2021 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/zola-okay-we-ll-do-it-your-way/</link>
+          <guid>https://blog.psypherpunk.io/blog/zola-okay-we-ll-do-it-your-way/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/zola-okay-we-ll-do-it-your-way/">&lt;p&gt;I’d &lt;a href=&quot;https:&#x2F;&#x2F;blog.psypherpunk.io&#x2F;blog&#x2F;hugo-to-zola&#x2F;#fork-it&quot;&gt;previously mentioned&lt;&#x2F;a&gt; that I was
+maintaining a fork of Zola to allow me to use my old deployment model: that of
+having a separate, public repo. which housed my built static-site and
+referencing this as a Git submodule residing the &lt;code&gt;public&lt;&#x2F;code&gt; subdirectory.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>💥 From Hugo to Zola</title>
+          <pubDate>Sat, 12 Jun 2021 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/hugo-to-zola/</link>
+          <guid>https://blog.psypherpunk.io/blog/hugo-to-zola/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/hugo-to-zola/">&lt;h2 id=&quot;why-are-we-here-again&quot;&gt;Why Are We Here Again?&lt;&#x2F;h2&gt;
+&lt;p&gt;While I outlined my earlier selection of Hugo as the static-site-generator of
+choice in a &lt;a href=&quot;https:&#x2F;&#x2F;blog.psypherpunk.io&#x2F;blog&#x2F;go-down-the-rabbit-hole&#x2F;&quot;&gt;previous post&lt;&#x2F;a&gt;, it’s
+finally time to admit that Go and I aren’t getting on. It’s not you, it’s me
+(except it’s totally you.)&lt;&#x2F;p&gt;
+&lt;p&gt;And it’s more than a little Rust, to be honest.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>💾 Jargon</title>
+          <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/jargon/</link>
+          <guid>https://blog.psypherpunk.io/blog/jargon/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/jargon/">&lt;h2 id=&quot;jargon-do-you-grok-it&quot;&gt;Jargon, do you grok it?&lt;&#x2F;h2&gt;
+&lt;p&gt;I recently had a weird conversation on Teams (yes, we use Microsoft
+Teams at work; don’t judge us); triggered by a question in a recent
+Postman user-survey, it prompted a discussion around “unique terminology”
+in sofware development and to what degree each of us had been exposed.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>🔓 Hack the Shed</title>
+          <pubDate>Wed, 19 Jun 2019 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/hack-the-shed/</link>
+          <guid>https://blog.psypherpunk.io/blog/hack-the-shed/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/hack-the-shed/">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;“Has anyone ever participated in a Capture-the-flag style hacking event?
+Does anyone fancy trying one?”&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;So, fairly innocuously, began what turned out to be a pretty interesting event.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>🐛 Go Down the Rabbit Hole</title>
+          <pubDate>Wed, 13 Feb 2019 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/go-down-the-rabbit-hole/</link>
+          <guid>https://blog.psypherpunk.io/blog/go-down-the-rabbit-hole/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/go-down-the-rabbit-hole/">&lt;p&gt;I like a good em-dash. It’s delightfully versatile, easily taking the place of
+other, lesser punctuation marks.&lt;&#x2F;p&gt;</description>
+      </item>
+      <item>
+          <title>🦄 django-pwny</title>
+          <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/django-pwny/</link>
+          <guid>https://blog.psypherpunk.io/blog/django-pwny/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/django-pwny/">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Originally published at
+&lt;a href=&quot;https:&#x2F;&#x2F;www.thedatashed.co.uk&#x2F;2019&#x2F;02&#x2F;07&#x2F;django-pwny&#x2F;&quot;&gt;The Data Shed&lt;&#x2F;a&gt;.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;</description>
+      </item>
+      <item>
+          <title>🎉 Hello, World!</title>
+          <pubDate>Wed, 15 Aug 2018 00:00:00 +0000</pubDate>
+          <author>PsypherPunk</author>
+          <link>https://blog.psypherpunk.io/blog/hello-world/</link>
+          <guid>https://blog.psypherpunk.io/blog/hello-world/</guid>
+          <description xml:base="https://blog.psypherpunk.io/blog/hello-world/">&lt;p&gt;Hello, World! 🎉&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>
