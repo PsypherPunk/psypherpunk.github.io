@@ -1,0 +1,143 @@
+<!doctype html><html data-theme=dark lang=en xmlns=http://www.w3.org/1999/xhtml><head><meta charset=UTF-8><meta name=description><meta content="width=device-width,initial-scale=1" name=viewport><meta content=#9a9996 name=theme-color><meta content=#20c20e media=(prefers-color-scheme:dark) name=theme-color><title>️🐍 Polyfactory and Patients - psypherpunk::blog</title><link href=https://blog.psypherpunk.io/blog/polyfactory-and-patients/ rel=canonical><link href=https://blog.psypherpunk.io/favicon.png rel=icon type=image/png><link href=https://blog.psypherpunk.io/apple-touch-icon.png rel=apple-touch-icon sizes=180x180 type=image/png><link title="psypherpunk::blog - RSS Feed" href=https://blog.psypherpunk.io/rss.xml rel=alternate type=application/rss+xml><link title="psypherpunk::blog - Atom Feed" href=https://blog.psypherpunk.io/atom.xml rel=alternate type=application/atom+xml><style>:root{--accent-color:#6f8396}[data-theme=dark]{--accent-color:#20c20e}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--accent-color:#20c20e}}</style><link href=https://blog.psypherpunk.io/style.css rel=stylesheet><script defer src=https://blog.psypherpunk.io/closable.js></script><meta content=psypherpunk::blog property=og:site_name><meta content="️🐍 Polyfactory and Patients - psypherpunk::blog" property=og:title><meta content=https://blog.psypherpunk.io/blog/polyfactory-and-patients/ property=og:url><meta content="On using Polyfactory to generate representative data." property=og:description><meta content=https://blog.psypherpunk.io/card.png property=og:image><meta content=en_US property=og:locale><body><header id=site-nav><nav><a href=#main-content tabindex=0> Skip to Main Content </a><ul><li id=home><a href=https://blog.psypherpunk.io> <i class=icon></i>psypherpunk::blog</a><li class=divider><li><a href=https://blog.psypherpunk.io/blog/>Blog</a><li id=feed><details class=closable><summary class=circle title=Feed><i class=icon></i></summary> <ul><li><a href=https://blog.psypherpunk.io/rss.xml>RSS</a><li><a href=https://blog.psypherpunk.io/atom.xml>Atom</a></ul></details></ul></nav></header><main id=main-content><article><div id=heading><p><small> <time datetime=" 2024-12-03T00:00:00+00:00">Published on December 03, 2024</time></small><h1>️🐍 Polyfactory and Patients</h1><ul class=tags><li><a class=tag href=https://blog.psypherpunk.io/tags/python/>python</a><li><a class=tag href=https://blog.psypherpunk.io/tags/polyfactory/>polyfactory</a></ul><ul class=tags><li><a class=tag href=https://blog.psypherpunk.io/categories/python/>python</a></ul></div><div id=buttons-container><a title="Go to Top" href=#top id=go-to-top><i class=icon></i></a></div><p><a href=https://www.meetup.com/pydata-leeds/>PyData Leeds</a> was recently fortunate enough to play host to the <a href=https://hippodigital.co.uk/blog/tackling-high-quality-test-data-generation-at-pydatas-nhs-data-community-takeover/>“NHS Data Community Takeover”</a>. To preface things with a quote from that blog post:<blockquote><p><em>Unfortunately, quality test data is non-existent as some (if not most) NHS organisations, especially data that reflects real-life use cases and the depth of complexity the real world represents. This is particularly challenging given the weight of this dataset, it’s real people’s healthcare data and it deserves the respect we give it.</em></blockquote><span id=continue-reading></span><p>Sadly, yours truly was plague-ridden and missed out and, more importantly, didn’t get the chance to bang my drum in favour of one of my favourite libraries for just this task: <a href=https://polyfactory.litestar.dev/><em>Polyfactory</em></a>.<p>Getting things underway with a new project and adding the initial dependency (yes, I’m using <a href=https://python-poetry.org/>Poetry</a>, don’t judge):<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>poetry</span><span> init
+</span><span style=color:#bf616a>poetry</span><span> add polyfactory
+</span></code></pre><p>I originally came across this project a year or two ago, back when it was known as <a href=https://pypi.org/project/pydantic-factories/><code>pydantic-factories</code></a>. That should give some indication as to how I’m going to start things off: with a <a href=https://docs.pydantic.dev/latest/>Pydantic</a> model.<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>poetry</span><span> add pydantic
+</span></code></pre><p>I’ll keep things relatively simple and attempt to represent only a single—and heavily simplified—entity, a <em>patient</em>:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>from </span><span>datetime </span><span style=color:#b48ead>import </span><span>date
+</span><span>
+</span><span style=color:#b48ead>from </span><span>pydantic </span><span style=color:#b48ead>import </span><span>BaseModel, constr
+</span><span>
+</span><span>
+</span><span style=color:#b48ead>class </span><span style=color:#ebcb8b>Patient</span><span style=color:#eff1f5>(</span><span style=color:#a3be8c>BaseModel</span><span style=color:#eff1f5>):
+</span><span>    patient_id: int
+</span><span>    date_of_birth: date | </span><span style=color:#d08770>None
+</span><span>    full_name: </span><span style=color:#bf616a>constr</span><span>(</span><span style=color:#bf616a>max_length</span><span>=</span><span style=color:#d08770>70</span><span>) | </span><span style=color:#d08770>None
+</span><span>    title: </span><span style=color:#bf616a>constr</span><span>(</span><span style=color:#bf616a>max_length</span><span>=</span><span style=color:#d08770>35</span><span>) | </span><span style=color:#d08770>None
+</span><span>    forename: </span><span style=color:#bf616a>constr</span><span>(</span><span style=color:#bf616a>max_length</span><span>=</span><span style=color:#d08770>35</span><span>) | </span><span style=color:#d08770>None
+</span><span>    surname: </span><span style=color:#bf616a>constr</span><span>(</span><span style=color:#bf616a>max_length</span><span>=</span><span style=color:#d08770>35</span><span>) | </span><span style=color:#d08770>None
+</span></code></pre><p>Armed with a Pydantic model which represents an entity for which one would like to produce accurate data, what’s next? Time to turn to Polyfactory:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>from </span><span>polyfactory.factories </span><span style=color:#b48ead>import </span><span>pydantic_factory
+</span><span>
+</span><span>
+</span><span style=color:#b48ead>class </span><span style=color:#ebcb8b>PatientFactory</span><span style=color:#eff1f5>(</span><span style=color:#a3be8c>pydantic_factory.ModelFactory</span><span style=color:#eff1f5>):
+</span><span>    __model__ = Patient
+</span></code></pre><p>That’s it. Done, dusted; time to celebrate.<p>To prove the point:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span>>>> </span><span style=color:#96b5b4>print</span><span>(</span><span style=color:#bf616a>PatientFactory</span><span>().</span><span style=color:#bf616a>build</span><span>().</span><span style=color:#bf616a>model_dump_json</span><span>(</span><span style=color:#bf616a>indent</span><span>=</span><span style=color:#d08770>2</span><span>))
+</span><span>{
+</span><span>  "</span><span style=color:#a3be8c>patient_id</span><span>": </span><span style=color:#d08770>9428</span><span>,
+</span><span>  "</span><span style=color:#a3be8c>date_of_birth</span><span>": "</span><span style=color:#a3be8c>2022-06-24</span><span>",
+</span><span>  "</span><span style=color:#a3be8c>full_name</span><span>": "</span><span style=color:#a3be8c>e5</span><span>",
+</span><span>  "</span><span style=color:#a3be8c>title</span><span>": null,
+</span><span>  "</span><span style=color:#a3be8c>forename</span><span>": "</span><span style=color:#a3be8c>eb0f2d8ca6e484819494</span><span>",
+</span><span>  "</span><span style=color:#a3be8c>surname</span><span>": null
+</span><span>}
+</span></code></pre><p>All data match the provided schema, including a variety of missing data. Okay, it may fit the (fairly loose) schema but perhaps it’s not entirely <em>representative</em>.<p>To demonstrate how that factory can be extended to include data which better represents the expected values, one can turn to <a href=https://github.com/joke2k/faker><em>Faker</em></a>:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>poetry</span><span> add faker
+</span></code></pre><p>The <code>PatientFactory</code> model can be extended to make use of some in-built functionality in Faker:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>import </span><span>faker
+</span><span>
+</span><span style=color:#b48ead>from </span><span>polyfactory </span><span style=color:#b48ead>import </span><span>Use
+</span><span>
+</span><span>
+</span><span>gb = faker.</span><span style=color:#bf616a>Faker</span><span>("</span><span style=color:#a3be8c>en-GB</span><span>")
+</span><span>
+</span><span style=color:#b48ead>class </span><span style=color:#ebcb8b>PatientFactory</span><span style=color:#eff1f5>(</span><span style=color:#a3be8c>pydantic_factory.ModelFactory</span><span style=color:#eff1f5>):
+</span><span>    __model__ = Patient
+</span><span>
+</span><span>    title = </span><span style=color:#bf616a>Use</span><span>(gb.prefix)
+</span><span>    forename = </span><span style=color:#bf616a>Use</span><span>(gb.first_name)
+</span><span>    surname = </span><span style=color:#bf616a>Use</span><span>(gb.last_name)
+</span></code></pre><p>The above makes use of Polyfactory’s <a href=https://polyfactory.litestar.dev/usage/fields.html#the-use-field><code>Use</code></a> class which takes a callable, in this case three of Faker’s name-related functions, to be invoked at build-time.<p>…which looks like:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span>>>> </span><span style=color:#96b5b4>print</span><span>(</span><span style=color:#bf616a>PatientFactory</span><span>().</span><span style=color:#bf616a>build</span><span>().</span><span style=color:#bf616a>model_dump_json</span><span>(</span><span style=color:#bf616a>indent</span><span>=</span><span style=color:#d08770>2</span><span>))
+</span><span>{
+</span><span>  "</span><span style=color:#a3be8c>patient_id</span><span>": </span><span style=color:#d08770>9201</span><span>,
+</span><span>  "</span><span style=color:#a3be8c>date_of_birth</span><span>": null,
+</span><span>  "</span><span style=color:#a3be8c>full_name</span><span>": "</span><span style=color:#a3be8c>aa104</span><span>",
+</span><span>  "</span><span style=color:#a3be8c>title</span><span>": "</span><span style=color:#a3be8c>Dr</span><span>",
+</span><span>  "</span><span style=color:#a3be8c>forename</span><span>": "</span><span style=color:#a3be8c>Guy</span><span>",
+</span><span>  "</span><span style=color:#a3be8c>surname</span><span>": "</span><span style=color:#a3be8c>Mitchell</span><span>"
+</span><span>}
+</span></code></pre><p>Great, that’s one Dr. Guy Mitchell. However, those values of course can be <code>NULL</code>; it’s straightforward enough to wrap those in <em>another</em> function which will optionally return <code>None</code> instead of a value:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>import </span><span>typing
+</span><span>
+</span><span>
+</span><span style=color:#b48ead>def </span><span style=color:#8fa1b3>_random_nullable</span><span>(</span><span style=color:#bf616a>f</span><span>: typing.Callable) -> str | </span><span style=color:#d08770>None</span><span>:
+</span><span>    </span><span style=color:#b48ead>if </span><span>not </span><span style=color:#bf616a>bool</span><span>(pydantic_factory.ModelFactory.__random__.</span><span style=color:#bf616a>getrandbits</span><span>(</span><span style=color:#d08770>1</span><span>)):
+</span><span>        </span><span style=color:#b48ead>return </span><span style=color:#d08770>None
+</span><span>    
+</span><span>    </span><span style=color:#b48ead>return </span><span style=color:#bf616a>f</span><span>()
+</span><span>
+</span><span>
+</span><span style=color:#b48ead>class </span><span style=color:#ebcb8b>PatientFactory</span><span style=color:#eff1f5>(</span><span style=color:#a3be8c>pydantic_factory.ModelFactory</span><span style=color:#eff1f5>):
+</span><span>    __model__ = Patient
+</span><span>
+</span><span>    title = </span><span style=color:#bf616a>Use</span><span>(_random_nullable, gb.prefix)
+</span><span>    forename = </span><span style=color:#bf616a>Use</span><span>(_random_nullable, gb.first_name)
+</span><span>    surname = </span><span style=color:#bf616a>Use</span><span>(_random_nullable, gb.last_name)
+</span></code></pre><p>However, something like <code>full_name</code> now makes no sense; one <em>could</em> simply repeat the above:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span>full_name = </span><span style=color:#bf616a>Use</span><span>(gb.name)
+</span></code></pre><p>…but the resulting name would be inconsistent with the other name components. Polyfactory has a couple of options here but I’ll make use of the <a href=https://polyfactory.litestar.dev/latest/usage/decorators.html><code>post_generated</code></a> decorator:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>from </span><span>polyfactory.decorators </span><span style=color:#b48ead>import </span><span>post_generated
+</span><span>
+</span><span>
+</span><span style=color:#b48ead>class </span><span style=color:#ebcb8b>PatientFactory</span><span style=color:#eff1f5>(</span><span style=color:#a3be8c>pydantic_factory.ModelFactory</span><span style=color:#eff1f5>):
+</span><span>    __model__ = Patient
+</span><span>
+</span><span>    title = </span><span style=color:#bf616a>Use</span><span>(_random_nullable, gb.prefix)
+</span><span>    forename = </span><span style=color:#bf616a>Use</span><span>(_random_nullable, gb.first_name)
+</span><span>    surname = </span><span style=color:#bf616a>Use</span><span>(_random_nullable, gb.last_name)
+</span><span>
+</span><span>    @</span><span style=color:#bf616a>post_generated
+</span><span>    @</span><span style=color:#96b5b4>classmethod
+</span><span>    </span><span style=color:#b48ead>def </span><span style=color:#8fa1b3>full_name</span><span>(
+</span><span>        </span><span style=color:#bf616a>cls</span><span>,
+</span><span>        </span><span style=color:#bf616a>title</span><span>: str | </span><span style=color:#d08770>None</span><span>,
+</span><span>        </span><span style=color:#bf616a>forename</span><span>: str | </span><span style=color:#d08770>None</span><span>,
+</span><span>        </span><span style=color:#bf616a>surname</span><span>: str | </span><span style=color:#d08770>None</span><span>,
+</span><span>    ) -> str | </span><span style=color:#d08770>None</span><span>:
+</span><span>        </span><span style=color:#b48ead>if </span><span>not (parts := </span><span style=color:#bf616a>list</span><span>(</span><span style=color:#96b5b4>filter</span><span>(</span><span style=color:#d08770>None</span><span>, [title, forename, surname]))):
+</span><span>            </span><span style=color:#b48ead>return </span><span style=color:#d08770>None
+</span><span>
+</span><span>        </span><span style=color:#b48ead>return </span><span>" ".</span><span style=color:#bf616a>join</span><span>(parts)
+</span></code></pre><p>Here, I’ve defined a function with both <code>classmethod</code> and <code>post_generated</code> decorators which takes the name component fields as arguments. If they’re all <code>None</code>, the resulting <code>full_name</code> must be <code>None</code>, otherwise the components are combined into the final value, resulting in:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span>>>> </span><span style=color:#96b5b4>print</span><span>(</span><span style=color:#bf616a>PatientFactory</span><span>().</span><span style=color:#bf616a>build</span><span>().</span><span style=color:#bf616a>model_dump_json</span><span>(</span><span style=color:#bf616a>indent</span><span>=</span><span style=color:#d08770>2</span><span>))
+</span><span>{
+</span><span>  "</span><span style=color:#a3be8c>patient_id</span><span>": </span><span style=color:#d08770>2685</span><span>,
+</span><span>  "</span><span style=color:#a3be8c>date_of_birth</span><span>": "</span><span style=color:#a3be8c>2022-06-09</span><span>",
+</span><span>  "</span><span style=color:#a3be8c>full_name</span><span>": "</span><span style=color:#a3be8c>Mrs Guy Kaur</span><span>",
+</span><span>  "</span><span style=color:#a3be8c>title</span><span>": "</span><span style=color:#a3be8c>Mrs</span><span>",
+</span><span>  "</span><span style=color:#a3be8c>forename</span><span>": "</span><span style=color:#a3be8c>Guy</span><span>",
+</span><span>  "</span><span style=color:#a3be8c>surname</span><span>": "</span><span style=color:#a3be8c>Kaur</span><span>"
+</span><span>}
+</span></code></pre><p>Pleased to meet you, Mrs. Guy Kaur.<p>To demonstrate one last feature, I’ll look at the <code>date_of_birth</code> field. As can be seen above, it’s correctly generating (optionally-null) dates. However, Faker has a number of date-related functions:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span>>>> </span><span style=color:#96b5b4>print</span><span>("</span><span style=color:#96b5b4>\n</span><span>".</span><span style=color:#bf616a>join</span><span>(f </span><span style=color:#b48ead>for </span><span>f </span><span style=color:#b48ead>in </span><span style=color:#96b5b4>dir</span><span>(gb) </span><span style=color:#b48ead>if </span><span>"</span><span style=color:#a3be8c>date</span><span>" in f.</span><span style=color:#bf616a>lower</span><span>()))
+</span><span>date
+</span><span>date_between
+</span><span>date_between_dates
+</span><span>date_object
+</span><span>date_of_birth
+</span><span>date_this_century
+</span><span>date_this_decade
+</span><span>date_this_month
+</span><span>date_this_year
+</span><span>date_time
+</span><span>date_time_ad
+</span><span>date_time_between
+</span><span>date_time_between_dates
+</span><span>date_time_this_century
+</span><span>date_time_this_decade
+</span><span>date_time_this_month
+</span><span>date_time_this_year
+</span><span>future_date
+</span><span>future_datetime
+</span><span>passport_dates
+</span><span>past_date
+</span><span>past_datetime
+</span></code></pre><p>…several of which would be more appropriate (<code>past_date</code>, for instance). What, in the spirit of things, I want the range of data to match a distribution?<p>According to the <a href=https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/bulletins/annualmidyearpopulationestimates/mid2022>ONS</a>, the average (median, apparently) age in the UK is 40.7 years (there are <a href=https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/bulletins/annualmidyearpopulationestimates/mid2023>later</a> data but there’s no convenient headline figure).<p>With that in mind, I can make use of <a href=https://numpy.org/>NumPy</a>:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>poetry</span><span> add numpy
+</span></code></pre><p>…to provide a normal distribution around that value (making some assumptions about standard deviation):<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>from </span><span>datetime </span><span style=color:#b48ead>import </span><span>date, timedelta
+</span><span>
+</span><span>
+</span><span style=color:#b48ead>def </span><span style=color:#8fa1b3>_random_date_of_birth</span><span>() -> date:
+</span><span>    today = date.</span><span style=color:#bf616a>today</span><span>()
+</span><span>    peak = today - </span><span style=color:#bf616a>timedelta</span><span>(</span><span style=color:#bf616a>days</span><span>=</span><span style=color:#d08770>365 </span><span>* </span><span style=color:#d08770>40</span><span>)
+</span><span>    offset_days = </span><span style=color:#bf616a>int</span><span>(numpy.random.</span><span style=color:#bf616a>normal</span><span>(</span><span style=color:#bf616a>loc</span><span>=</span><span style=color:#d08770>0</span><span>, </span><span style=color:#bf616a>scale</span><span>=</span><span style=color:#d08770>365 </span><span>* </span><span style=color:#d08770>15</span><span>))
+</span><span>
+</span><span>    </span><span style=color:#b48ead>return </span><span>peak + </span><span style=color:#bf616a>timedelta</span><span>(</span><span style=color:#bf616a>days</span><span>=offset_days)
+</span><span>
+</span><span>
+</span><span style=color:#b48ead>class </span><span style=color:#ebcb8b>PatientFactory</span><span style=color:#eff1f5>(</span><span style=color:#a3be8c>pydantic_factory.ModelFactory</span><span style=color:#eff1f5>):
+</span><span>    __model__ = Patient
+</span><span>
+</span><span>    title = </span><span style=color:#bf616a>Use</span><span>(_random_nullable, gb.prefix)
+</span><span>    forename = </span><span style=color:#bf616a>Use</span><span>(_random_nullable, gb.first_name)
+</span><span>    surname = </span><span style=color:#bf616a>Use</span><span>(_random_nullable, gb.last_name)
+</span><span>    date_of_birth = </span><span style=color:#bf616a>Use</span><span>(_random_nullable, _random_date_of_birth)
+</span></code></pre><p>Functionally, that shouldn’t affect the way the data appear but the <code>date_of_birth</code> field will now follow a normal distribution, centred around the likely average age of a patient.<p>That’s it. That’s Polyfactory in a nutshell: with a simple Pydantic model (<a href=https://polyfactory.litestar.dev/latest/usage/library_factories/index.html>other factories are available</a>), it’s possible to generate data which matches that model. Equally, it’s possible to incrementally extend it as particular fields—or the relationship between fields—is better understood.<p>Perhaps the biggest challenge is that it does require that one knows one’s data in order to properly model it. However, it does require that one <em>know one’s data</em> to properly model it. And how could that possibly be a bad thing?</article><hr><nav id=post-nav><a class="post-nav-item post-nav-prev" href=https://blog.psypherpunk.io/blog/metactf-november-2024-flash-ctf/> <div class=nav-arrow>Previous</div> <span class=post-title>️🏴 MetaCTF November 2024 Flash CTF</span> </a><a class="post-nav-item post-nav-next" href=https://blog.psypherpunk.io/blog/metactf-january-2025-flash-ctf/> <div class=nav-arrow>Next</div> <span class=post-title>️🏴 MetaCTF January 2025 Flash CTF</span> </a></nav></main><footer id=site-footer><nav><ul><li><a href=https://blog.psypherpunk.io/blog/>Blog</a></ul></nav><p>© 2025 PsypherPunk<ul id=socials><li><a rel=" me" href=https://github.com/PsypherPunk title=GitHub> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EGitHub%3C/title%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>GitHub</span> </a><li><a rel=" me" href=https://hachyderm.io/@psypherpunk title=Mastodon> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EMastodon%3C/title%3E%3Cpath d='M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 0 0 .023-.043v-1.809a.052.052 0 0 0-.02-.041.053.053 0 0 0-.046-.01 20.282 20.282 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 0 1-.319-1.433.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546.376 0 .75 0 1.125-.01 1.57-.044 3.224-.124 4.768-.422.038-.008.077-.015.11-.024 2.435-.464 4.753-1.92 4.989-5.604.008-.145.03-1.52.03-1.67.002-.512.167-3.63-.024-5.545zm-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102c0-1.31.337-2.35 1.011-3.12.696-.77 1.608-1.164 2.74-1.164 1.311 0 2.302.5 2.962 1.498l.638 1.06.638-1.06c.66-.999 1.65-1.498 2.96-1.498 1.13 0 2.043.395 2.74 1.164.675.77 1.012 1.81 1.012 3.12z'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>Mastodon</span> </a><li><a rel=" me" href=https://twitter.com/PsypherPunk title=Twitter> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3ETwitter%3C/title%3E%3Cpath d='M21.543 7.104c.015.211.015.423.015.636 0 6.507-4.954 14.01-14.01 14.01v-.003A13.94 13.94 0 0 1 0 19.539a9.88 9.88 0 0 0 7.287-2.041 4.93 4.93 0 0 1-4.6-3.42 4.916 4.916 0 0 0 2.223-.084A4.926 4.926 0 0 1 .96 9.167v-.062a4.887 4.887 0 0 0 2.235.616A4.928 4.928 0 0 1 1.67 3.148 13.98 13.98 0 0 0 11.82 8.292a4.929 4.929 0 0 1 8.39-4.49 9.868 9.868 0 0 0 3.128-1.196 4.941 4.941 0 0 1-2.165 2.724A9.828 9.828 0 0 0 24 4.555a10.019 10.019 0 0 1-2.457 2.549z'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>Twitter</span> </a></ul></footer>

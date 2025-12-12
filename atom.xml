@@ -1,0 +1,899 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>psypherpunk::blog</title>
+    <link rel="self" type="application/atom+xml" href="https://blog.psypherpunk.io/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2025-12-12T00:00:00+00:00</updated>
+    <id>https://blog.psypherpunk.io/atom.xml</id>
+    <entry xml:lang="en">
+        <title>️A Christmas Puzzle</title>
+        <published>2025-12-12T00:00:00+00:00</published>
+        <updated>2025-12-12T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/a-christmas-puzzle/"/>
+        <id>https://blog.psypherpunk.io/blog/a-christmas-puzzle/</id>
+        
+        <content type="html" xml:base="https://blog.psypherpunk.io/blog/a-christmas-puzzle/">&lt;p&gt;With &lt;em&gt;Advent of Code&lt;&#x2F;em&gt; running a little
+&lt;a href=&quot;https:&#x2F;&#x2F;adventofcode.com&#x2F;2025&#x2F;about#faq_num_days&quot;&gt;shorter&lt;&#x2F;a&gt; this year, I put
+together a quick puzzle with which I challenged the folks at work.&lt;&#x2F;p&gt;
+&lt;p&gt;With the exception of one person who, over the course of several days and
+numerous guesses, managed to coax an LLM into giving them the right answer, it
+is as yet unsolved.&lt;&#x2F;p&gt;
+&lt;p&gt;So here it is: there’s a message hidden in this file—what is it?&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;&#x2F;a-christmas-carol.b64&quot;&gt;&lt;code&gt;a-christmas-carol.b64&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🏴 MetaCTF August 2025 Flash CTF</title>
+        <published>2025-08-29T00:00:00+00:00</published>
+        <updated>2025-08-29T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/metactf-august-2025-flash-ctf/"/>
+        <id>https://blog.psypherpunk.io/blog/metactf-august-2025-flash-ctf/</id>
+        
+        <content type="html" xml:base="https://blog.psypherpunk.io/blog/metactf-august-2025-flash-ctf/">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A free monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training, TCM Security, and Simply Cyber Academy. There will be 5
+challenges and you will have 2 hours to solve as many as you can. This CTF
+will include both beginner and difficult challenges.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;aug2025&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;aug2025&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;baby-something&quot;&gt;Baby Something&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;How does the song go again? Baby something do do do do do do…&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;Download the artifact
+&lt;a href=&quot;https:&#x2F;&#x2F;metaproblems.com&#x2F;68cac23cb90cd83f95380ab13319f799&#x2F;babysomething.pcap&quot;&gt;here&lt;&#x2F;a&gt;.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;The provided packet capture is involves only a single HTTP request&#x2F;response,
+the latter of which, courtesy of Wireshare (as hinted at in the
+description—thanks for that earworm), contains HTML and the flag:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;html&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-html &quot;&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span&gt;&amp;lt;!doctype html&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;html &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;lang&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;en&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;head&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;meta &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;charset&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;utf-8&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;title&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;Baby Shark Fan Page&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;title&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;head&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;h1&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;Baby Shark Fan Page&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;h1&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;p&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;doo doo doo doo doo doo ð¦&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;p&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;p&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;We love Baby Shark and all things sharky.&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;p&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;     &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;pre &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;style&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;border:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1px &lt;&#x2F;span&gt;&lt;span&gt;solid &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;#ddd&lt;&#x2F;span&gt;&lt;span&gt;;padding:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;8px&lt;&#x2F;span&gt;&lt;span&gt;;&amp;quot;&amp;gt;MetaCTF{w1r3sh4rk_do0_d0o_d00_d00_doo_do0}&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;pre&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;body&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;html&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;all-about-flags&quot;&gt;All About Flags&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;I wrote a command line application all about flags! Can you take a look at
+it for me?&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;There’s downloads both for
+&lt;a href=&quot;https:&#x2F;&#x2F;metaproblems.com&#x2F;1846d06461dd8b20feb4153d20005405&#x2F;all-about-flags.exe&quot;&gt;Windows&lt;&#x2F;a&gt;
+and
+&lt;a href=&quot;https:&#x2F;&#x2F;metaproblems.com&#x2F;1846d06461dd8b20feb4153d20005405&#x2F;all-about-flags&quot;&gt;Linux&lt;&#x2F;a&gt;,
+but they’re functionally the same, just download the version for whichever
+OS you prefer.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;There might be more to this one but the flag appears in plaintext in the binary:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;❯&lt;&#x2F;span&gt;&lt;span&gt; strings all-about-flags | &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sed -rn &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;s@^.*(MetaCTF\{.+\}).*$@\1@p&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;MetaCTF{I_f1y_m4ny_fl4g5_4nd_c4p7ur3_3v3n_m0r3&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;rainbow-box&quot;&gt;Rainbow Box&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Several planes crashed in the same location, but we could only find one
+black box. All we found was this weird rainbow image? Can you make anything
+out?&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;Download the image
+&lt;a href=&quot;https:&#x2F;&#x2F;metaproblems.com&#x2F;9567319b4223296f1ecfba2957c1e4e9&#x2F;rainbow_box.png&quot;&gt;here&lt;&#x2F;a&gt;.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Planes? &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Bit_plane&quot;&gt;Bit planes&lt;&#x2F;a&gt;? &lt;em&gt;Geddit&lt;&#x2F;em&gt;?&lt;&#x2F;p&gt;
+&lt;p&gt;Taking a leaf out of this article on
+&lt;em&gt;&lt;a href=&quot;https:&#x2F;&#x2F;medium.com&#x2F;@stephanie.werli&#x2F;image-steganography-with-python-83381475da57&quot;&gt;Image Steganography with Python&lt;&#x2F;a&gt;&lt;&#x2F;em&gt;,
+the code therein reveals this:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;img&#x2F;metactf-2025-aug-bitplanes-000.png&quot; alt=&quot;bitplanes-000.png&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;…so characters are indeed hidden in the image but this doesn’t quite make them
+legible (as it’s for gray-scale images, as per that article.)&lt;&#x2F;p&gt;
+&lt;p&gt;I managed to produce some code that extends the above and produces this:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;img&#x2F;metactf-2025-aug-bitplanes-001.png&quot; alt=&quot;bitplanes-001.png&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;…which has &lt;em&gt;“…all the right notes but not necessarily in the right order.”&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;However, a quick search for “bitplane steganography tool” turns up
+&lt;em&gt;&lt;a href=&quot;https:&#x2F;&#x2F;georgeom.net&#x2F;StegOnline&#x2F;upload&quot;&gt;StegOnline&lt;&#x2F;a&gt;&lt;&#x2F;em&gt; which manages the above
+with little effort: &lt;code&gt;MetaCTF{fly-b1tpl4ne}&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;on-the-grid&quot;&gt;On The Grid&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;metaproblems.com&#x2F;a5abc995fb40c48302a17b92cf61ebe8&#x2F;on_the_grid.jpg&quot; alt=&quot;on_the_grid.jpg&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;I was hanging out on Granite Beach when I found a message in a bottle, it
+didn’t say very much though. Can you help me figure out where it came from?
+Here’s the transcript:&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;&lt;code&gt;Help!&lt;&#x2F;code&gt;&lt;&#x2F;em&gt;
+&lt;em&gt;&lt;code&gt;4V FH 246 677&lt;&#x2F;code&gt;&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;The answer to the challenge is the name of the location the message was most
+likely written at.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Some searching suggests that “FV…” might be a “Military Grid Reference System”.
+Given the name of the challenge, that sounds promising.&lt;&#x2F;p&gt;
+&lt;p&gt;This site,
+&lt;em&gt;&lt;a href=&quot;https:&#x2F;&#x2F;latlongdata.com&#x2F;mgrs-converter&#x2F;&quot;&gt;MGRS Converter: Military Grid Reference System&lt;&#x2F;a&gt;&lt;&#x2F;em&gt;,
+converts that value to a latitude of &lt;code&gt;56.53711577&lt;&#x2F;code&gt; and longitude of
+&lt;code&gt;-156.97382099&lt;&#x2F;code&gt;, which Google Maps shows to be
+&lt;em&gt;&lt;a href=&quot;https:&#x2F;&#x2F;maps.app.goo.gl&#x2F;F6DdBU8Sy2Cv6o3t5&quot;&gt;Foggy Cape&lt;&#x2F;a&gt;&lt;&#x2F;em&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;super-quick-logic-invitational&quot;&gt;Super Quick Logic Invitational&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;I’ll take “Rather Vexing” for 500 Alex.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;This new trivia game is pretty fun, but one of the challenges is impossible!
+“What is the flag for this CTF challenge?”, how would I know?! Maybe you’ll
+fare better?&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;The site presents &lt;em&gt;“201 unique problems to solve each game, you’ll never
+believe what’s the answer to challenge 201!”&lt;&#x2F;em&gt;, presumably the flag…?&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;“What is the largest prime factor of 625?”&lt;&#x2F;em&gt;. After a surprising number of
+lucky guesses, it seems that the classic &lt;code&gt;&#x27; OR 1=1 --&lt;&#x2F;code&gt; works—the site is
+vulnerable to SQLi.&lt;&#x2F;p&gt;
+&lt;p&gt;Using a classic &lt;code&gt;UNION&lt;&#x2F;code&gt; attack, via &lt;code&gt;&#x27;UNION SELECT &#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;, &#x27;D&#x27; --&lt;&#x2F;code&gt;,
+shows that there are 4 parameters being returned. However, those values don’t
+show up until the site’s 30 second countdown has completed, at which point &lt;code&gt;C&lt;&#x2F;code&gt;
+shows up in the &lt;em&gt;Answer&lt;&#x2F;em&gt; value.&lt;&#x2F;p&gt;
+&lt;p&gt;Thankfully, forcing an error by closing the &lt;code&gt;&#x27;&lt;&#x2F;code&gt; and passing in any ol’ garbage,
+like &lt;code&gt;&#x27;!&quot;£$%^&amp;amp;*()_&lt;&#x2F;code&gt;, results in an error:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;json&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-json &quot;&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;error&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;:&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;unrecognized token: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;!&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;query&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;:&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;SELECT * FROM problems WHERE id = 164 AND answer = &amp;#39;&amp;#39;!&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\&amp;quot;\u00a3&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;$%^&amp;amp;*()_&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;…revealing both the table and column of interest. Putting those discoveries
+together and passing:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sql&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sql &quot;&gt;&lt;code class=&quot;language-sql&quot; data-lang=&quot;sql&quot;&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt; UNION SELECT &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;&amp;#39;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;&amp;#39;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;, (SELECT answer FROM problems WHERE id = 201), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;&amp;#39;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt; --
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;…results in a page containing:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;Answer: MetaCTF{wh4t_1s_7h3_fl4g_f0r_7hi5_ch5l1eng3}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;spreadsheet&quot;&gt;Spreadsheet&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;I can’t afford Office 365 so I’ve decided to roll my own. What could
+possibly go wrong!&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;My spreadsheet application is a work in progress but feel free to give it a
+try. You can download my program
+&lt;a href=&quot;https:&#x2F;&#x2F;metaproblems.com&#x2F;751ed25efb17cbc11a50ed717d81fcdd&#x2F;spreadsheet.zip&quot;&gt;here&lt;&#x2F;a&gt;.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;The “spreadsheet” app. is a TUI tool allowing editing, loading, saving and
+printing of—as you might guess—a spreadsheet:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;❯&lt;&#x2F;span&gt;&lt;span&gt; .&#x2F;spreadsheet.bin b
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Options:&lt;&#x2F;span&gt;&lt;span&gt; (P)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rint,&lt;&#x2F;span&gt;&lt;span&gt; (E)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;dit,&lt;&#x2F;span&gt;&lt;span&gt; (L)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;oad,&lt;&#x2F;span&gt;&lt;span&gt; (S)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ave,&lt;&#x2F;span&gt;&lt;span&gt; (Q)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;uit
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;As can be seen from the &lt;code&gt;print_spreadsheet&lt;&#x2F;code&gt; function (courtesy of Ghidra), it
+actually occupies a static 10x10 array (of &lt;code&gt;char *&lt;&#x2F;code&gt;):&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;print_spreadsheet&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;void&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; row;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt; col;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;putchar&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;9&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;(col = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; col &amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;; col = col + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;%c&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\t&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,(ulong)(col + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0x41&lt;&#x2F;span&gt;&lt;span&gt;));
+&lt;&#x2F;span&gt;&lt;span&gt;  }
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;putchar&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;(row = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; row &amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;; row = row + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;%2d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\t&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,(ulong)(row + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;));
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;(col = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; col &amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;; col = col + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;printf&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;%4s&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\t&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,spreadsheet[row][col]);
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;putchar&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;  }
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The filename, &lt;code&gt;spreadsheet.csv&lt;&#x2F;code&gt;, is also static and, more importantly, its
+pointer sits right next to the above array on the stack.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;edit_spreadsheet&lt;&#x2F;code&gt; contains no validation around which characters can be
+entered into a “cell”, so it’s possible to write additional columns:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;csv&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-csv &quot;&gt;&lt;code class=&quot;language-csv&quot; data-lang=&quot;csv&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;MPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;X&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;flag.txt&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Equally, &lt;code&gt;load_spreadsheet&lt;&#x2F;code&gt; doesn’t correctly validate the columns on read,
+just using &lt;code&gt;strtok&lt;&#x2F;code&gt; to catch instances of &lt;code&gt;,&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;void &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;load_spreadsheet&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;void&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;…
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    row = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;((pcVar3 = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;fgets&lt;&#x2F;span&gt;&lt;span&gt;(line,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0x400&lt;&#x2F;span&gt;&lt;span&gt;,__stream), pcVar3 != (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span&gt;*)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0x0 &lt;&#x2F;span&gt;&lt;span&gt;&amp;amp;&amp;amp;
+&lt;&#x2F;span&gt;&lt;span&gt;           (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sVar2 &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;strlen&lt;&#x2F;span&gt;&lt;span&gt;(line), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1 &lt;&#x2F;span&gt;&lt;span&gt;&amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;sVar2&lt;&#x2F;span&gt;&lt;span&gt;))) {
+&lt;&#x2F;span&gt;&lt;span&gt;      col = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;      val = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;strtok&lt;&#x2F;span&gt;&lt;span&gt;(line,&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;);
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;while &lt;&#x2F;span&gt;&lt;span&gt;(val != (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span&gt;*)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0x0&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;free&lt;&#x2F;span&gt;&lt;span&gt;(spreadsheet[row][col]);
+&lt;&#x2F;span&gt;&lt;span&gt;        pcVar3 = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;strdup&lt;&#x2F;span&gt;&lt;span&gt;(val);
+&lt;&#x2F;span&gt;&lt;span&gt;        spreadsheet[row][col] = pcVar3;
+&lt;&#x2F;span&gt;&lt;span&gt;        val = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;strtok&lt;&#x2F;span&gt;&lt;span&gt;((&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;char &lt;&#x2F;span&gt;&lt;span&gt;*)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0x0&lt;&#x2F;span&gt;&lt;span&gt;,&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;);
+&lt;&#x2F;span&gt;&lt;span&gt;        col = col + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;      }
+&lt;&#x2F;span&gt;&lt;span&gt;      row = row + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;fclose&lt;&#x2F;span&gt;&lt;span&gt;(__stream);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;puts&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Spreadsheet loaded!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;);
+&lt;&#x2F;span&gt;&lt;span&gt;  }
+&lt;&#x2F;span&gt;&lt;span&gt;…
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;In the above example, &lt;code&gt;flag.txt&lt;&#x2F;code&gt; would be read in as an &lt;em&gt;additional&lt;&#x2F;em&gt; value
+after the 10x10 array…right into the filename pointer!&lt;&#x2F;p&gt;
+&lt;p&gt;Once that’s done, loading the file &lt;em&gt;again&lt;&#x2F;em&gt; would cause &lt;code&gt;flag.txt&lt;&#x2F;code&gt; to be read,
+after which it should be possible to display the flag:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;❯&lt;&#x2F;span&gt;&lt;span&gt; nc kubenode.mctf.io 31009
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Options:&lt;&#x2F;span&gt;&lt;span&gt; (P)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rint,&lt;&#x2F;span&gt;&lt;span&gt; (E)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;dit,&lt;&#x2F;span&gt;&lt;span&gt; (L)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;oad,&lt;&#x2F;span&gt;&lt;span&gt; (S)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ave,&lt;&#x2F;span&gt;&lt;span&gt; (Q)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;uit
+&lt;&#x2F;span&gt;&lt;span&gt; &amp;gt; E
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Enter&lt;&#x2F;span&gt;&lt;span&gt; cell (i.e. &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;B7&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span&gt; J10
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Enter&lt;&#x2F;span&gt;&lt;span&gt; new value: X,flag.txt
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Value&lt;&#x2F;span&gt;&lt;span&gt; updated!
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Options:&lt;&#x2F;span&gt;&lt;span&gt; (P)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rint,&lt;&#x2F;span&gt;&lt;span&gt; (E)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;dit,&lt;&#x2F;span&gt;&lt;span&gt; (L)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;oad,&lt;&#x2F;span&gt;&lt;span&gt; (S)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ave,&lt;&#x2F;span&gt;&lt;span&gt; (Q)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;uit
+&lt;&#x2F;span&gt;&lt;span&gt; &amp;gt; S
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Spreadsheet&lt;&#x2F;span&gt;&lt;span&gt; saved!
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Options:&lt;&#x2F;span&gt;&lt;span&gt; (P)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rint,&lt;&#x2F;span&gt;&lt;span&gt; (E)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;dit,&lt;&#x2F;span&gt;&lt;span&gt; (L)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;oad,&lt;&#x2F;span&gt;&lt;span&gt; (S)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ave,&lt;&#x2F;span&gt;&lt;span&gt; (Q)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;uit
+&lt;&#x2F;span&gt;&lt;span&gt; &amp;gt; L
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Spreadsheet&lt;&#x2F;span&gt;&lt;span&gt; loaded!
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Options:&lt;&#x2F;span&gt;&lt;span&gt; (P)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rint,&lt;&#x2F;span&gt;&lt;span&gt; (E)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;dit,&lt;&#x2F;span&gt;&lt;span&gt; (L)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;oad,&lt;&#x2F;span&gt;&lt;span&gt; (S)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ave,&lt;&#x2F;span&gt;&lt;span&gt; (Q)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;uit
+&lt;&#x2F;span&gt;&lt;span&gt; &amp;gt; L
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Spreadsheet&lt;&#x2F;span&gt;&lt;span&gt; loaded!
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Options:&lt;&#x2F;span&gt;&lt;span&gt; (P)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;rint,&lt;&#x2F;span&gt;&lt;span&gt; (E)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;dit,&lt;&#x2F;span&gt;&lt;span&gt; (L)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;oad,&lt;&#x2F;span&gt;&lt;span&gt; (S)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ave,&lt;&#x2F;span&gt;&lt;span&gt; (Q)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;uit
+&lt;&#x2F;span&gt;&lt;span&gt; &amp;gt; P
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;A&lt;&#x2F;span&gt;&lt;span&gt;       B       C       D       E       F       G       H       I       J
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;      MetaCTF{c0mm4_c0mm4_c0mm4_c0mma_c0mm4_ch4m3l30n}
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;EMPTY&lt;&#x2F;span&gt;&lt;span&gt;   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;      EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;3&lt;&#x2F;span&gt;&lt;span&gt;      EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;4&lt;&#x2F;span&gt;&lt;span&gt;      EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;      EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;6&lt;&#x2F;span&gt;&lt;span&gt;      EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;7&lt;&#x2F;span&gt;&lt;span&gt;      EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;8&lt;&#x2F;span&gt;&lt;span&gt;      EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;9&lt;&#x2F;span&gt;&lt;span&gt;      EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;      EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY   EMPTY      X
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🏴 404 on the Dancefloor</title>
+        <published>2025-07-10T00:00:00+00:00</published>
+        <updated>2025-07-10T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/404-on-the-dancefloor/"/>
+        <id>https://blog.psypherpunk.io/blog/404-on-the-dancefloor/</id>
+        
+        <summary type="html">&lt;p&gt;As always, an announcement on
+&lt;a href=&quot;https:&#x2F;&#x2F;x.com&#x2F;prjctmammoth&#x2F;status&#x2F;1939932908573086182&quot;&gt;Twitter&lt;&#x2F;a&gt; kicks things
+off…&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️📦 HackTheBox: UnderPass</title>
+        <published>2025-05-11T00:00:00+00:00</published>
+        <updated>2025-05-11T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/htb-machine-easy-underpass/"/>
+        <id>https://blog.psypherpunk.io/blog/htb-machine-easy-underpass/</id>
+        
+        <summary type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;app.hackthebox.com&#x2F;machines&#x2F;UnderPass&quot;&gt;UnderPass&lt;&#x2F;a&gt; is the most recently
+retired of HackTheBox’s machines and one that I’m not ashamed to admit took me
+far too long to solve.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🏴 MetaCTF January 2025 Flash CTF</title>
+        <published>2025-01-26T00:00:00+00:00</published>
+        <updated>2025-01-26T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/metactf-january-2025-flash-ctf/"/>
+        <id>https://blog.psypherpunk.io/blog/metactf-january-2025-flash-ctf/</id>
+        
+        <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training, TCM Security, Simply Cyber Academy. There will be 5
+challenges and you will have 2 hours to solve as many as you can. This is a
+beginner-friendly CTF.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;jan2025&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;jan2025&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🐍 Polyfactory and Patients</title>
+        <published>2024-12-03T00:00:00+00:00</published>
+        <updated>2024-12-03T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/polyfactory-and-patients/"/>
+        <id>https://blog.psypherpunk.io/blog/polyfactory-and-patients/</id>
+        
+        <summary type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.meetup.com&#x2F;pydata-leeds&#x2F;&quot;&gt;PyData Leeds&lt;&#x2F;a&gt; was recently fortunate
+enough to play host to the
+&lt;a href=&quot;https:&#x2F;&#x2F;hippodigital.co.uk&#x2F;blog&#x2F;tackling-high-quality-test-data-generation-at-pydatas-nhs-data-community-takeover&#x2F;&quot;&gt;“NHS Data Community Takeover”&lt;&#x2F;a&gt;.
+To preface things with a quote from that blog post:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Unfortunately, quality test data is non-existent as some (if not most) NHS
+organisations, especially data that reflects real-life use cases and the
+depth of complexity the real world represents. This is particularly
+challenging given the weight of this dataset, it’s real people’s healthcare
+data and it deserves the respect we give it.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🏴 MetaCTF November 2024 Flash CTF</title>
+        <published>2024-11-21T00:00:00+00:00</published>
+        <updated>2024-11-21T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/metactf-november-2024-flash-ctf/"/>
+        <id>https://blog.psypherpunk.io/blog/metactf-november-2024-flash-ctf/</id>
+        
+        <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security. There will be 5 challenges and you will
+have 2 hours to solve as many as you can. This is a beginner-friendly CTF.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;sep2024&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;sep2024&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🏴 MetaCTF August 2024 Flash CTF</title>
+        <published>2024-08-22T00:00:00+00:00</published>
+        <updated>2024-08-22T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/metactf-august-2024-flash-ctf/"/>
+        <id>https://blog.psypherpunk.io/blog/metactf-august-2024-flash-ctf/</id>
+        
+        <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security. There will be 5 challenges and you will
+have 2 hours to solve as many as you can. This is a beginner-friendly CTF.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;aug2024&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;aug2024&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🏴 MetaCTF July 2024 Flash CTF</title>
+        <published>2024-07-19T00:00:00+00:00</published>
+        <updated>2024-07-19T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/metactf-july-2024-flash-ctf/"/>
+        <id>https://blog.psypherpunk.io/blog/metactf-july-2024-flash-ctf/</id>
+        
+        <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security. There will be 5 challenges and you will
+have 2 hours to solve as many as you can. This is a beginner-friendly CTF.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;jul2024&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;jul2024&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🏴 MetaCTF June 2024 Flash CTF</title>
+        <published>2024-06-21T00:00:00+00:00</published>
+        <updated>2024-06-21T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/metactf-june-2024-flash-ctf/"/>
+        <id>https://blog.psypherpunk.io/blog/metactf-june-2024-flash-ctf/</id>
+        
+        <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security. There will be 5 challenges and you will
+have 2 hours to solve as many as you can. This is a beginner-friendly CTF.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;jun2024&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;jun2024&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🏴 MetaCTF May 2024 Flash CTF</title>
+        <published>2024-05-24T00:00:00+00:00</published>
+        <updated>2024-05-24T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/metactf-may-2024-flash-ctf/"/>
+        <id>https://blog.psypherpunk.io/blog/metactf-may-2024-flash-ctf/</id>
+        
+        <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security. There will be 5 challenges and you will
+have 2 hours to solve as many as you can. This is a beginner-friendly CTF.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;may2024&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;may2024&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🏴 MetaCTF April 2024 Flash CTF</title>
+        <published>2024-04-26T00:00:00+00:00</published>
+        <updated>2024-04-26T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/metactf-april-2024-flash-ctf/"/>
+        <id>https://blog.psypherpunk.io/blog/metactf-april-2024-flash-ctf/</id>
+        
+        <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security. There will be 5 challenges and you will
+have 2 hours to solve as many as you can. This is a beginner-friendly CTF.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Details here: &lt;a href=&quot;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;apr2024&quot;&gt;https:&#x2F;&#x2F;app.metactf.com&#x2F;join&#x2F;apr2024&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🏴 MetaCTF March 2024 Flash CTF</title>
+        <published>2024-03-22T00:00:00+00:00</published>
+        <updated>2024-03-22T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/metactf-march-2024-flash-ctf/"/>
+        <id>https://blog.psypherpunk.io/blog/metactf-march-2024-flash-ctf/</id>
+        
+        <summary type="html">&lt;h2 id=&quot;metactf-march-2024-flash-ctf&quot;&gt;MetaCTF March 2024 Flash CTF&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF with support from
+Antisyphon Training and TCM Security.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🏴 MetaCTF February 2024 Flash CTF</title>
+        <published>2024-02-23T00:00:00+00:00</published>
+        <updated>2024-02-23T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/metactf-february-2024-flash-ctf/"/>
+        <id>https://blog.psypherpunk.io/blog/metactf-february-2024-flash-ctf/</id>
+        
+        <summary type="html">&lt;h2 id=&quot;metactf-february-2024-flash-ctf&quot;&gt;MetaCTF February 2024 Flash CTF&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;A monthly mini CTF competition organized by MetaCTF and Antisyphon. There
+will be 5 challenges and you will have 2 hours to solve as many as you can.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🏴 BSides London 2023 CTF</title>
+        <published>2024-01-29T00:00:00+00:00</published>
+        <updated>2024-01-29T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/bsides-london-2023/"/>
+        <id>https://blog.psypherpunk.io/blog/bsides-london-2023/</id>
+        
+        <summary type="html">&lt;h2 id=&quot;bsides-london-2023-ctf&quot;&gt;BSides London 2023 CTF&lt;&#x2F;h2&gt;
+&lt;p&gt;Prompted by a message on the
+&lt;a href=&quot;https:&#x2F;&#x2F;www.meetup.com&#x2F;hack-the-box-meetup-uk&#x2F;&quot;&gt;&lt;em&gt;Hack The Box Meetup:UK&lt;&#x2F;em&gt;&lt;&#x2F;a&gt;
+Discord, the below documents my attempt at the CTF from the &lt;em&gt;BSides London
+2023&lt;&#x2F;em&gt; conference, shamelessly purloined from the archive at
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;phyushin&#x2F;bsidesLDN2023&quot;&gt;&lt;code&gt;phyushin&#x2F;bsidesLDN2023&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🏴 Mammoth Mini-CTF 2023</title>
+        <published>2024-01-20T00:00:00+00:00</published>
+        <updated>2024-01-20T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/mammoth-mini-ctf-2023/"/>
+        <id>https://blog.psypherpunk.io/blog/mammoth-mini-ctf-2023/</id>
+        
+        <summary type="html">&lt;h2 id=&quot;mammoth-mini-ctf-2023&quot;&gt;Mammoth Mini-CTF 2023&lt;&#x2F;h2&gt;
+&lt;p&gt;Similar to the previous &lt;a href=&quot;&#x2F;dialed-up-ctf&quot;&gt;&lt;em&gt;Dialed-Up CTF&lt;&#x2F;em&gt;&lt;&#x2F;a&gt;,
+this was announced on
+&lt;a href=&quot;https:&#x2F;&#x2F;x.com&#x2F;prjctmammoth&#x2F;status&#x2F;1662205859273818113&quot;&gt;Twitter&lt;&#x2F;a&gt; with the MP3
+available on &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-mammoth&#x2F;mammoth-ctf-2023&quot;&gt;GitHub&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️📦 HackTheBox: Stocker</title>
+        <published>2023-02-14T00:00:00+00:00</published>
+        <updated>2023-02-14T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/htb-machine-easy-stocker/"/>
+        <id>https://blog.psypherpunk.io/blog/htb-machine-easy-stocker/</id>
+        
+        <summary type="html">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;app.hackthebox.com&#x2F;machines&#x2F;Stocker&quot;&gt;Stocker&lt;&#x2F;a&gt; is one of
+HackTheBox’s &lt;em&gt;Easy&lt;&#x2F;em&gt; machines, now retired (hence this inaugural writeup.)&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🎄 Advent of Code 2021, Day 9</title>
+        <published>2022-08-28T00:00:00+00:00</published>
+        <updated>2022-08-28T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/advent-of-code-2021-day-9/"/>
+        <id>https://blog.psypherpunk.io/blog/advent-of-code-2021-day-9/</id>
+        
+        <summary type="html">&lt;p&gt;In which I decide to stop messing around and do things Properly™ when it comes
+to fallible parsing.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🎄 Advent of Code 2021, Day 7</title>
+        <published>2022-08-27T00:00:00+00:00</published>
+        <updated>2022-08-27T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/advent-of-code-2021-day-7/"/>
+        <id>https://blog.psypherpunk.io/blog/advent-of-code-2021-day-7/</id>
+        
+        <summary type="html">&lt;h2 id=&quot;day-7-the-treachery-of-whales&quot;&gt;&lt;a href=&quot;https:&#x2F;&#x2F;adventofcode.com&#x2F;2021&#x2F;day&#x2F;7&quot;&gt;Day 7: The Treachery of Whales&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;While I’ve completed every star for each year of
+&lt;a href=&quot;https:&#x2F;&#x2F;adventofcode.com&#x2F;&quot;&gt;&lt;em&gt;Advent of Code&lt;&#x2F;em&gt;&lt;&#x2F;a&gt;, I recently realised I hadn’t
+written up my notes from some of the days from last year. Taking the
+opportunity to revisit my efforts, here’s the first missing day from 2021,
+along with some obvervations as to where I fundamentally misunderstood the
+input data.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>️🏴 Dialed Up CTF</title>
+        <published>2022-08-16T00:00:00+00:00</published>
+        <updated>2022-08-16T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/dialed-up-ctf/"/>
+        <id>https://blog.psypherpunk.io/blog/dialed-up-ctf/</id>
+        
+        <summary type="html">&lt;h2 id=&quot;dialed-up-ctf&quot;&gt;Dialed Up CTF&lt;&#x2F;h2&gt;
+&lt;p&gt;I originally noticed this on
+&lt;a href=&quot;https:&#x2F;&#x2F;twitter.com&#x2F;prjctmammoth&#x2F;status&#x2F;1554939919230849024&quot;&gt;Twitter&lt;&#x2F;a&gt;, the
+weekend before DEF CON 30: a &lt;em&gt;“mini-CTF all embedded in  an .mp3”&lt;&#x2F;em&gt;. Who could
+resist?&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>🗃️ Wordle on Sunday</title>
+        <published>2022-03-10T00:00:00+00:00</published>
+        <updated>2022-03-10T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/wordle-on-sunday/"/>
+        <id>https://blog.psypherpunk.io/blog/wordle-on-sunday/</id>
+        
+        <summary type="html">&lt;p&gt;Wordle is everywhere.&lt;&#x2F;p&gt;
+&lt;p&gt;Wordle is everything.&lt;&#x2F;p&gt;
+&lt;p&gt;Soon all will be Wordle.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>💥 Regular Expressions</title>
+        <published>2022-01-21T00:00:00+00:00</published>
+        <updated>2022-01-21T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/regular-expression-gotcha/"/>
+        <id>https://blog.psypherpunk.io/blog/regular-expression-gotcha/</id>
+        
+        <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;One statement, no questions,&lt;&#x2F;em&gt;&lt;br &#x2F;&gt;
+&lt;em&gt;Put your fist up for your regular expressions&lt;&#x2F;em&gt;.&lt;br &#x2F;&gt;
+—Dual Core, &lt;em&gt;Regular Expressions&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Regular expressions are powerful.&lt;&#x2F;p&gt;
+&lt;p&gt;Regular expressions are fun.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>🔁 Zola, okay we&#x27;ll do it your way.</title>
+        <published>2021-11-03T00:00:00+00:00</published>
+        <updated>2021-11-03T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/zola-okay-we-ll-do-it-your-way/"/>
+        <id>https://blog.psypherpunk.io/blog/zola-okay-we-ll-do-it-your-way/</id>
+        
+        <summary type="html">&lt;p&gt;I’d &lt;a href=&quot;https:&#x2F;&#x2F;blog.psypherpunk.io&#x2F;blog&#x2F;hugo-to-zola&#x2F;#fork-it&quot;&gt;previously mentioned&lt;&#x2F;a&gt; that I was
+maintaining a fork of Zola to allow me to use my old deployment model: that of
+having a separate, public repo. which housed my built static-site and
+referencing this as a Git submodule residing the &lt;code&gt;public&lt;&#x2F;code&gt; subdirectory.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>💥 From Hugo to Zola</title>
+        <published>2021-06-12T00:00:00+00:00</published>
+        <updated>2021-06-12T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/hugo-to-zola/"/>
+        <id>https://blog.psypherpunk.io/blog/hugo-to-zola/</id>
+        
+        <summary type="html">&lt;h2 id=&quot;why-are-we-here-again&quot;&gt;Why Are We Here Again?&lt;&#x2F;h2&gt;
+&lt;p&gt;While I outlined my earlier selection of Hugo as the static-site-generator of
+choice in a &lt;a href=&quot;https:&#x2F;&#x2F;blog.psypherpunk.io&#x2F;blog&#x2F;go-down-the-rabbit-hole&#x2F;&quot;&gt;previous post&lt;&#x2F;a&gt;, it’s
+finally time to admit that Go and I aren’t getting on. It’s not you, it’s me
+(except it’s totally you.)&lt;&#x2F;p&gt;
+&lt;p&gt;And it’s more than a little Rust, to be honest.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>💾 Jargon</title>
+        <published>2019-11-18T00:00:00+00:00</published>
+        <updated>2019-11-18T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/jargon/"/>
+        <id>https://blog.psypherpunk.io/blog/jargon/</id>
+        
+        <summary type="html">&lt;h2 id=&quot;jargon-do-you-grok-it&quot;&gt;Jargon, do you grok it?&lt;&#x2F;h2&gt;
+&lt;p&gt;I recently had a weird conversation on Teams (yes, we use Microsoft
+Teams at work; don’t judge us); triggered by a question in a recent
+Postman user-survey, it prompted a discussion around “unique terminology”
+in sofware development and to what degree each of us had been exposed.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>🔓 Hack the Shed</title>
+        <published>2019-06-19T00:00:00+00:00</published>
+        <updated>2019-06-19T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/hack-the-shed/"/>
+        <id>https://blog.psypherpunk.io/blog/hack-the-shed/</id>
+        
+        <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;“Has anyone ever participated in a Capture-the-flag style hacking event?
+Does anyone fancy trying one?”&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;So, fairly innocuously, began what turned out to be a pretty interesting event.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>🐛 Go Down the Rabbit Hole</title>
+        <published>2019-02-13T00:00:00+00:00</published>
+        <updated>2019-02-13T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/go-down-the-rabbit-hole/"/>
+        <id>https://blog.psypherpunk.io/blog/go-down-the-rabbit-hole/</id>
+        
+        <summary type="html">&lt;p&gt;I like a good em-dash. It’s delightfully versatile, easily taking the place of
+other, lesser punctuation marks.&lt;&#x2F;p&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>🦄 django-pwny</title>
+        <published>2018-08-29T00:00:00+00:00</published>
+        <updated>2018-08-29T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/django-pwny/"/>
+        <id>https://blog.psypherpunk.io/blog/django-pwny/</id>
+        
+        <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Originally published at
+&lt;a href=&quot;https:&#x2F;&#x2F;www.thedatashed.co.uk&#x2F;2019&#x2F;02&#x2F;07&#x2F;django-pwny&#x2F;&quot;&gt;The Data Shed&lt;&#x2F;a&gt;.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>🎉 Hello, World!</title>
+        <published>2018-08-15T00:00:00+00:00</published>
+        <updated>2018-08-15T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              PsypherPunk
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://blog.psypherpunk.io/blog/hello-world/"/>
+        <id>https://blog.psypherpunk.io/blog/hello-world/</id>
+        
+        <content type="html" xml:base="https://blog.psypherpunk.io/blog/hello-world/">&lt;p&gt;Hello, World! 🎉&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

